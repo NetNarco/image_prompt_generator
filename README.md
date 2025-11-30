@@ -75,7 +75,7 @@
 # Python 3
 python -m http.server 8000
 
-# Откройте http://localhost:8000/IPG_Q_ai_10_improved.html
+# Откройте http://localhost:8000/IPG_Q_ai_13.html
 ```
 
 ### Требования
