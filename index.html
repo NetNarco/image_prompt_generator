@@ -1,0 +1,2366 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор промптов</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CradialGradient id='glow' cx='30%25' cy='30%25'%3E%3Cstop offset='0%25' stop-color='%23c084fc'/%3E%3Cstop offset='70%25' stop-color='%237c3aed'/%3E%3Cstop offset='100%25' stop-color='%234c1d95'/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='28' fill='url(%23glow)' stroke='%23e9d5ff' stroke-width='3' opacity='0.95'/%3E%3Ccircle cx='32' cy='32' r='22' fill='%231e1b4b' opacity='0.6'/%3E%3Cg transform='translate(18,28) scale(0.8)' opacity='0.7'%3E%3Crect x='0' y='0' width='28' height='8' rx='2' fill='%23ddd'/%3E%3Crect x='2' y='10' width='5' height='5' rx='1' fill='%23555'/%3E%3Crect x='9' y='10' width='5' height='5' rx='1' fill='%23555'/%3E%3Crect x='16' y='10' width='5' height='5' rx='1' fill='%23555'/%3E%3Crect x='23' y='10' width='5' height='5' rx='1' fill='%23555'/%3E%3Crect x='6' y='16' width='16' height='5' rx='1' fill='%234ade80'/%3E%3C/g%3E%3Ccircle cx='22' cy='20' r='8' fill='%23fff' opacity='0.4'/%3E%3Ccircle cx='20' cy='18' r='4' fill='%23fff' opacity='0.7'/%3E%3C/svg%3E">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            --panel-bg: rgba(255, 255, 255, 0.85);
+            --border: #cbd5e1;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --success: #10b981;
+            --danger: #ef4444;
+            --hover-bg: #f8fafc;
+            --input-bg: white;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-hover: 0 6px 25px rgba(0,0,0,0.12);
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #0f172a, #1e293b);
+            --panel-bg: rgba(30, 41, 59, 0.8);
+            --border: #334155;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --primary: #818cf8;
+            --primary-light: #a5b4fc;
+            --success: #34d399;
+            --danger: #f87171;
+            --hover-bg: #1e293b;
+            --input-bg: #0f172a;
+            --shadow: 0 4px 20px rgba(0,0,0,0.3);
+            --shadow-hover: 0 6px 25px rgba(0,0,0,0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: var(--bg-gradient);
+            color: var(--text);
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--panel-bg);
+            border: 1px solid var(--border);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: var(--shadow);
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(20deg);
+            background: var(--hover-bg);
+        }
+
+        .reset-button {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: var(--panel-bg);
+            border: 1px solid var(--border);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: var(--shadow);
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+
+        .reset-button:hover {
+            transform: rotate(20deg);
+            background: var(--hover-bg);
+        }
+
+        .top-container {
+            max-width: 1800px;
+            margin: 0 auto 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 1200px) {
+            .top-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            background: var(--panel-bg);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .panel:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .panel h3 {
+            margin-top: 0;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        textarea, input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            background: var(--input-bg);
+            color: var(--text);
+            resize: vertical;
+        }
+
+        textarea {
+            height: 160px;
+        }
+
+        textarea:focus, input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .copy-btn, .enhance-btn, .help-btn, .icon-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            transition: all 0.2s;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 18px;
+        }
+        
+        .icon-btn {
+            right: 70px;
+            width: 38px;
+            height: 38px;
+            padding: 0;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .help-btn {
+            right: 120px;
+            background: var(--hover-bg);
+        }
+
+        .enhance-btn {
+            position: static;
+            width: 100%;
+            margin-top: 10px;
+            background: var(--primary);
+            color: white;
+            border: none;
+        }
+
+        .copy-btn:hover, .enhance-btn:hover, .help-btn:hover, .icon-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .examples-container {
+            background: var(--panel-bg);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 8px 0;
+        }
+
+        .section-header h3,
+        .subcategory-header h4 {
+            margin: 0;
+            color: var(--text);
+        }
+
+        .toggle-icon {
+            font-size: 18px;
+            transition: transform 0.3s;
+            color: var(--text-muted);
+        }
+
+        .toggle-icon.collapsed {
+            transform: rotate(-90deg);
+        }
+
+        .section-content,
+        .subcategory-content {
+            margin-top: 16px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, opacity 0.4s ease;
+            opacity: 0;
+        }
+
+        .section-content.expanded,
+        .subcategory-content.expanded {
+            max-height: 1000px;
+            opacity: 1;
+        }
+
+        .styles-content,
+        .artistic-content {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .styles-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .style-option {
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            background: var(--input-bg);
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text);
+        }
+
+        .style-option:hover {
+            background: var(--hover-bg);
+            border-color: var(--primary);
+        }
+
+        .style-option input {
+            margin-right: 6px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            background: var(--input-bg);
+            color: var(--text);
+        }
+
+        .quality-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 12px;
+        }
+
+        .quality-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: var(--text);
+            font-size: 14px;
+        }
+
+        .example-btn {
+            display: inline-block;
+            background: var(--hover-bg);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s;
+            color: var(--text);
+            margin: 4px 4px 0 0;
+            white-space: nowrap;
+        }
+
+        .example-btn:hover {
+            background: var(--border);
+        }
+
+        .btn-refresh {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-refresh:hover {
+            background: var(--primary-light);
+        }
+
+        .control-container {
+            max-width: 1800px;
+            margin: 0 auto 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 1200px) {
+            .control-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 800px) {
+            .control-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .styles-container,
+        .quality-container,
+        .artistic-container {
+            background: var(--panel-bg);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .history-container {
+            background: var(--panel-bg);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .history-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 1000px) {
+            .history-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .history-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .history-item {
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s;
+            color: var(--text);
+            background: var(--input-bg);
+        }
+
+        .history-item:hover {
+            background: var(--hover-bg);
+        }
+
+        .history-actions {
+            margin-top: 16px;
+            text-align: right;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-clear {
+            background: var(--danger);
+            color: white;
+            width: 50px;
+            height: 50px;
+            padding: 0;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-clear:hover {
+            opacity: 0.9;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: transform 0.3s, opacity 0.3s;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .api-settings {
+            margin-top: 12px;
+            padding: 12px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .api-settings label {
+            display: block;
+            margin: 8px 0 4px;
+            font-size: 13px;
+            color: var(--text);
+        }
+        
+        .enhance-mode-container {
+            margin-bottom: 10px;
+        }
+
+        .api-key-container {
+            position: relative;
+        }
+
+        .remember-key-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 6px;
+            font-size: 12px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .remember-key-checkbox input[type="checkbox"] {
+            width: auto;
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+        }
+
+        .modal-content {
+            background: var(--panel-bg);
+            margin: 5% auto;
+            padding: 25px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .close-modal:hover {
+            color: var(--text);
+        }
+
+        .modal h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        .modal ol {
+            padding-left: 20px;
+            margin: 15px 0;
+        }
+
+        .modal li {
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .modal a {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        .modal a:hover {
+            color: var(--primary-light);
+        }
+
+        .artistic-category-level-1 {
+            margin-left: 10px;
+            padding-left: 10px;
+            border-left: 2px solid var(--border);
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .artistic-category-level-2 {
+            margin-left: 10px;
+            padding-left: 10px;
+            border-left: 1px dashed var(--border);
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        .artistic-category-level-1 > .section-header h3 {
+            color: var(--text);
+        }
+        .artistic-category-level-2 > .section-header h4 {
+            color: var(--text-muted);
+        }
+
+        .artistic-counter {
+            display: inline-block;
+            margin-left: 8px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            background: var(--success);
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .artistic-counter.exceeded {
+            background: var(--danger);
+            animation: pulse 0.5s ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: var(--danger);
+            color: white;
+            padding: 14px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+            transform: translateX(400px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 1001;
+            max-width: 320px;
+            font-size: 14px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .preset-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .preset-btn {
+            padding: 0;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 24px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preset-btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .preset-btn.secondary {
+            background: var(--hover-bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .preset-btn.secondary:hover {
+            background: var(--border);
+        }
+
+        .preset-list {
+            margin-top: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .preset-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 6px 0;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .preset-item:hover {
+            background: var(--hover-bg);
+            border-color: var(--primary);
+        }
+
+        .preset-item-name {
+            font-weight: 600;
+            color: var(--text);
+            flex: 1;
+        }
+
+        .preset-item-actions {
+            display: flex;
+            gap: 6px;
+        }
+
+        .preset-item-btn {
+            padding: 4px 10px;
+            font-size: 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .preset-item-btn.load {
+            background: var(--success);
+            color: white;
+        }
+
+        .preset-item-btn.delete {
+            background: var(--danger);
+            color: white;
+        }
+
+        .preset-item-btn:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
+
+        .random-prompt-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0;
+            height: 50px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 12px;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .random-prompt-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .random-prompt-btn:active {
+            transform: translateY(0);
+        }
+
+        .preset-modal-content {
+            background: var(--panel-bg);
+            margin: 10% auto;
+            padding: 25px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        }
+
+        .preset-modal-content input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--input-bg);
+            color: var(--text);
+        }
+
+        .preset-modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .preset-modal-actions button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .preset-modal-actions .btn-save {
+            background: var(--success);
+            color: white;
+        }
+
+        .preset-modal-actions .btn-cancel {
+            background: var(--hover-bg);
+            color: var(--text);
+        }
+        
+        .translation-result {
+            margin-top: 15px;
+            padding: 15px;
+            background: var(--hover-bg);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            white-space: pre-wrap;
+        }
+
+        .translation-copy-btn {
+            margin-top: 10px;
+            padding: 8px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.2s;
+        }
+        
+        .translation-copy-btn:hover {
+            background: var(--primary-light);
+        }
+
+        /* === НОВЫЙ БЛОК: Стили для распознавания изображений === */
+        .image-recognition-container {
+            background: var(--panel-bg);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .image-upload-area {
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            margin: 15px 0;
+            background: var(--input-bg);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .image-upload-area:hover {
+            border-color: var(--primary);
+            background: var(--hover-bg);
+        }
+
+        .image-upload-area.dragging {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            opacity: 0.8;
+        }
+
+        .image-preview {
+            max-width: 100%;
+            max-height: 400px;
+            margin: 15px auto;
+            display: block;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .hf-token-container {
+            margin: 15px 0;
+        }
+
+        .image-prompt-result {
+            margin-top: 15px;
+            padding: 15px;
+            background: var(--hover-bg);
+            border-radius: 8px;
+            border-left: 4px solid var(--success);
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .image-analyze-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 10px;
+        }
+
+        .image-analyze-btn:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .image-analyze-btn:disabled {
+            background: var(--border);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .image-prompt-copy-btn {
+            margin-top: 10px;
+            padding: 10px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .image-prompt-copy-btn:hover {
+            background: var(--primary-light);
+        }
+
+        .hf-help-btn {
+            display: inline-block;
+            margin-left: 10px;
+            padding: 4px 12px;
+            background: var(--hover-bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .hf-help-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* === КОНЕЦ нового блока стилей === */
+
+    </style>
+</head>
+<body>
+    <div class="theme-toggle" id="theme-toggle" title="Переключить тему">🌙</div>
+    <div class="reset-button" id="reset-button" title="Сбросить параметры">🔄</div>
+
+    <div class="top-container">
+        <div class="panel">
+            <h3>📝 Ввод на русском</h3>
+            <textarea id="input" placeholder="Опишите, что хотите видеть, например: 'Кот на крыше под луной'"></textarea>
+
+            <div class="examples-container">
+                <div class="section-header" style="padding: 0; margin-bottom: 12px;">
+                    <h3>✨ Примеры промптов</h3>
+                    <button class="btn-refresh" onclick="renderRandomExamples()" title="Обновить примеры">🔄</button>
+                </div>
+                <div id="examples-list"></div>
+                <button class="random-prompt-btn" onclick="generateRandomPrompt()" title="Случайный промпт">🎲</button>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h3>🎯 Готовый промпт</h3>
+            <button class="icon-btn" onclick="translateBack('output')" title="Перевести обратно на русский">🌐</button>
+            <button id="copy-btn" class="copy-btn" title="Копировать промпт">📋</button>
+            <textarea id="output" readonly placeholder="Здесь появится промпт..."></textarea>
+        </div>
+
+        <div class="panel">
+            <h3>✨ Улучшенный промпт</h3>
+            <button class="icon-btn" onclick="translateBack('enhanced-output')" title="Перевести обратно на русский">🌐</button>
+            <button id="copy-enhanced-btn" class="copy-btn" title="Копировать улучшенный промпт">📋</button>
+            <button id="help-btn" class="help-btn" onclick="openHelpModal()" title="Инструкция">❓</button>
+            <textarea id="enhanced-output" readonly placeholder="Нажмите 'Улучшить' для генерации..."></textarea>
+
+            <div class="api-settings">
+                <div class="api-key-container">
+                    <label for="api-key">🔑 Ваш API-ключ Groq:</label>
+                    <input type="password" id="api-key" placeholder="gsk_...">
+                    <label class="remember-key-checkbox">
+                        <input type="checkbox" id="remember-key">
+                        <span>Запомнить ключ между сессиями</span>
+                    </label>
+                </div>
+
+                <label for="model-input">🧠 Модель (сохраняется):</label>
+                <input type="text" id="model-input" placeholder="llama3-8b-8192">
+                
+                <div class="enhance-mode-container">
+                    <label for="enhance-mode">🎨 Режим улучшения:</label>
+                    <select id="enhance-mode">
+                        <option value="artistic">Художественно (Artistic)</option>
+                        <option value="technical">Технически детализировано (Technical)</option>
+                        <option value="cinematic">Кинематографично (Cinematic)</option>
+                        <option value="anime">Аниме-стиль (Anime)</option>
+                        <option value="minimalist">Минималистично (Minimalist)</option>
+                    </select>
+                </div>
+            </div>
+
+            <button id="enhance-btn" class="enhance-btn" title="Улучшить промпт">🎨</button>
+        </div>
+    </div>
+
+    <div class="control-container">
+        <div class="styles-container">
+            <div class="section-header" onclick="toggleSection('styles')">
+                <h3>🎨 Стили (выберите один)</h3>
+                <span class="toggle-icon" id="styles-toggle">▼</span>
+            </div>
+            <input type="text" class="search-box" id="style-search" placeholder="Поиск стиля...">
+            <div class="section-content styles-content" id="styles-content"></div>
+        </div>
+
+        <div class="quality-container">
+            <div class="section-header" onclick="toggleSection('quality')">
+                <h3>🎛️ Настройки качества</h3>
+                <span class="toggle-icon" id="quality-toggle">▼</span>
+            </div>
+            <div class="section-content" id="quality-content">
+                <div class="quality-grid">
+                    <div class="quality-group">
+                        <label>Разрешение</label>
+                        <select id="resolution">
+                            <option value="">Нет</option>
+                            <option value="4K resolution">4K</option>
+                            <option value="8K resolution">8K</option>
+                            <option value="Ultra HD">Ultra HD</option>
+                            <option value="Full HD">Full HD</option>
+                            <option value="1440p">1440p</option>
+                            <option value="1080p">1080p</option>
+                            <option value="HD">HD</option>
+                        </select>
+                    </div>
+                    <div class="quality-group">
+                        <label>Освещение</label>
+                        <select id="lighting">
+                            <option value="">Нет</option>
+                            <option value="cinematic lighting">Кинематографическое</option>
+                            <option value="dramatic lighting">Драматическое</option>
+                            <option value="soft lighting">Мягкое</option>
+                            <option value="studio lighting">Студийное</option>
+                            <option value="natural lighting">Естественное</option>
+                            <option value="backlighting">Контровое</option>
+                            <option value="side lighting">Боковое</option>
+                            <option value="golden hour lighting">Золотой час</option>
+                            <option value="twilight lighting">Сумерки</option>
+                            <option value="neon lighting">Неоновое</option>
+                        </select>
+                    </div>
+                    <div class="quality-group">
+                        <label>Цвета</label>
+                        <select id="colors">
+                            <option value="">Нет</option>
+                            <option value="vibrant colors">Яркие</option>
+                            <option value="muted colors">Приглушенные</option>
+                            <option value="pastel colors">Пастельные</option>
+                            <option value="monochrome">Монохром</option>
+                            <option value="warm tones">Тёплые тона</option>
+                            <option value="cool tones">Холодные тона</option>
+                            <option value="high contrast colors">Контрастные</option>
+                            <option value="earth tones">Земляные тона</option>
+                            <option value="retro color palette">Ретро палитра</option>
+                        </select>
+                    </div>
+                    <div class="quality-group">
+                        <label>Фокус</label>
+                        <select id="focus">
+                            <option value="">Нет</option>
+                            <option value="sharp focus">Резкий</option>
+                            <option value="soft focus">Мягкий</option>
+                            <option value="bokeh">Боке</option>
+                            <option value="deep depth of field">Глубокая резкость</option>
+                            <option value="selective focus">Селективный фокус</option>
+                            <option value="blurred background">Размытый фон</option>
+                        </select>
+                    </div>
+                    <div class="quality-group" style="grid-column: span 2;">
+                        <label>Детализация</label>
+                        <select id="detail">
+                            <option value="">Нет</option>
+                            <option value="highly detailed">Высокая</option>
+                            <option value="ultra detailed">Ультра</option>
+                            <option value="photorealistic">Реалистичная</option>
+                            <option value="intricate details">Изысканная</option>
+                            <option value="minimalist detail">Минималистичная</option>
+                            <option value="low detail">Низкая детализация</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="artistic-container">
+            <div class="section-header" onclick="toggleSection('artistic')">
+                <h3>🖼️ Худож. элементы (до 5)<span class="artistic-counter" id="artistic-counter">0/5</span></h3>
+                <span class="toggle-icon" id="artistic-toggle">▼</span>
+            </div>
+            <input type="text" class="search-box" id="artistic-search" placeholder="Поиск...">
+            <div class="section-content artistic-content" id="artistic-content"></div>
+        </div>
+    </div>
+
+    <div class="history-container">
+        <div class="section-header" onclick="toggleSection('history')">
+            <h3>🕒 История промптов (последние 60)</h3>
+            <span class="toggle-icon" id="history-toggle">▼</span>
+        </div>
+        <div class="section-content" id="history-content">
+            <div class="history-grid" id="history-grid"></div>
+            <div class="history-actions">
+                <button class="btn btn-clear" onclick="clearHistory()" title="Очистить историю">🗑️</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- === НОВЫЙ БЛОК: Распознавание изображений === -->
+    <div class="image-recognition-container">
+        <div class="section-header" onclick="toggleSection('image-recognition')">
+            <h3>🖼️ Распознавание изображений (Google Gemini Vision)</h3>
+            <span class="toggle-icon collapsed" id="image-recognition-toggle">▼</span>
+        </div>
+        <div class="section-content" id="image-recognition-content">
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 15px;">
+                Загрузите изображение, чтобы получить текстовый промпт для генерации похожих изображений.
+            </p>
+
+            <div class="hf-token-container">
+                <label for="hf-token">🔑 Google Gemini API ключ:
+                    <button class="hf-help-btn" onclick="openHFHelpModal()">❓ Инструкция</button>
+                </label>
+                <input type="password" id="hf-token" placeholder="AIza...">
+                <label class="remember-key-checkbox">
+                    <input type="checkbox" id="remember-hf-token">
+                    <span>Запомнить токен между сессиями</span>
+                </label>
+            </div>
+
+            <div class="image-upload-area" id="image-upload-area">
+                <p style="font-size: 16px; margin: 0;">📁 Нажмите или перетащите изображение сюда</p>
+                <p style="font-size: 12px; color: var(--text-muted); margin: 5px 0 0;">Поддерживаются JPG, PNG, WebP</p>
+                <input type="file" id="image-file-input" accept="image/*" style="display: none;">
+            </div>
+
+            <div id="image-preview-container" style="display: none;">
+                <img id="image-preview" class="image-preview" alt="Предпросмотр">
+            </div>
+
+            <button class="image-analyze-btn" id="analyze-image-btn" disabled>
+                <span id="analyze-btn-text">🔍 Анализировать изображение</span>
+            </button>
+
+            <div id="image-prompt-result-container" style="display: none;">
+                <h4 style="color: var(--primary); margin-top: 20px;">📝 Сгенерированный промпт:</h4>
+                <div class="image-prompt-result" id="image-prompt-result"></div>
+                <button class="image-prompt-copy-btn" onclick="copyImagePrompt()">📋 Копировать промпт</button>
+            </div>
+        </div>
+    </div>
+    <!-- === КОНЕЦ нового блока === -->
+
+    <div id="help-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeHelpModal()">&times;</span>
+            <h3>❓ Краткая инструкция по Groq Cloud API</h3>
+            <ol>
+                <li><strong>Регистрация:</strong> Перейдите на сайт <a href="https://console.groq.com" target="_blank">https://console.groq.com</a> и нажмите "Sign Up" (или войдите через Google/GitHub). Создайте аккаунт бесплатно, без кредитной карты. Новые пользователи получают доступ к free tier сразу после регистрации.</li>
+                <li><strong>Получение бесплатного API-ключа:</strong> После входа перейдите в раздел "API Keys" (<a href="https://console.groq.com/keys" target="_blank">https://console.groq.com/keys</a>). Нажмите "Create API Key", укажите имя (опционально) и сгенерируйте ключ. Он бесплатный и готов к использованию. <strong>КЛЮЧ СКОПИРУЙТЕ И СОХРАНИТЕ. ПРОСМОТРЕТЬ ЕГО ПОТОМ БУДЕТ НЕЛЬЗЯ.</strong></li>
+                <li><strong>Выбор и получение бесплатной модели:</strong> Перейдите в playground (<a href="https://console.groq.com/playground" target="_blank">https://console.groq.com/playground</a>) или документацию моделей (<a href="https://console.groq.com/docs/models" target="_blank">https://console.groq.com/docs/models</a>), где перечислены бесплатные варианты (например, Llama 3.1, Mixtral, Gemma, Whisper). Выберите модель и интегрируйте её в API-запросы с вашим ключом (<a href="https://console.groq.com/docs/quickstart" target="_blank">документация</a>). Учтите лимиты free tier: например, для Llama-3.1-405b — 131 072 токенов в минуту/день; для других моделей лимиты ниже (проверьте в аккаунте). Developer tier предлагает до 10x выше лимиты за плату.</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- === НОВАЯ МОДАЛКА: Инструкция для Hugging Face === -->
+    <div id="hf-help-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeHFHelpModal()">&times;</span>
+            <h3>❓ Как получить API ключ Google Gemini</h3>
+            <ol>
+                <li><strong>Перейдите на сайт:</strong> Откройте <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a> - это официальная платформа для получения API ключей.</li>
+                <li><strong>Войдите:</strong> Войдите с помощью вашего Google аккаунта. Если у вас нет аккаунта Google, создайте его бесплатно.</li>
+                <li><strong>Создание API ключа:</strong> Нажмите кнопку "Create API Key" или "Get API Key". Выберите проект (или создайте новый, если требуется).</li>
+                <li><strong>Копирование ключа:</strong> Скопируйте созданный API ключ (начинается с "AIza...") и вставьте в поле выше. <strong>Сохраните ключ в надёжном месте!</strong></li>
+                <li><strong>Модель:</strong> Используется бесплатная модель <code>gemini-1.5-flash</code> с vision-возможностями для распознавания изображений и генерации промптов.</li>
+                <li><strong>Бесплатный лимит:</strong> Google Gemini предоставляет бесплатный tier с достаточным количеством запросов для личного использования.</li>
+            </ol>
+        </div>
+    </div>
+    <!-- === КОНЕЦ новой модалки === -->
+    
+    <div id="translation-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeTranslationModal()">&times;</span>
+            <h3>🇷🇺 Перевод промпта</h3>
+            <p>Вот как выглядит этот промпт на русском языке:</p>
+            <div id="translation-result" class="translation-result">Загрузка перевода...</div>
+            <button class="translation-copy-btn" onclick="copyTranslation()" title="Копировать перевод">📋</button>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">Промпт скопирован!</div>
+
+    <div id="preset-modal" class="modal">
+        <div class="preset-modal-content">
+            <h3>💾 Сохранить пресет</h3>
+            <input type="text" id="preset-name-input" placeholder="Название пресета...">
+            <div class="preset-modal-actions">
+                <button class="btn-save" onclick="confirmSavePreset()">Сохранить</button>
+                <button class="btn-cancel" onclick="closePresetModal()">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="import-modal" class="modal">
+        <div class="preset-modal-content">
+            <h3>📥 Импорт пресетов</h3>
+            <textarea id="import-json-input" placeholder="Вставьте JSON..." style="height: 150px; font-family: monospace; font-size: 12px;"></textarea>
+            <div class="preset-modal-actions">
+                <button class="btn-save" onclick="confirmImportPresets()">Импортировать</button>
+                <button class="btn-cancel" onclick="closeImportModal()">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">Сообщение</div>
+
+    <div class="history-container" style="margin-top: 20px;">
+        <div class="section-header" onclick="toggleSection('presets')">
+            <h3>💾 Пресеты</h3>
+            <span class="toggle-icon collapsed" id="presets-toggle">▼</span>
+        </div>
+        <div class="section-content" id="presets-content">
+            <div class="preset-controls">
+                <button class="preset-btn" onclick="savePresetDialog()" title="Сохранить пресет">💾</button>
+                <button class="preset-btn secondary" onclick="exportPresets()" title="Экспорт пресетов">📤</button>
+                <button class="preset-btn secondary" onclick="importPresetsDialog()" title="Импорт пресетов">📥</button>
+            </div>
+            <div class="preset-list" id="preset-list"></div>
+        </div>
+    </div>
+
+    <script>
+        const MODEL_KEY = 'flux_groq_model';
+        const API_KEY_STORAGE = 'flux_groq_api_key';
+        const REMEMBER_KEY_FLAG = 'flux_remember_api_key';
+        const HF_TOKEN_STORAGE = 'flux_hf_api_token';
+        const REMEMBER_HF_TOKEN_FLAG = 'flux_remember_hf_token';
+        let GROQ_KEY = '';
+        let HF_TOKEN = '';
+        let SELECTED_MODEL = localStorage.getItem(MODEL_KEY) || 'llama3-8b-8192';
+        let currentImageFile = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('model-input').value = SELECTED_MODEL;
+
+            const rememberKey = localStorage.getItem(REMEMBER_KEY_FLAG) === 'true';
+            document.getElementById('remember-key').checked = rememberKey;
+            if (rememberKey) {
+                const savedKey = localStorage.getItem(API_KEY_STORAGE);
+                if (savedKey) {
+                    document.getElementById('api-key').value = savedKey;
+                    GROQ_KEY = savedKey;
+                }
+            }
+
+            const rememberHFToken = localStorage.getItem(REMEMBER_HF_TOKEN_FLAG) === 'true';
+            document.getElementById('remember-hf-token').checked = rememberHFToken;
+            if (rememberHFToken) {
+                const savedToken = localStorage.getItem(HF_TOKEN_STORAGE);
+                if (savedToken) {
+                    document.getElementById('hf-token').value = savedToken;
+                    HF_TOKEN = savedToken;
+                }
+            }
+
+            document.getElementById('remember-key').addEventListener('change', (e) => {
+                localStorage.setItem(REMEMBER_KEY_FLAG, e.target.checked);
+                if (e.target.checked) {
+                    const key = document.getElementById('api-key').value;
+                    if (key) localStorage.setItem(API_KEY_STORAGE, key);
+                } else {
+                    localStorage.removeItem(API_KEY_STORAGE);
+                }
+            });
+
+            document.getElementById('remember-hf-token').addEventListener('change', (e) => {
+                localStorage.setItem(REMEMBER_HF_TOKEN_FLAG, e.target.checked);
+                if (e.target.checked) {
+                    const token = document.getElementById('hf-token').value;
+                    if (token) localStorage.setItem(HF_TOKEN_STORAGE, token);
+                } else {
+                    localStorage.removeItem(HF_TOKEN_STORAGE);
+                }
+            });
+
+            document.getElementById('api-key').addEventListener('input', (e) => {
+                GROQ_KEY = e.target.value;
+                if (document.getElementById('remember-key').checked) {
+                    localStorage.setItem(API_KEY_STORAGE, GROQ_KEY);
+                }
+            });
+
+            document.getElementById('hf-token').addEventListener('input', (e) => {
+                HF_TOKEN = e.target.value;
+                if (document.getElementById('remember-hf-token').checked) {
+                    localStorage.setItem(HF_TOKEN_STORAGE, HF_TOKEN);
+                }
+                updateAnalyzeButtonState();
+            });
+
+            document.getElementById('model-input').addEventListener('input', (e) => {
+                SELECTED_MODEL = e.target.value;
+                localStorage.setItem(MODEL_KEY, SELECTED_MODEL);
+            });
+
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.getElementById('theme-toggle').textContent = '☀️';
+            }
+
+            renderStyles();
+            renderArtistic();
+            renderHistory();
+            renderPresets();
+            renderRandomExamples();
+            initializeImageRecognition();
+        });
+
+        const inputEl = document.getElementById('input');
+        const outputEl = document.getElementById('output');
+        const enhancedOutputEl = document.getElementById('enhanced-output');
+
+        const styleDescriptions = {
+            'realistic': 'ultra realistic, photorealistic, 8k resolution, professional photography',
+            'anime': 'anime style, vibrant colors, detailed anime artwork',
+            'digital_art': 'digital art, trending on artstation, highly detailed',
+            'oil_painting': 'oil painting, classic art style, traditional painting',
+            'watercolor': 'watercolor painting, soft colors, artistic watercolor',
+            'pencil': 'pencil sketch, detailed drawing, graphite art',
+            'cartoon': 'cartoon style, bright colors, fun and playful',
+            'cyberpunk': 'cyberpunk style, neon lights, futuristic cityscape',
+            'fantasy': 'fantasy art, magical atmosphere, epic fantasy scene',
+            'sci-fi': 'science fiction, futuristic, advanced technology',
+            'horror': 'horror atmosphere, dark and eerie, suspenseful mood',
+            'steampunk': 'steampunk aesthetic, Victorian-era machinery, brass and copper tones',
+            'minimalist': 'minimalist design, clean lines, simple composition',
+            'abstract': 'abstract art, non-representational, experimental forms',
+            'surreal': 'surrealism, dreamlike imagery, unexpected combinations',
+            'comic': 'comic book style, bold outlines, dynamic action',
+            'retro': 'retro aesthetic, vintage style, nostalgic atmosphere',
+            'noir': 'film noir style, high contrast, dramatic shadows',
+            '3d_render': '3D render, CGI, photorealistic rendering',
+            'isometric': 'isometric view, geometric precision, technical illustration',
+            'pixel': 'pixel art, 8-bit style, retro gaming aesthetic',
+            'pop_art': 'pop art style, bold colors, Andy Warhol inspired',
+            'impressionist': 'impressionist painting, loose brushstrokes, Monet style',
+            'baroque': 'baroque art style, ornate details, dramatic lighting',
+            'art_nouveau': 'art nouveau style, flowing lines, decorative elements',
+            'art_deco': 'art deco design, geometric patterns, 1920s aesthetic',
+            'gothic': 'gothic style, dark atmosphere, medieval architecture',
+            'renaissance': 'Renaissance painting, classical composition, masterwork',
+            'cubist': 'cubist style, geometric shapes, Picasso inspired',
+            'vaporwave': 'vaporwave aesthetic, pastel colors, 80s nostalgia',
+            'low_poly': 'low poly art, geometric shapes, minimalist 3D',
+            'glitch': 'glitch art, digital corruption, distorted imagery'
+        };
+
+        const styleTranslations = {
+            'realistic': 'Реалистичный',
+            'anime': 'Аниме',
+            'digital_art': 'Цифровое искусство',
+            'oil_painting': 'Масло',
+            'watercolor': 'Акварель',
+            'pencil': 'Карандаш',
+            'cartoon': 'Мультяшный',
+            'cyberpunk': 'Киберпанк',
+            'fantasy': 'Фэнтези',
+            'sci-fi': 'Научная фантастика',
+            'horror': 'Хоррор',
+            'steampunk': 'Стимпанк',
+            'minimalist': 'Минимализм',
+            'abstract': 'Абстракция',
+            'surreal': 'Сюрреализм',
+            'comic': 'Комикс',
+            'retro': 'Ретро',
+            'noir': 'Нуар',
+            '3d_render': '3D-рендер',
+            'isometric': 'Изометрия',
+            'pixel': 'Пиксель-арт',
+            'pop_art': 'Поп-арт',
+            'impressionist': 'Импрессионизм',
+            'baroque': 'Барокко',
+            'art_nouveau': 'Модерн',
+            'art_deco': 'Ар-деко',
+            'gothic': 'Готика',
+            'renaissance': 'Ренессанс',
+            'cubist': 'Кубизм',
+            'vaporwave': 'Вейпорвейв',
+            'low_poly': 'Лоу-поли',
+            'glitch': 'Глитч'
+        };
+
+        const styleCategories = {
+            'Основные стили': ['realistic', 'anime', 'digital_art', 'cartoon'],
+            'Традиционное искусство': ['oil_painting', 'watercolor', 'pencil', 'impressionist', 'renaissance', 'baroque'],
+            'Современное искусство': ['abstract', 'surreal', 'cubist', 'pop_art', 'minimalist'],
+            'Жанры': ['fantasy', 'sci-fi', 'horror', 'cyberpunk', 'steampunk', 'gothic'],
+            'Цифровое искусство': ['3d_render', 'isometric', 'pixel', 'low_poly', 'glitch'],
+            'Стилизация': ['comic', 'retro', 'noir', 'art_nouveau', 'art_deco', 'vaporwave']
+        };
+
+        const artisticTemplates = {
+            'golden_ratio': 'golden ratio composition, fibonacci spiral, harmonious proportions',
+            'symmetry': 'perfect symmetry, balanced composition, mirror effect',
+            'rule_of_thirds': 'rule of thirds composition, dynamic placement',
+            'leading_lines': 'leading lines, perspective depth, visual flow',
+            'framing': 'natural framing, focus on subject, layered composition',
+            'depth_of_field': 'shallow depth of field, bokeh background, professional focus',
+            'color_harmony': 'color harmony, complementary colors, balanced palette',
+            'chiaroscuro': 'chiaroscuro lighting, strong light-dark contrast',
+            'atmospheric': 'atmospheric perspective, depth through haze, layered distances',
+            'dynamic_pose': 'dynamic pose, action shot, movement captured',
+            'macro': 'macro photography, extreme close-up, intricate details',
+            'wide_angle': 'wide angle view, expansive scene, panoramic perspective',
+            'birds_eye': 'bird\'s eye view, overhead perspective, top-down angle',
+            'worms_eye': 'worm\'s eye view, looking up, dramatic low angle',
+            'dutch_angle': 'Dutch angle, tilted horizon, dynamic tension',
+            'silhouette': 'silhouette, backlit subject, strong outline',
+            'reflection': 'reflection effect, mirrored surface, double image',
+            'texture': 'rich texture, tactile quality, surface detail',
+            'pattern': 'repeating pattern, geometric design, visual rhythm',
+            'negative_space': 'negative space, minimalist composition, breathing room',
+            'motion_blur': 'motion blur, speed effect, dynamic movement',
+            'long_exposure': 'long exposure, light trails, smooth water effect',
+            'hdr': 'HDR effect, high dynamic range, enhanced details',
+            'vintage_grain': 'vintage film grain, analog photography aesthetic',
+            'lens_flare': 'lens flare, sun rays, optical effect',
+            'vignette': 'vignette effect, darkened edges, focus on center',
+            'tilt_shift': 'tilt-shift effect, miniature appearance, selective focus',
+            'double_exposure': 'double exposure, overlapping images, artistic blend',
+            'rim_lighting': 'rim lighting, edge highlight, dramatic outline',
+            'god_rays': 'god rays, volumetric lighting, light beams',
+            'foggy': 'foggy atmosphere, mysterious mood, diffused light',
+            'rainy': 'rainy weather, wet surfaces, water droplets',
+            'snowy': 'snowy scene, winter atmosphere, white landscape',
+            'sunset': 'sunset lighting, warm orange glow, golden hour',
+            'sunrise': 'sunrise scene, morning light, soft awakening',
+            'twilight': 'twilight hour, blue hour, magical transition',
+            'starry_night': 'starry night sky, celestial view, night photography',
+            'aurora': 'aurora borealis, northern lights, colorful sky',
+            'moonlight': 'moonlit scene, silvery glow, night atmosphere',
+            'candlelight': 'candlelight illumination, warm intimate glow',
+            'neon': 'neon lights, vibrant glow, urban night',
+            'bioluminescent': 'bioluminescent, glowing organisms, ethereal light',
+            'underwater': 'underwater scene, aquatic environment, submerged view',
+            'aerial': 'aerial view, drone perspective, bird\'s flight',
+            'microscopic': 'microscopic view, cellular detail, scientific beauty',
+            'cosmic': 'cosmic scene, space environment, nebula and stars',
+            'dystopian': 'dystopian atmosphere, post-apocalyptic, desolate mood',
+            'utopian': 'utopian vision, ideal world, harmonious scene',
+            'whimsical': 'whimsical style, playful elements, imaginative design',
+            'elegant': 'elegant composition, refined aesthetic, sophisticated style',
+            'gritty': 'gritty texture, rough aesthetic, raw atmosphere',
+            'ethereal': 'ethereal quality, otherworldly beauty, transcendent mood',
+            'dramatic': 'dramatic composition, high tension, emotional impact',
+            'serene': 'serene atmosphere, peaceful mood, tranquil scene',
+            'energetic': 'energetic composition, vibrant activity, lively scene',
+            'melancholic': 'melancholic mood, wistful atmosphere, nostalgic feeling',
+            'mysterious': 'mysterious atmosphere, enigmatic scene, hidden secrets',
+            'romantic': 'romantic mood, passionate atmosphere, emotional connection',
+            'epic': 'epic scale, grand composition, larger than life',
+            'intimate': 'intimate framing, close personal moment, emotional closeness'
+        };
+
+        const artisticTranslations = {
+            'golden_ratio': 'Золотое сечение',
+            'symmetry': 'Симметрия',
+            'rule_of_thirds': 'Правило третей',
+            'leading_lines': 'Направляющие линии',
+            'framing': 'Кадрирование',
+            'depth_of_field': 'Глубина резкости',
+            'color_harmony': 'Цветовая гармония',
+            'chiaroscuro': 'Кьяроскуро',
+            'atmospheric': 'Атмосферная перспектива',
+            'dynamic_pose': 'Динамичная поза',
+            'macro': 'Макросъёмка',
+            'wide_angle': 'Широкий угол',
+            'birds_eye': 'Вид с высоты птичьего полёта',
+            'worms_eye': 'Вид снизу вверх',
+            'dutch_angle': 'Голландский угол',
+            'silhouette': 'Силуэт',
+            'reflection': 'Отражение',
+            'texture': 'Текстура',
+            'pattern': 'Паттерн',
+            'negative_space': 'Негативное пространство',
+            'motion_blur': 'Размытие в движении',
+            'long_exposure': 'Длинная выдержка',
+            'hdr': 'HDR эффект',
+            'vintage_grain': 'Винтажная зернистость',
+            'lens_flare': 'Блики',
+            'vignette': 'Виньетирование',
+            'tilt_shift': 'Тилт-шифт',
+            'double_exposure': 'Двойная экспозиция',
+            'rim_lighting': 'Контровое освещение',
+            'god_rays': 'Божественные лучи',
+            'foggy': 'Туманный',
+            'rainy': 'Дождливый',
+            'snowy': 'Снежный',
+            'sunset': 'Закат',
+            'sunrise': 'Рассвет',
+            'twilight': 'Сумерки',
+            'starry_night': 'Звёздная ночь',
+            'aurora': 'Северное сияние',
+            'moonlight': 'Лунный свет',
+            'candlelight': 'Свет свечей',
+            'neon': 'Неон',
+            'bioluminescent': 'Биолюминесценция',
+            'underwater': 'Подводный',
+            'aerial': 'Воздушный',
+            'microscopic': 'Микроскопический',
+            'cosmic': 'Космический',
+            'dystopian': 'Дистопический',
+            'utopian': 'Утопический',
+            'whimsical': 'Причудливый',
+            'elegant': 'Элегантный',
+            'gritty': 'Грубый',
+            'ethereal': 'Эфирный',
+            'dramatic': 'Драматичный',
+            'serene': 'Спокойный',
+            'energetic': 'Энергичный',
+            'melancholic': 'Меланхоличный',
+            'mysterious': 'Таинственный',
+            'romantic': 'Романтичный',
+            'epic': 'Эпичный',
+            'intimate': 'Интимный'
+        };
+
+        const artisticCategories = {
+            'Композиция': {
+                'Основы': ['golden_ratio', 'symmetry', 'rule_of_thirds', 'leading_lines', 'framing', 'negative_space'],
+                'Перспектива': ['birds_eye', 'worms_eye', 'dutch_angle', 'aerial', 'wide_angle']
+            },
+            'Эффекты камеры': {
+                'Фокус и глубина': ['depth_of_field', 'macro', 'tilt_shift'],
+                'Движение': ['motion_blur', 'long_exposure'],
+                'Обработка': ['hdr', 'vintage_grain', 'lens_flare', 'vignette', 'double_exposure']
+            },
+            'Освещение': {
+                'Естественное': ['sunset', 'sunrise', 'twilight', 'moonlight'],
+                'Искусственное': ['candlelight', 'neon', 'rim_lighting', 'god_rays'],
+                'Природные явления': ['starry_night', 'aurora', 'bioluminescent']
+            },
+            'Атмосфера': {
+                'Погода': ['foggy', 'rainy', 'snowy'],
+                'Настроение': ['dramatic', 'serene', 'energetic', 'melancholic', 'mysterious', 'romantic', 'whimsical']
+            },
+            'Визуальные элементы': {
+                'Базовые': ['silhouette', 'reflection', 'texture', 'pattern', 'color_harmony'],
+                'Стиль': ['elegant', 'gritty', 'ethereal', 'epic', 'intimate']
+            },
+            'Окружение': {
+                'Специфические виды': ['underwater', 'microscopic', 'cosmic'],
+                'Мировоззрение': ['dystopian', 'utopian']
+            },
+            'Техники': {
+                'Световые': ['chiaroscuro', 'atmospheric'],
+                'Композиционные': ['dynamic_pose']
+            }
+        };
+
+        const enhancePrompts = {
+            artistic: "You are an expert AI art prompt engineer. Enhance the following prompt to be more artistic and visually appealing. Add creative details about composition, color palette, mood, and artistic style. Keep it concise but impactful. Respond ONLY with the enhanced prompt, no explanations.",
+            technical: "You are a technical AI art prompt engineer. Enhance the following prompt with precise technical details about lighting, camera settings, rendering quality, and visual parameters. Include specific technical terms. Respond ONLY with the enhanced prompt, no explanations.",
+            cinematic: "You are a cinematic AI prompt engineer. Transform the following prompt into a cinematic masterpiece description. Add details about dramatic lighting, camera angles, depth of field, and film-like atmosphere. Respond ONLY with the enhanced prompt, no explanations.",
+            anime: "You are an anime art expert. Enhance the following prompt with anime-specific details: character style, vibrant colors, dynamic poses, and typical anime aesthetic elements. Respond ONLY with the enhanced prompt, no explanations.",
+            minimalist: "You are a minimalist design expert. Refine the following prompt to emphasize simplicity, clean lines, essential elements, and negative space. Remove unnecessary details while maintaining the core concept. Respond ONLY with the enhanced prompt, no explanations."
+        };
+
+        const promptExamples = [
+            'Кот на крыше под луной',
+            'Дракон над горным хребтом',
+            'Космический корабль в туманности',
+            'Футуристический город в дождь',
+            'Волшебный лес с светящимися грибами',
+            'Старинный замок на утёсе',
+            'Подводный город с русалками',
+            'Робот в заброшенном здании',
+            'Феникс, восстающий из пепла',
+            'Викинг в битве с морским чудовищем',
+            'Эльфийская принцесса в лесу',
+            'Самурай на фоне сакуры',
+            'Киборг в неоновом переулке',
+            'Пиратский корабль в шторм',
+            'Ангел и демон лицом к лицу',
+            'Механический дракон в пустыне',
+            'Медитирующий монах в храме',
+            'Космонавт на чужой планете',
+            'Ведьма варит зелье',
+            'Рыцарь перед драконом'
+        ];
+
+        function renderRandomExamples() {
+            const examplesList = document.getElementById('examples-list');
+            const shuffled = [...promptExamples].sort(() => 0.5 - Math.random());
+            const selected = shuffled.slice(0, 6);
+            examplesList.innerHTML = selected.map(ex =>
+                `<span class="example-btn" onclick="useExample('${ex.replace(/'/g, "\\'")}')">${ex}</span>`
+            ).join('');
+        }
+
+        function useExample(text) {
+            inputEl.value = text;
+            generatePrompt();
+        }
+
+        function renderStyles() {
+            const container = document.getElementById('styles-content');
+            let html = '';
+            for (let category in styleCategories) {
+                html += `<div class="section-header" style="margin-top: 10px;"><h3 style="font-size: 14px; color: var(--text);">${category}</h3></div>`;
+                html += `<div class="styles-list">`;
+                styleCategories[category].forEach(key => {
+                    html += `<label class="style-option">
+                        <input type="radio" name="style" value="${key}" onchange="generatePrompt()">
+                        ${styleTranslations[key]}
+                    </label>`;
+                });
+                html += `</div>`;
+            }
+            container.innerHTML = html;
+        }
+
+        function renderArtistic() {
+            const container = document.getElementById('artistic-content');
+            let html = '';
+
+            function renderCategory(categories, level = 1) {
+                let result = '';
+                for (let category in categories) {
+                    const content = categories[category];
+                    const isSubcategory = typeof content === 'object' && !Array.isArray(content);
+                    const categoryId = category.replace(/\s+/g, '-').toLowerCase();
+
+                    if (isSubcategory) {
+                        result += `<div class="artistic-category-level-${level}">`;
+                        result += `<div class="section-header" onclick="toggleSubcategory('${categoryId}')">`;
+                        result += level === 1 
+                            ? `<h3 style="font-size: 14px; margin: 0;">${category}</h3>` 
+                            : `<h4 style="font-size: 13px; margin: 0;">${category}</h4>`;
+                        result += `<span class="toggle-icon collapsed" id="${categoryId}-toggle">▼</span>`;
+                        result += `</div>`;
+                        result += `<div class="subcategory-content" id="${categoryId}-content">`;
+                        result += renderCategory(content, level + 1);
+                        result += `</div></div>`;
+                    } else {
+                        result += `<div class="artistic-category-level-${level}">`;
+                        result += level === 1 
+                            ? `<h3 style="font-size: 14px; margin-top: 10px;">${category}</h3>` 
+                            : `<h4 style="font-size: 13px; margin-top: 8px;">${category}</h4>`;
+                        result += `<div class="styles-list">`;
+                        content.forEach(key => {
+                            result += `<label class="style-option">
+                                <input type="checkbox" class="artistic-checkbox" value="${key}" onchange="handleArtisticChange()">
+                                ${artisticTranslations[key]}
+                            </label>`;
+                        });
+                        result += `</div></div>`;
+                    }
+                }
+                return result;
+            }
+
+            html = renderCategory(artisticCategories);
+            container.innerHTML = html;
+            updateArtisticCounter();
+        }
+
+        function handleArtisticChange() {
+            limitArtisticCheckboxes();
+            updateArtisticCounter();
+            generatePrompt();
+        }
+
+        function limitArtisticCheckboxes() {
+            const checkboxes = document.querySelectorAll('.artistic-checkbox');
+            const checked = document.querySelectorAll('.artistic-checkbox:checked');
+            if (checked.length > 5) {
+                showToast('⚠️ Максимум 5 художественных элементов!');
+                checked[checked.length - 1].checked = false;
+            }
+        }
+
+        function updateArtisticCounter() {
+            const checked = document.querySelectorAll('.artistic-checkbox:checked');
+            const counter = document.getElementById('artistic-counter');
+            counter.textContent = `${checked.length}/5`;
+            if (checked.length > 5) {
+                counter.classList.add('exceeded');
+            } else {
+                counter.classList.remove('exceeded');
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function toggleSubcategory(id) {
+            const content = document.getElementById(`${id}-content`);
+            const toggle = document.getElementById(`${id}-toggle`);
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                toggle.classList.add('collapsed');
+            } else {
+                content.classList.add('expanded');
+                toggle.classList.remove('collapsed');
+            }
+        }
+
+        async function generatePrompt() {
+            const input = inputEl.value.trim();
+            if (!input) {
+                outputEl.value = '';
+                return;
+            }
+
+            const selectedStyle = document.querySelector('input[name="style"]:checked');
+            const selectedArtistic = Array.from(document.querySelectorAll('.artistic-checkbox:checked')).map(cb => cb.value);
+            const resolution = document.getElementById('resolution').value;
+            const lighting = document.getElementById('lighting').value;
+            const colors = document.getElementById('colors').value;
+            const focus = document.getElementById('focus').value;
+            const detail = document.getElementById('detail').value;
+
+            try {
+                const translated = await translateText(input, 'en');
+                let basePart = translated;
+                if (selectedStyle) {
+                    const template = styleDescriptions[selectedStyle.value];
+                    basePart = `${translated}, ${template}`;
+                }
+
+                let artisticPart = '';
+                if (selectedArtistic.length > 0) {
+                    const artisticDescriptions = selectedArtistic.map(key => artisticTemplates[key]);
+                    artisticPart = artisticDescriptions.join(', ');
+                }
+
+                const qualityParts = [resolution, lighting, colors, focus, detail].filter(v => v);
+                const qualityPart = qualityParts.join(', ');
+
+                let finalPrompt = [basePart, artisticPart, qualityPart].filter(p => p).join(', ');
+
+                if (input.endsWith('.')) {
+                    if (!finalPrompt.endsWith('.')) finalPrompt += '.';
+                } else {
+                    if (finalPrompt.endsWith('.')) finalPrompt = finalPrompt.slice(0, -1);
+                }
+
+                outputEl.value = finalPrompt;
+            } catch (error) {
+                console.error('Translation error:', error);
+                outputEl.value = input;
+            }
+        }
+
+        async function translateText(text, targetLang) {
+            try {
+                const response = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`);
+                const data = await response.json();
+                return data[0].map(item => item[0]).join('');
+            } catch (error) {
+                throw error;
+            }
+        }
+
+        async function enhanceArtistically() {
+            const prompt = outputEl.value.trim();
+            if (!prompt) {
+                showNotification('⚠️ Сначала сгенерируйте промпт!', 'warning');
+                return;
+            }
+
+            const apiKey = document.getElementById('api-key').value.trim();
+            if (!apiKey) {
+                showNotification('⚠️ Введите API-ключ Groq!', 'warning');
+                return;
+            }
+
+            const model = SELECTED_MODEL || 'llama3-8b-8192';
+            const mode = document.getElementById('enhance-mode').value;
+            const systemPrompt = enhancePrompts[mode];
+
+            const enhanceBtn = document.getElementById('enhance-btn');
+            enhanceBtn.disabled = true;
+            enhanceBtn.innerHTML = '<span class="loading-spinner"></span>Генерация...';
+
+            try {
+                const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${apiKey}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: model,
+                        messages: [
+                            { role: 'system', content: systemPrompt },
+                            { role: 'user', content: prompt }
+                        ],
+                        temperature: 0.9,
+                        max_tokens: 500
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                const enhanced = data.choices[0].message.content.trim();
+                enhancedOutputEl.value = enhanced;
+                showNotification('✅ Промпт улучшен!', 'success');
+            } catch (error) {
+                console.error('Enhance error:', error);
+                showNotification('❌ Ошибка улучшения промпта!', 'error');
+            } finally {
+                enhanceBtn.disabled = false;
+                enhanceBtn.innerHTML = '🎨';
+            }
+        }
+
+        function copyPrompt(source) {
+            const text = document.getElementById(source).value;
+            if (!text) return;
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('📋 Промпт скопирован!', 'success');
+                saveToHistory(text);
+            });
+        }
+
+        function showNotification(message, type = 'success') {
+            const notif = document.getElementById('notification');
+            notif.textContent = message;
+            if (type === 'warning') notif.style.background = 'var(--danger)';
+            else if (type === 'success') notif.style.background = 'var(--success)';
+            notif.classList.add('show');
+            setTimeout(() => notif.classList.remove('show'), 3000);
+        }
+
+        function saveToHistory(prompt) {
+            let history = JSON.parse(localStorage.getItem('prompt_history') || '[]');
+            history.unshift({ text: prompt, time: Date.now() });
+            history = history.slice(0, 60);
+            localStorage.setItem('prompt_history', JSON.stringify(history));
+            renderHistory();
+        }
+
+        function renderHistory() {
+            const history = JSON.parse(localStorage.getItem('prompt_history') || '[]');
+            const grid = document.getElementById('history-grid');
+            if (history.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: var(--text-muted);">История пуста</p>';
+                return;
+            }
+            grid.innerHTML = history.map((item, idx) => {
+                const short = item.text.length > 80 ? item.text.substring(0, 80) + '...' : item.text;
+                return `<div class="history-item" onclick="loadFromHistory(${idx})" title="${item.text.replace(/"/g, '&quot;')}">${short}</div>`;
+            }).join('');
+        }
+
+        function loadFromHistory(index) {
+            const history = JSON.parse(localStorage.getItem('prompt_history') || '[]');
+            if (history[index]) {
+                outputEl.value = history[index].text;
+                showNotification('✅ Промпт загружен из истории', 'success');
+            }
+        }
+
+        function clearHistory() {
+            if (confirm('Очистить всю историю промптов?')) {
+                localStorage.removeItem('prompt_history');
+                renderHistory();
+                showNotification('🗑️ История очищена', 'success');
+            }
+        }
+
+        function toggleSection(section) {
+            const content = document.getElementById(`${section}-content`);
+            const toggle = document.getElementById(`${section}-toggle`);
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                toggle.classList.add('collapsed');
+            } else {
+                content.classList.add('expanded');
+                toggle.classList.remove('collapsed');
+            }
+        }
+
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const newTheme = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            document.getElementById('theme-toggle').textContent = newTheme === 'dark' ? '☀️' : '🌙';
+            localStorage.setItem('theme', newTheme);
+        });
+
+        document.getElementById('reset-button').addEventListener('click', () => {
+            if (confirm('Сбросить все выбранные параметры?')) {
+                document.querySelectorAll('input[type="radio"]:checked').forEach(r => r.checked = false);
+                document.querySelectorAll('.artistic-checkbox:checked').forEach(cb => cb.checked = false);
+                document.getElementById('resolution').value = '';
+                document.getElementById('lighting').value = '';
+                document.getElementById('colors').value = '';
+                document.getElementById('focus').value = '';
+                document.getElementById('detail').value = '';
+                document.getElementById('style-search').value = '';
+                document.getElementById('artistic-search').value = '';
+                updateArtisticCounter();
+                generatePrompt();
+                showNotification('🔄 Параметры сброшены', 'success');
+            }
+        });
+
+        inputEl.addEventListener('input', generatePrompt);
+        document.getElementById('copy-btn').addEventListener('click', () => copyPrompt('output'));
+        document.getElementById('copy-enhanced-btn').addEventListener('click', () => copyPrompt('enhanced-output'));
+        document.getElementById('enhance-btn').addEventListener('click', enhanceArtistically);
+
+        document.getElementById('style-search').addEventListener('input', debounce((e) => {
+            const query = e.target.value.toLowerCase();
+            document.querySelectorAll('.styles-list .style-option').forEach(opt => {
+                const text = opt.textContent.toLowerCase();
+                opt.style.display = text.includes(query) ? '' : 'none';
+            });
+        }, 300));
+
+        document.getElementById('artistic-search').addEventListener('input', debounce((e) => {
+            const query = e.target.value.toLowerCase();
+            document.querySelectorAll('.artistic-content .style-option').forEach(opt => {
+                const text = opt.textContent.toLowerCase();
+                opt.style.display = text.includes(query) ? '' : 'none';
+            });
+        }, 300));
+
+        function debounce(func, wait) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        }
+
+        function openHelpModal() {
+            document.getElementById('help-modal').style.display = 'block';
+        }
+
+        function closeHelpModal() {
+            document.getElementById('help-modal').style.display = 'none';
+        }
+
+        function openHFHelpModal() {
+            document.getElementById('hf-help-modal').style.display = 'block';
+        }
+
+        function closeHFHelpModal() {
+            document.getElementById('hf-help-modal').style.display = 'none';
+        }
+
+        function translateBack(sourceId) {
+            const text = document.getElementById(sourceId).value.trim();
+            if (!text) {
+                showNotification('⚠️ Нет текста для перевода!', 'warning');
+                return;
+            }
+
+            document.getElementById('translation-modal').style.display = 'block';
+            document.getElementById('translation-result').textContent = 'Загрузка перевода...';
+
+            translateText(text, 'ru').then(translated => {
+                document.getElementById('translation-result').textContent = translated;
+            }).catch(error => {
+                document.getElementById('translation-result').textContent = 'Ошибка перевода. Попробуйте еще раз.';
+            });
+        }
+
+        function closeTranslationModal() {
+            document.getElementById('translation-modal').style.display = 'none';
+        }
+
+        function copyTranslation() {
+            const text = document.getElementById('translation-result').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('📋 Перевод скопирован!', 'success');
+            });
+        }
+
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        };
+
+        function getCurrentState() {
+            const selectedStyle = document.querySelector('input[name="style"]:checked');
+            const selectedArtistic = Array.from(document.querySelectorAll('.artistic-checkbox:checked')).map(cb => cb.value);
+            return {
+                style: selectedStyle ? selectedStyle.value : null,
+                artistic: selectedArtistic,
+                resolution: document.getElementById('resolution').value,
+                lighting: document.getElementById('lighting').value,
+                colors: document.getElementById('colors').value,
+                focus: document.getElementById('focus').value,
+                detail: document.getElementById('detail').value
+            };
+        }
+
+        function applyState(state) {
+            document.querySelectorAll('input[type="radio"]:checked').forEach(r => r.checked = false);
+            document.querySelectorAll('.artistic-checkbox:checked').forEach(cb => cb.checked = false);
+
+            if (state.style) {
+                const radio = document.querySelector(`input[name="style"][value="${state.style}"]`);
+                if (radio) radio.checked = true;
+            }
+
+            state.artistic.forEach(key => {
+                const checkbox = document.querySelector(`.artistic-checkbox[value="${key}"]`);
+                if (checkbox) checkbox.checked = true;
+            });
+
+            document.getElementById('resolution').value = state.resolution || '';
+            document.getElementById('lighting').value = state.lighting || '';
+            document.getElementById('colors').value = state.colors || '';
+            document.getElementById('focus').value = state.focus || '';
+            document.getElementById('detail').value = state.detail || '';
+
+            updateArtisticCounter();
+            generatePrompt();
+        }
+
+        function loadPresets() {
+            return JSON.parse(localStorage.getItem('prompt_presets') || '[]');
+        }
+
+        function savePresets(presets) {
+            localStorage.setItem('prompt_presets', JSON.stringify(presets));
+        }
+
+        function renderPresets() {
+            const presets = loadPresets();
+            const list = document.getElementById('preset-list');
+            if (presets.length === 0) {
+                list.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 20px 0;">Нет сохранённых пресетов</p>';
+                return;
+            }
+            list.innerHTML = presets.map((preset, idx) => `
+                <div class="preset-item">
+                    <span class="preset-item-name">${preset.name}</span>
+                    <div class="preset-item-actions">
+                        <button class="preset-item-btn load" onclick="loadPreset(${idx})">Загрузить</button>
+                        <button class="preset-item-btn delete" onclick="deletePreset(${idx})">Удалить</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function savePresetDialog() {
+            document.getElementById('preset-modal').style.display = 'block';
+            document.getElementById('preset-name-input').value = '';
+        }
+
+        function closePresetModal() {
+            document.getElementById('preset-modal').style.display = 'none';
+        }
+
+        function confirmSavePreset() {
+            const name = document.getElementById('preset-name-input').value.trim();
+            if (!name) {
+                showNotification('⚠️ Введите название пресета!', 'warning');
+                return;
+            }
+
+            const presets = loadPresets();
+            const state = getCurrentState();
+            presets.push({ name, state });
+            savePresets(presets);
+            renderPresets();
+            closePresetModal();
+            showNotification('💾 Пресет сохранён!', 'success');
+        }
+
+        function loadPreset(index) {
+            const presets = loadPresets();
+            if (presets[index]) {
+                applyState(presets[index].state);
+                showNotification('✅ Пресет загружен!', 'success');
+            }
+        }
+
+        function deletePreset(index) {
+            if (confirm('Удалить этот пресет?')) {
+                const presets = loadPresets();
+                presets.splice(index, 1);
+                savePresets(presets);
+                renderPresets();
+                showNotification('🗑️ Пресет удалён', 'success');
+            }
+        }
+
+        function exportPresets() {
+            const presets = loadPresets();
+            if (presets.length === 0) {
+                showNotification('⚠️ Нет пресетов для экспорта!', 'warning');
+                return;
+            }
+            const json = JSON.stringify(presets, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'prompt_presets.json';
+            a.click();
+            showNotification('📤 Пресеты экспортированы!', 'success');
+        }
+
+        function importPresetsDialog() {
+            document.getElementById('import-modal').style.display = 'block';
+            document.getElementById('import-json-input').value = '';
+        }
+
+        function closeImportModal() {
+            document.getElementById('import-modal').style.display = 'none';
+        }
+
+        function confirmImportPresets() {
+            const json = document.getElementById('import-json-input').value.trim();
+            if (!json) {
+                showNotification('⚠️ Вставьте JSON данные!', 'warning');
+                return;
+            }
+
+            try {
+                const imported = JSON.parse(json);
+                if (!Array.isArray(imported)) throw new Error('Invalid format');
+                const presets = loadPresets();
+                presets.push(...imported);
+                savePresets(presets);
+                renderPresets();
+                closeImportModal();
+                showNotification('📥 Пресеты импортированы!', 'success');
+            } catch (error) {
+                showNotification('❌ Ошибка импорта! Проверьте JSON.', 'error');
+            }
+        }
+
+        function generateRandomPrompt() {
+            const randomExample = promptExamples[Math.floor(Math.random() * promptExamples.length)];
+            inputEl.value = randomExample;
+
+            const allStyles = Object.keys(styleDescriptions);
+            const randomStyle = allStyles[Math.floor(Math.random() * allStyles.length)];
+            const styleRadio = document.querySelector(`input[name="style"][value="${randomStyle}"]`);
+            if (styleRadio) styleRadio.checked = true;
+
+            document.querySelectorAll('.artistic-checkbox:checked').forEach(cb => cb.checked = false);
+            const allArtistic = Object.keys(artisticTemplates);
+            const randomCount = Math.floor(Math.random() * 3) + 1;
+            const shuffled = allArtistic.sort(() => 0.5 - Math.random());
+            shuffled.slice(0, randomCount).forEach(key => {
+                const checkbox = document.querySelector(`.artistic-checkbox[value="${key}"]`);
+                if (checkbox) checkbox.checked = true;
+            });
+
+            updateArtisticCounter();
+            generatePrompt();
+            showNotification('🎲 Случайный промпт сгенерирован!', 'success');
+        }
+
+        // === НОВЫЙ КОД: Функции для распознавания изображений ===
+        function initializeImageRecognition() {
+            const uploadArea = document.getElementById('image-upload-area');
+            const fileInput = document.getElementById('image-file-input');
+            const analyzeBtn = document.getElementById('analyze-image-btn');
+
+            uploadArea.addEventListener('click', () => fileInput.click());
+
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragging');
+            });
+
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragging');
+            });
+
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragging');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleImageFile(files[0]);
+                }
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleImageFile(e.target.files[0]);
+                }
+            });
+
+            analyzeBtn.addEventListener('click', analyzeImage);
+        }
+
+        function handleImageFile(file) {
+            if (!file.type.startsWith('image/')) {
+                showNotification('⚠️ Пожалуйста, выберите изображение!', 'warning');
+                return;
+            }
+
+            currentImageFile = file;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                document.getElementById('image-preview').src = e.target.result;
+                document.getElementById('image-preview-container').style.display = 'block';
+                document.getElementById('image-prompt-result-container').style.display = 'none';
+                updateAnalyzeButtonState();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function updateAnalyzeButtonState() {
+            const token = document.getElementById('hf-token').value.trim();
+            const btn = document.getElementById('analyze-image-btn');
+            btn.disabled = !(currentImageFile && token);
+        }
+
+        async function analyzeImage() {
+            const apiKey = document.getElementById('hf-token').value.trim();
+            if (!apiKey || !currentImageFile) return;
+
+            const btn = document.getElementById('analyze-image-btn');
+            const btnText = document.getElementById('analyze-btn-text');
+            btn.disabled = true;
+            btnText.innerHTML = '<span class="loading-spinner"></span>Анализ изображения...';
+
+            try {
+                const base64Image = await fileToBase64(currentImageFile);
+                const mimeType = currentImageFile.type;
+                
+                const requestBody = {
+                    contents: [{
+                        parts: [
+                            {
+                                text: "Describe this image in detail for AI image generation. Include: main subject, composition, colors, lighting, style, mood, and artistic elements. Focus on visual characteristics that would help recreate a similar image. Provide a comprehensive description in English."
+                            },
+                            {
+                                inline_data: {
+                                    mime_type: mimeType,
+                                    data: base64Image
+                                }
+                            }
+                        ]
+                    }]
+                };
+
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error?.message || `API Error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                const answer = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Не удалось получить описание';
+                
+                const russianPrompt = await translateText(answer, 'ru');
+                
+                document.getElementById('image-prompt-result').textContent = russianPrompt;
+                document.getElementById('image-prompt-result-container').style.display = 'block';
+                showNotification('✅ Изображение проанализировано!', 'success');
+            } catch (error) {
+                console.error('Image analysis error:', error);
+                showNotification('❌ Ошибка анализа изображения: ' + error.message, 'error');
+            } finally {
+                btn.disabled = false;
+                btnText.innerHTML = '🔍 Анализировать изображение';
+            }
+        }
+
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result.split(',')[1]);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function copyImagePrompt() {
+            const text = document.getElementById('image-prompt-result').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('📋 Промпт изображения скопирован!', 'success');
+            });
+        }
+        // === КОНЕЦ нового кода ===
+
+    </script>
+</body>
+</html>
