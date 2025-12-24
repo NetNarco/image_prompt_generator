@@ -1160,7 +1160,7 @@
     <!-- === НОВЫЙ БЛОК: Распознавание изображений === -->
     <div class="image-recognition-container">
         <div class="section-header" onclick="toggleSection('image-recognition')">
-            <h3>🖼️ Распознавание изображений (Google Gemini Vision)</h3>
+            <h3>🖼️ Распознавание изображений (Hugging Face LLaVA)</h3>
             <span class="toggle-icon collapsed" id="image-recognition-toggle">▼</span>
         </div>
         <div class="section-content" id="image-recognition-content">
@@ -1169,10 +1169,10 @@
             </p>
 
             <div class="hf-token-container">
-                <label for="hf-token">🔑 Google Gemini API ключ:
+                <label for="hf-token">🔑 Hugging Face API токен:
                     <button class="hf-help-btn" onclick="openHFHelpModal()">❓ Инструкция</button>
                 </label>
-                <input type="password" id="hf-token" placeholder="AIza...">
+                <input type="password" id="hf-token" placeholder="hf_...">
                 <label class="remember-key-checkbox">
                     <input type="checkbox" id="remember-hf-token">
                     <span>Запомнить токен между сессиями</span>
@@ -1218,14 +1218,13 @@
     <div id="hf-help-modal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeHFHelpModal()">&times;</span>
-            <h3>❓ Как получить API ключ Google Gemini</h3>
+            <h3>❓ Как получить токен Hugging Face</h3>
             <ol>
-                <li><strong>Перейдите на сайт:</strong> Откройте <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a> - это официальная платформа для получения API ключей.</li>
-                <li><strong>Войдите:</strong> Войдите с помощью вашего Google аккаунта. Если у вас нет аккаунта Google, создайте его бесплатно.</li>
-                <li><strong>Создание API ключа:</strong> Нажмите кнопку "Create API Key" или "Get API Key". Выберите проект (или создайте новый, если требуется).</li>
-                <li><strong>Копирование ключа:</strong> Скопируйте созданный API ключ (начинается с "AIza...") и вставьте в поле выше. <strong>Сохраните ключ в надёжном месте!</strong></li>
-                <li><strong>Модель:</strong> Используется бесплатная модель <code>gemini-2.5-flash</code> с vision-возможностями для распознавания изображений и генерации промптов.</li>
-                <li><strong>Бесплатный лимит:</strong> Google Gemini предоставляет бесплатный tier с достаточным количеством запросов для личного использования.</li>
+                <li><strong>Регистрация:</strong> Перейдите на <a href="https://huggingface.co/join" target="_blank">https://huggingface.co/join</a> и создайте бесплатный аккаунт. Регистрация занимает несколько минут.</li>
+                <li><strong>Получение токена:</strong> После входа перейдите в настройки токенов: <a href="https://huggingface.co/settings/tokens" target="_blank">https://huggingface.co/settings/tokens</a></li>
+                <li><strong>Создание токена:</strong> Нажмите "New token", выберите тип "Read" (для чтения моделей достаточно), дайте имя токену и нажмите "Generate".</li>
+                <li><strong>Сохранение:</strong> Скопируйте токен и вставьте в поле выше. <strong>Токен отображается только один раз!</strong> Сохраните его в надёжном месте или используйте чекбокс "Запомнить токен".</li>
+                <li><strong>Модель:</strong> Используется бесплатная модель <code>llava-hf/llava-1.5-7b-hf</code> для распознавания изображений и генерации промптов.</li>
             </ol>
         </div>
     </div>
@@ -2286,8 +2285,8 @@
         }
 
         async function analyzeImage() {
-            const apiKey = document.getElementById('hf-token').value.trim();
-            if (!apiKey || !currentImageFile) return;
+            const token = document.getElementById('hf-token').value.trim();
+            if (!token || !currentImageFile) return;
 
             const btn = document.getElementById('analyze-image-btn');
             const btnText = document.getElementById('analyze-btn-text');
@@ -2296,39 +2295,28 @@
 
             try {
                 const base64Image = await fileToBase64(currentImageFile);
-                const mimeType = currentImageFile.type;
                 
-                const requestBody = {
-                    contents: [{
-                        parts: [
-                            {
-                                text: "Describe this image in detail for AI image generation. Include: main subject, composition, colors, lighting, style, mood, and artistic elements. Focus on visual characteristics that would help recreate a similar image. Provide a comprehensive description in English."
-                            },
-                            {
-                                inline_data: {
-                                    mime_type: mimeType,
-                                    data: base64Image
-                                }
-                            }
-                        ]
-                    }]
-                };
-
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+                const response = await fetch('https://api-inference.huggingface.co/models/llava-hf/llava-1.5-7b-hf', {
                     method: 'POST',
                     headers: {
+                        'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(requestBody)
+                    body: JSON.stringify({
+                        inputs: {
+                            question: "Describe this image in detail for AI image generation. Include: main subject, composition, colors, lighting, style, mood, and artistic elements. Focus on visual characteristics that would help recreate a similar image.",
+                            image: base64Image
+                        }
+                    })
                 });
 
                 if (!response.ok) {
                     const errorData = await response.json();
-                    throw new Error(errorData.error?.message || `API Error: ${response.status}`);
+                    throw new Error(errorData.error || `API Error: ${response.status}`);
                 }
 
                 const data = await response.json();
-                const answer = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Не удалось получить описание';
+                let answer = data[0]?.generated_text || data.answer || 'Не удалось получить описание';
                 
                 const russianPrompt = await translateText(answer, 'ru');
                 
