@@ -180,8 +180,9 @@
             font-size: 18px;
         }
         
+        /* Стили для иконки перевода */
         .icon-btn {
-            right: 70px;
+            right: 70px; /* Позиционируем левее кнопки копирования */
             width: 38px;
             height: 38px;
             padding: 0;
@@ -252,16 +253,19 @@
 
         .section-content.expanded,
         .subcategory-content.expanded {
-            max-height: 1000px;
+            max-height: 1000px; /* Adjust as needed */
             opacity: 1;
         }
 
+        /* --- Scrollbar styles for specific sections --- */
         .styles-content,
         .artistic-content {
-            max-height: 400px;
-            overflow-y: auto;
-            padding-right: 10px;
+            max-height: 400px; /* Установите желаемую максимальную высоту */
+            overflow-y: auto; /* Добавляет скроллбар по вертикали, если контент превышает max-height */
+            padding-right: 10px; /* Чтобы контент не прилипал к скроллбару */
         }
+        /* --- End of Scrollbar styles --- */
+
 
         .styles-list {
             display: flex;
@@ -513,6 +517,7 @@
             cursor: pointer;
         }
 
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -574,8 +579,9 @@
             color: var(--primary-light);
         }
 
+        /* Nested Artistic Categories */
         .artistic-category-level-1 {
-            margin-left: 10px;
+            margin-left: 10px; /* Indent subcategories */
             padding-left: 10px;
             border-left: 2px solid var(--border);
             margin-top: 10px;
@@ -583,7 +589,7 @@
         }
 
         .artistic-category-level-2 {
-            margin-left: 10px;
+            margin-left: 10px; /* Further indent */
             padding-left: 10px;
             border-left: 1px dashed var(--border);
             margin-top: 8px;
@@ -591,12 +597,14 @@
         }
 
         .artistic-category-level-1 > .section-header h3 {
-            color: var(--text);
+            color: var(--text); /* Make sub-headers less prominent than main ones */
         }
         .artistic-category-level-2 > .section-header h4 {
-            color: var(--text-muted);
+            color: var(--text-muted); /* Make sub-sub-headers even less prominent */
         }
 
+
+        /* Счётчик художественных элементов */
         .artistic-counter {
             display: inline-block;
             margin-left: 8px;
@@ -619,6 +627,7 @@
             50% { transform: scale(1.1); }
         }
 
+        /* Тост-уведомления */
         .toast {
             position: fixed;
             bottom: 80px;
@@ -641,6 +650,7 @@
             opacity: 1;
         }
 
+        /* Кнопки пресетов */
         .preset-controls {
             display: flex;
             flex-wrap: wrap;
@@ -741,6 +751,7 @@
             transform: scale(1.05);
         }
 
+        /* Кнопка случайного промпта */
         .random-prompt-btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -769,6 +780,7 @@
             transform: translateY(0);
         }
 
+        /* Modal для пресетов */
         .preset-modal-content {
             background: var(--panel-bg);
             margin: 10% auto;
@@ -824,6 +836,7 @@
             white-space: pre-wrap;
         }
 
+
         .translation-copy-btn {
             margin-top: 10px;
             padding: 8px;
@@ -846,143 +859,8 @@
             background: var(--primary-light);
         }
 
-        /* === НОВЫЙ БЛОК: Стили для распознавания изображений === */
-        .image-recognition-container {
-            background: var(--panel-bg);
-            border-radius: 16px;
-            padding: 20px;
-            margin-top: 20px;
-            box-shadow: var(--shadow);
-        }
-
-        .image-upload-area {
-            border: 2px dashed var(--border);
-            border-radius: 12px;
-            padding: 30px;
-            text-align: center;
-            margin: 15px 0;
-            background: var(--input-bg);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .image-upload-area:hover {
-            border-color: var(--primary);
-            background: var(--hover-bg);
-        }
-
-        .image-upload-area.dragging {
-            border-color: var(--primary);
-            background: var(--primary-light);
-            opacity: 0.8;
-        }
-
-        .image-preview {
-            max-width: 100%;
-            max-height: 400px;
-            margin: 15px auto;
-            display: block;
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-        }
-
-        .hf-token-container {
-            margin: 15px 0;
-        }
-
-        .image-prompt-result {
-            margin-top: 15px;
-            padding: 15px;
-            background: var(--hover-bg);
-            border-radius: 8px;
-            border-left: 4px solid var(--success);
-            white-space: pre-wrap;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .image-analyze-btn {
-            width: 100%;
-            padding: 12px;
-            background: var(--success);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 10px;
-        }
-
-        .image-analyze-btn:hover {
-            background: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .image-analyze-btn:disabled {
-            background: var(--border);
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .image-prompt-copy-btn {
-            margin-top: 10px;
-            padding: 10px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            width: 100%;
-            font-size: 14px;
-            transition: all 0.2s;
-        }
-
-        .image-prompt-copy-btn:hover {
-            background: var(--primary-light);
-        }
-
-        .hf-help-btn {
-            display: inline-block;
-            margin-left: 10px;
-            padding: 4px 12px;
-            background: var(--hover-bg);
-            color: var(--text);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-        }
-
-        .hf-help-btn:hover {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 0.8s linear infinite;
-            margin-right: 8px;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* === КОНЕЦ нового блока стилей === */
-
     </style>
-</head>
+<script type="text/javascript" nonce="9f20834369e841209135b4a595e" src="//local.adguard.org?ts=1764405769856&amp;type=content-script&amp;dmn=www.genspark.ai&amp;url=https%3A%2F%2Fwww.genspark.ai%2Fapi%2Fcode_sandbox%2Fdownload_file%3Fproject_id%3D8dbc2d60-641e-48ae-9408-c98a959b082c%26path%3D%252Fmnt%252Fuser-data%252Foutputs%252FIPG_Q_ai_15.html%26enable_backup%3Dtrue%26enable_recovery%3Dtrue&amp;app=browser.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="9f20834369e841209135b4a595e" src="//local.adguard.org?ts=1764405769856&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
 <body>
     <div class="theme-toggle" id="theme-toggle" title="Переключить тему">🌙</div>
     <div class="reset-button" id="reset-button" title="Сбросить параметры">🔄</div>
@@ -1157,51 +1035,7 @@
         </div>
     </div>
 
-    <!-- === НОВЫЙ БЛОК: Распознавание изображений === -->
-    <div class="image-recognition-container">
-        <div class="section-header" onclick="toggleSection('image-recognition')">
-            <h3>🖼️ Распознавание изображений (Google Gemini Vision)</h3>
-            <span class="toggle-icon collapsed" id="image-recognition-toggle">▼</span>
-        </div>
-        <div class="section-content" id="image-recognition-content">
-            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 15px;">
-                Загрузите изображение, чтобы получить текстовый промпт для генерации похожих изображений.
-            </p>
-
-            <div class="hf-token-container">
-                <label for="hf-token">🔑 Google Gemini API ключ:
-                    <button class="hf-help-btn" onclick="openHFHelpModal()">❓ Инструкция</button>
-                </label>
-                <input type="password" id="hf-token" placeholder="AIza...">
-                <label class="remember-key-checkbox">
-                    <input type="checkbox" id="remember-hf-token">
-                    <span>Запомнить токен между сессиями</span>
-                </label>
-            </div>
-
-            <div class="image-upload-area" id="image-upload-area">
-                <p style="font-size: 16px; margin: 0;">📁 Нажмите или перетащите изображение сюда</p>
-                <p style="font-size: 12px; color: var(--text-muted); margin: 5px 0 0;">Поддерживаются JPG, PNG, WebP</p>
-                <input type="file" id="image-file-input" accept="image/*" style="display: none;">
-            </div>
-
-            <div id="image-preview-container" style="display: none;">
-                <img id="image-preview" class="image-preview" alt="Предпросмотр">
-            </div>
-
-            <button class="image-analyze-btn" id="analyze-image-btn" disabled>
-                <span id="analyze-btn-text">🔍 Анализировать изображение</span>
-            </button>
-
-            <div id="image-prompt-result-container" style="display: none;">
-                <h4 style="color: var(--primary); margin-top: 20px;">📝 Сгенерированный промпт:</h4>
-                <div class="image-prompt-result" id="image-prompt-result"></div>
-                <button class="image-prompt-copy-btn" onclick="copyImagePrompt()">📋 Копировать промпт</button>
-            </div>
-        </div>
-    </div>
-    <!-- === КОНЕЦ нового блока === -->
-
+    <!-- Modal с инструкцией -->
     <div id="help-modal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeHelpModal()">&times;</span>
@@ -1213,24 +1047,8 @@
             </ol>
         </div>
     </div>
-
-    <!-- === НОВАЯ МОДАЛКА: Инструкция для Hugging Face === -->
-    <div id="hf-help-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeHFHelpModal()">&times;</span>
-            <h3>❓ Как получить API ключ Google Gemini</h3>
-            <ol>
-                <li><strong>Перейдите на сайт:</strong> Откройте <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a> - это официальная платформа для получения API ключей.</li>
-                <li><strong>Войдите:</strong> Войдите с помощью вашего Google аккаунта. Если у вас нет аккаунта Google, создайте его бесплатно.</li>
-                <li><strong>Создание API ключа:</strong> Нажмите кнопку "Create API Key" или "Get API Key". Выберите проект (или создайте новый, если требуется).</li>
-                <li><strong>Копирование ключа:</strong> Скопируйте созданный API ключ (начинается с "AIza...") и вставьте в поле выше. <strong>Сохраните ключ в надёжном месте!</strong></li>
-                <li><strong>Модель:</strong> Используется бесплатная модель <code>gemini-1.5-flash</code> с vision-возможностями для распознавания изображений и генерации промптов.</li>
-                <li><strong>Бесплатный лимит:</strong> Google Gemini предоставляет бесплатный tier с достаточным количеством запросов для личного использования.</li>
-            </ol>
-        </div>
-    </div>
-    <!-- === КОНЕЦ новой модалки === -->
     
+    <!-- Modal для обратного перевода -->
     <div id="translation-modal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeTranslationModal()">&times;</span>
@@ -1243,6 +1061,7 @@
 
     <div class="notification" id="notification">Промпт скопирован!</div>
 
+    <!-- Modal для сохранения пресета -->
     <div id="preset-modal" class="modal">
         <div class="preset-modal-content">
             <h3>💾 Сохранить пресет</h3>
@@ -1254,6 +1073,7 @@
         </div>
     </div>
 
+    <!-- Modal для импорта пресетов -->
     <div id="import-modal" class="modal">
         <div class="preset-modal-content">
             <h3>📥 Импорт пресетов</h3>
@@ -1267,6 +1087,7 @@
 
     <div class="toast" id="toast">Сообщение</div>
 
+    <!-- Секция пресетов -->
     <div class="history-container" style="margin-top: 20px;">
         <div class="section-header" onclick="toggleSection('presets')">
             <h3>💾 Пресеты</h3>
@@ -1282,486 +1103,1056 @@
         </div>
     </div>
 
+
     <script>
+        // === Groq Settings ===
         const MODEL_KEY = 'flux_groq_model';
         const API_KEY_STORAGE = 'flux_groq_api_key';
         const REMEMBER_KEY_FLAG = 'flux_remember_api_key';
-        const HF_TOKEN_STORAGE = 'flux_hf_api_token';
-        const REMEMBER_HF_TOKEN_FLAG = 'flux_remember_hf_token';
         let GROQ_KEY = '';
-        let HF_TOKEN = '';
         let SELECTED_MODEL = localStorage.getItem(MODEL_KEY) || 'llama3-8b-8192';
-        let currentImageFile = null;
 
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('model-input').value = SELECTED_MODEL;
-
+            
+            // Загружаем сохранённый ключ, если флаг запоминания установлен
             const rememberKey = localStorage.getItem(REMEMBER_KEY_FLAG) === 'true';
             document.getElementById('remember-key').checked = rememberKey;
+            
             if (rememberKey) {
                 const savedKey = localStorage.getItem(API_KEY_STORAGE);
                 if (savedKey) {
-                    document.getElementById('api-key').value = savedKey;
                     GROQ_KEY = savedKey;
+                    document.getElementById('api-key').value = savedKey;
                 }
             }
+        });
 
-            const rememberHFToken = localStorage.getItem(REMEMBER_HF_TOKEN_FLAG) === 'true';
-            document.getElementById('remember-hf-token').checked = rememberHFToken;
-            if (rememberHFToken) {
-                const savedToken = localStorage.getItem(HF_TOKEN_STORAGE);
-                if (savedToken) {
-                    document.getElementById('hf-token').value = savedToken;
-                    HF_TOKEN = savedToken;
-                }
+        document.getElementById('model-input').addEventListener('input', (e) => {
+            SELECTED_MODEL = e.target.value.trim() || 'llama3-8b-8192';
+            localStorage.setItem(MODEL_KEY, SELECTED_MODEL);
+        });
+
+        document.getElementById('api-key').addEventListener('input', (e) => {
+            GROQ_KEY = e.target.value.trim();
+            
+            // Сохраняем ключ только если чекбокс отмечен
+            const rememberKey = document.getElementById('remember-key').checked;
+            if (rememberKey) {
+                localStorage.setItem(API_KEY_STORAGE, GROQ_KEY);
             }
+        });
 
-            document.getElementById('remember-key').addEventListener('change', (e) => {
-                localStorage.setItem(REMEMBER_KEY_FLAG, e.target.checked);
-                if (e.target.checked) {
-                    const key = document.getElementById('api-key').value;
-                    if (key) localStorage.setItem(API_KEY_STORAGE, key);
-                } else {
-                    localStorage.removeItem(API_KEY_STORAGE);
-                }
-            });
-
-            document.getElementById('remember-hf-token').addEventListener('change', (e) => {
-                localStorage.setItem(REMEMBER_HF_TOKEN_FLAG, e.target.checked);
-                if (e.target.checked) {
-                    const token = document.getElementById('hf-token').value;
-                    if (token) localStorage.setItem(HF_TOKEN_STORAGE, token);
-                } else {
-                    localStorage.removeItem(HF_TOKEN_STORAGE);
-                }
-            });
-
-            document.getElementById('api-key').addEventListener('input', (e) => {
-                GROQ_KEY = e.target.value;
-                if (document.getElementById('remember-key').checked) {
+        document.getElementById('remember-key').addEventListener('change', (e) => {
+            const isChecked = e.target.checked;
+            localStorage.setItem(REMEMBER_KEY_FLAG, isChecked.toString());
+            
+            if (isChecked) {
+                // Сохраняем текущий ключ
+                if (GROQ_KEY) {
                     localStorage.setItem(API_KEY_STORAGE, GROQ_KEY);
                 }
-            });
-
-            document.getElementById('hf-token').addEventListener('input', (e) => {
-                HF_TOKEN = e.target.value;
-                if (document.getElementById('remember-hf-token').checked) {
-                    localStorage.setItem(HF_TOKEN_STORAGE, HF_TOKEN);
-                }
-                updateAnalyzeButtonState();
-            });
-
-            document.getElementById('model-input').addEventListener('input', (e) => {
-                SELECTED_MODEL = e.target.value;
-                localStorage.setItem(MODEL_KEY, SELECTED_MODEL);
-            });
-
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            if (savedTheme === 'dark') {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                document.getElementById('theme-toggle').textContent = '☀️';
+            } else {
+                // Удаляем сохранённый ключ
+                localStorage.removeItem(API_KEY_STORAGE);
             }
-
-            renderStyles();
-            renderArtistic();
-            renderHistory();
-            renderPresets();
-            renderRandomExamples();
-            initializeImageRecognition();
         });
+
+        // === Modal Help ===
+        function openHelpModal() {
+            document.getElementById('help-modal').style.display = 'block';
+        }
+
+        function closeHelpModal() {
+            document.getElementById('help-modal').style.display = 'none';
+        }
+        
+        // === Modal Translation ===
+        function closeTranslationModal() {
+            document.getElementById('translation-modal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const helpModal = document.getElementById('help-modal');
+            const translationModal = document.getElementById('translation-modal');
+            const presetModal = document.getElementById('preset-modal');
+            const importModal = document.getElementById('import-modal');
+            
+            if (event.target === helpModal) closeHelpModal();
+            if (event.target === translationModal) closeTranslationModal();
+            if (event.target === presetModal) closePresetModal();
+            if (event.target === importModal) closeImportModal();
+        };
+
+        // === Тёмный режим ===
+        const themeToggle = document.getElementById('theme-toggle');
+        const THEME_KEY = 'flux_theme';
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem(THEME_KEY, theme);
+            themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem(THEME_KEY);
+            if (savedTheme) {
+                setTheme(savedTheme);
+            } else {
+                const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                setTheme(systemPrefersDark ? 'dark' : 'light');
+            }
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            setTheme(current === 'dark' ? 'light' : 'dark');
+        });
+
+        // === СТИЛИ ИЗ CSV ===
+        const styleDescriptions = {
+            "3D Model": "professional 3d model {prompt} octane render, highly detailed, volumetric, dramatic lighting",
+            "Analog Film": "analog film photo {prompt} faded film, desaturated, 35mm photo, grainy, vignette, vintage, Kodachrome, Lomography, stained, highly detailed, found footage",
+            "Anime": "anime artwork {prompt} anime style, key visual, vibrant, studio anime, highly detailed",
+            "Cinematic": "cinematic film still {prompt} shallow depth of field, vignette, highly detailed, high budget, bokeh, cinemascope, moody, epic, gorgeous, film grain, grainy",
+            "Comic Book": "comic {prompt} graphic illustration, comic art, graphic novel art, vibrant, highly detailed",
+            "Craft Clay": "play-doh style {prompt} sculpture, clay art, centered composition, Claymation",
+            "Digital Art": "concept art {prompt} digital artwork, illustrative, painterly, matte painting, highly detailed",
+            "Enhance": "breathtaking {prompt} award-winning, professional, highly detailed",
+            "Fantasy Art": "ethereal fantasy concept art of {prompt} magnificent, celestial, ethereal, painterly, epic, majestic, magical, fantasy art, cover art, dreamy",
+            "Isometric": "isometric style {prompt} vibrant, beautiful, crisp, detailed, ultra detailed, intricate",
+            "Line Art": "line art drawing {prompt} professional, sleek, modern, minimalist, graphic, line art, vector graphics",
+            "Lowpoly": "low-poly style {prompt} low-poly game art, polygon mesh, jagged, blocky, wireframe edges, centered composition",
+            "Neonpunk": "neonpunk style {prompt} cyberpunk, vaporwave, neon, vibes, vibrant, stunningly beautiful, crisp, detailed, sleek, ultramodern, magenta highlights, dark purple shadows, high contrast, cinematic, ultra detailed, intricate, professional",
+            "Origami": "origami style {prompt} paper art, pleated paper, folded, origami art, pleats, cut and fold, centered composition",
+            "Photographic": "cinematic photo {prompt} 35mm photograph, film, bokeh, professional, 4k, highly detailed",
+            "Pixel Art": "pixel-art {prompt} low-res, blocky, pixel art style, 8-bit graphics",
+            "Texture": "texture {prompt} top down close-up",
+            "Ads Advertising": "advertising poster style {prompt} Professional, modern, product-focused, commercial, eye-catching, highly detailed",
+            "Ads Automotive": "automotive advertisement style {prompt} sleek, dynamic, professional, commercial, vehicle-focused, high-resolution, highly detailed",
+            "Ads Corporate": "corporate branding style {prompt} professional, clean, modern, sleek, minimalist, business-oriented, highly detailed",
+            "Ads Fashion Editorial": "fashion editorial style {prompt} high fashion, trendy, stylish, editorial, magazine style, professional, highly detailed",
+            "Ads Food Photography": "food photography style {prompt} appetizing, professional, culinary, high-resolution, commercial, highly detailed",
+            "Ads Gourmet Food Photography": "gourmet food photo of {prompt} soft natural lighting, macro details, vibrant colors, fresh ingredients, glistening textures, bokeh background, styled plating, wooden tabletop, garnished, tantalizing, editorial quality",
+            "Ads Luxury": "luxury product style {prompt} elegant, sophisticated, high-end, luxurious, professional, highly detailed",
+            "Ads Real Estate": "real estate photography style {prompt} professional, inviting, well-lit, high-resolution, property-focused, commercial, highly detailed",
+            "Ads Retail": "retail packaging style {prompt} vibrant, enticing, commercial, product-focused, eye-catching, professional, highly detailed",
+            "Artstyle Abstract": "abstract style {prompt} non-representational, colors and shapes, expression of feelings, imaginative, highly detailed",
+            "Artstyle Abstract Expressionism": "abstract expressionist painting {prompt} energetic brushwork, bold colors, abstract forms, expressive, emotional",
+            "Artstyle Art Deco": "art deco style {prompt} geometric shapes, bold colors, luxurious, elegant, decorative, symmetrical, ornate, detailed",
+            "Artstyle Art Nouveau": "art nouveau style {prompt} elegant, decorative, curvilinear forms, nature-inspired, ornate, detailed",
+            "Artstyle Constructivist": "constructivist style {prompt} geometric shapes, bold colors, dynamic composition, propaganda art style",
+            "Artstyle Cubist": "cubist artwork {prompt} geometric shapes, abstract, innovative, revolutionary",
+            "Artstyle Expressionist": "expressionist {prompt} raw, emotional, dynamic, distortion for emotional effect, vibrant, use of unusual colors, detailed",
+            "Artstyle Graffiti": "graffiti style {prompt} street art, vibrant, urban, detailed, tag, mural",
+            "Artstyle Hyperrealism": "hyperrealistic art {prompt} extremely high-resolution details, photographic, realism pushed to extreme, fine texture, incredibly lifelike",
+            "Artstyle Impressionist": "impressionist painting {prompt} loose brushwork, vibrant color, light and shadow play, captures feeling over form",
+            "Artstyle Pointillism": "pointillism style {prompt} composed entirely of small, distinct dots of color, vibrant, highly detailed",
+            "Artstyle Pop Art": "pop Art style {prompt} bright colors, bold outlines, popular culture themes, ironic or kitsch",
+            "Artstyle Psychedelic": "psychedelic style {prompt} vibrant colors, swirling patterns, abstract forms, surreal, trippy",
+            "Artstyle Renaissance": "renaissance style {prompt} realistic, perspective, light and shadow, religious or mythological themes, highly detailed",
+            "Artstyle Steampunk": "steampunk style {prompt} antique, mechanical, brass and copper tones, gears, intricate, detailed",
+            "Artstyle Surrealist": "surrealist art {prompt} dreamlike, mysterious, provocative, symbolic, intricate, detailed",
+            "Artstyle Typography": "typographic art {prompt} stylized, intricate, detailed, artistic, text-based",
+            "Artstyle Watercolor": "watercolor painting {prompt} vibrant, beautiful, painterly, detailed, textural, artistic",
+            "Futuristic Biomechanical": "biomechanical style {prompt} blend of organic and mechanical elements, futuristic, cybernetic, detailed, intricate",
+            "Futuristic Biomechanical Cyberpunk": "biomechanical cyberpunk {prompt} cybernetics, human-machine fusion, dystopian, organic meets artificial, dark, intricate, highly detailed",
+            "Futuristic Cybernetic": "cybernetic style {prompt} futuristic, technological, cybernetic enhancements, robotics, artificial intelligence themes",
+            "Futuristic Cybernetic Robot": "cybernetic robot {prompt} android, AI, machine, metal, wires, tech, futuristic, highly detailed",
+            "Futuristic Cyberpunk Cityscape": "cyberpunk cityscape {prompt} neon lights, dark alleys, skyscrapers, futuristic, vibrant colors, high contrast, highly detailed",
+            "Futuristic Futuristic": "futuristic style {prompt} sleek, modern, ultramodern, high tech, detailed",
+            "Futuristic Retro Cyberpunk": "retro cyberpunk {prompt} 80's inspired, synthwave, neon, vibrant, detailed, retro futurism",
+            "Futuristic Retro Futurism": "retro-futuristic {prompt} vintage sci-fi, 50s and 60s style, atomic age, vibrant, highly detailed",
+            "Futuristic Sci Fi": "sci-fi style {prompt} futuristic, technological, alien worlds, space themes, advanced civilizations",
+            "Futuristic Vaporwave": "vaporwave style {prompt} retro aesthetic, cyberpunk, vibrant, neon colors, vintage 80s and 90s style, highly detailed",
+            "Game Bubble Bobble": "Bubble Bobble style {prompt} 8-bit, cute, pixelated, fantasy, vibrant, reminiscent of Bubble Bobble game",
+            "Game Cyberpunk Game": "cyberpunk game style {prompt} neon, dystopian, futuristic, digital, vibrant, detailed, high contrast, reminiscent of cyberpunk genre video games",
+            "Game Fighting Game": "fighting game style {prompt} dynamic, vibrant, action-packed, detailed character design, reminiscent of fighting video games",
+            "Game Gta": "GTA-style artwork {prompt} satirical, exaggerated, pop art style, vibrant colors, iconic characters, action-packed",
+            "Game Mario": "Super Mario style {prompt} vibrant, cute, cartoony, fantasy, playful, reminiscent of Super Mario series",
+            "Game Minecraft": "Minecraft style {prompt} blocky, pixelated, vibrant colors, recognizable characters and objects, game assets",
+            "Game Pokemon": "Pokémon style {prompt} vibrant, cute, anime, fantasy, reminiscent of Pokémon series",
+            "Game Retro Arcade": "retro arcade style {prompt} 8-bit, pixelated, vibrant, classic video game, old school gaming, reminiscent of 80s and 90s arcade games",
+            "Game Retro Game": "retro game art {prompt} 16-bit, vibrant colors, pixelated, nostalgic, charming, fun",
+            "Game RPG Fantasy Game": "role-playing game (RPG) style fantasy {prompt} detailed, vibrant, immersive, reminiscent of high fantasy RPG games",
+            "Game Strategy Game": "strategy game style {prompt} overhead view, detailed map, units, reminiscent of real-time strategy video games",
+            "Game Streetfighter": "Street Fighter style {prompt} vibrant, dynamic, arcade, 2D fighting game, highly detailed, reminiscent of Street Fighter series",
+            "Game Zelda": "Legend of Zelda style {prompt} vibrant, fantasy, detailed, epic, heroic, reminiscent of The Legend of Zelda series",
+            "Misc Architectural": "architectural style {prompt} clean lines, geometric shapes, minimalist, modern, architectural drawing, highly detailed",
+            "Misc Disco": "disco-themed {prompt} vibrant, groovy, retro 70s style, shiny disco balls, neon lights, dance floor, highly detailed",
+            "Misc Dreamscape": "dreamscape {prompt} surreal, ethereal, dreamy, mysterious, fantasy, highly detailed",
+            "Misc Dystopian": "dystopian style {prompt} bleak, post-apocalyptic, somber, dramatic, highly detailed",
+            "Misc Fairy Tale": "fairy tale {prompt} magical, fantastical, enchanting, storybook style, highly detailed",
+            "Misc Gothic": "gothic style {prompt} dark, mysterious, haunting, dramatic, ornate, detailed",
+            "Misc Grunge": "grunge style {prompt} textured, distressed, vintage, edgy, punk rock vibe, dirty, noisy",
+            "Misc Horror": "horror-themed {prompt} eerie, unsettling, dark, spooky, suspenseful, grim, highly detailed",
+            "Misc Kawaii": "kawaii style {prompt} cute, adorable, brightly colored, cheerful, anime influence, highly detailed",
+            "Misc Lovecraftian": "lovecraftian horror {prompt} eldritch, cosmic horror, unknown, mysterious, surreal, highly detailed",
+            "Misc Macabre": "macabre style {prompt} dark, gothic, grim, haunting, highly detailed",
+            "Misc Manga": "manga style {prompt} vibrant, high-energy, detailed, iconic, Japanese comic style",
+            "Misc Metropolis": "metropolis-themed {prompt} urban, cityscape, skyscrapers, modern, futuristic, highly detailed",
+            "Misc Minimalist": "minimalist style {prompt} simple, clean, uncluttered, modern, elegant",
+            "Misc Monochrome": "monochrome {prompt} black and white, contrast, tone, texture, detailed",
+            "Misc Nautical": "nautical-themed {prompt} sea, ocean, ships, maritime, beach, marine life, highly detailed",
+            "Misc Space": "space-themed {prompt} cosmic, celestial, stars, galaxies, nebulas, planets, science fiction, highly detailed",
+            "Misc Stained Glass": "stained glass style {prompt} vibrant, beautiful, translucent, intricate, detailed",
+            "Misc Techwear Fashion": "techwear fashion {prompt} futuristic, cyberpunk, urban, tactical, sleek, dark, highly detailed",
+            "Misc Tribal": "tribal style {prompt} indigenous, ethnic, traditional patterns, bold, natural colors, highly detailed",
+            "Misc Zentangle": "zentangle {prompt} intricate, abstract, monochrome, patterns, meditative, highly detailed",
+            "Papercraft Collage": "collage style {prompt} mixed media, layered, textural, detailed, artistic",
+            "Papercraft Flat Papercut": "flat papercut style {prompt} silhouette, clean cuts, paper, sharp edges, minimalist, color block",
+            "Papercraft Kirigami": "kirigami representation of {prompt} 3D, paper folding, paper cutting, Japanese, intricate, symmetrical, precision, clean lines",
+            "Papercraft Paper Mache": "paper mache representation of {prompt} 3D, sculptural, textured, handmade, vibrant, fun",
+            "Papercraft Paper Quilling": "paper quilling art of {prompt} intricate, delicate, curling, rolling, shaping, coiling, loops, 3D, dimensional, ornamental",
+            "Papercraft Papercut Collage": "papercut collage of {prompt} mixed media, textured paper, overlapping, asymmetrical, abstract, vibrant",
+            "Papercraft Papercut Shadow Box": "3D papercut shadow box of {prompt} layered, dimensional, depth, silhouette, shadow, papercut, handmade, high contrast",
+            "Papercraft Stacked Papercut": "stacked papercut art of {prompt} 3D, layered, dimensional, depth, precision cut, stacked layers, papercut, high contrast",
+            "Papercraft Thick Layered Papercut": "thick layered papercut art of {prompt} deep 3D, volumetric, dimensional, depth, thick paper, high stack, heavy texture, tangible layers",
+            "Photo Alien": "alien-themed {prompt} extraterrestrial, cosmic, otherworldly, mysterious, sci-fi, highly detailed",
+            "Photo Film Noir": "film noir style {prompt} monochrome, high contrast, dramatic shadows, 1940s style, mysterious, cinematic",
+            "Photo Glamour": "glamorous photo {prompt} high fashion, luxurious, extravagant, stylish, sensual, opulent, elegance, stunning beauty, professional, high contrast, detailed",
+            "Photo Hdr": "HDR photo of {prompt} High dynamic range, vivid, rich details, clear shadows and highlights, realistic, intense, enhanced contrast, highly detailed",
+            "Photo Iphone Photographic": "iphone photo {prompt} large depth of field, deep depth of field, highly detailed",
+            "Photo Long Exposure": "long exposure photo of {prompt} Blurred motion, streaks of light, surreal, dreamy, ghosting effect, highly detailed",
+            "Photo Neon Noir": "neon noir {prompt} cyberpunk, dark, rainy streets, neon signs, high contrast, low light, vibrant, highly detailed",
+            "Photo Silhouette": "silhouette style {prompt} high contrast, minimalistic, black and white, stark, dramatic",
+            "Photo Tilt Shift": "tilt-shift photo of {prompt} selective focus, miniature effect, blurred background, highly detailed, vibrant, perspective control"
+        };
+
+        const styleTranslations = {
+            "3D Model": "3D Модель",
+            "Analog Film": "Аналоговая плёнка",
+            "Anime": "Аниме",
+            "Cinematic": "Кинематографический",
+            "Comic Book": "Комикс",
+            "Craft Clay": "Лепка из глины",
+            "Digital Art": "Цифровое искусство",
+            "Enhance": "Улучшенный",
+            "Fantasy Art": "Фэнтези арт",
+            "Isometric": "Изометрический",
+            "Line Art": "Линейный арт",
+            "Lowpoly": "Низкополигональный",
+            "Neonpunk": "Неонпанк",
+            "Origami": "Оригами",
+            "Photographic": "Фотографический",
+            "Pixel Art": "Пиксель-арт",
+            "Texture": "Текстура",
+            "Ads Advertising": "Рекламный плакат",
+            "Ads Automotive": "Автомобильная реклама",
+            "Ads Corporate": "Корпоративный стиль",
+            "Ads Fashion Editorial": "Модная редакционная статья",
+            "Ads Food Photography": "Фуд-фотография",
+            "Ads Gourmet Food Photography": "Изысканная фуд-фотография",
+            "Ads Luxury": "Реклама класса люкс",
+            "Ads Real Estate": "Фото недвижимости",
+            "Ads Retail": "Розничная упаковка",
+            "Artstyle Abstract": "Абстрактный стиль",
+            "Artstyle Abstract Expressionism": "Абстрактный экспрессионизм",
+            "Artstyle Art Deco": "Арт-Деко",
+            "Artstyle Art Nouveau": "Арт-Нуво",
+            "Artstyle Constructivist": "Конструктивизм",
+            "Artstyle Cubist": "Кубизм",
+            "Artstyle Expressionist": "Экспрессионизм",
+            "Artstyle Graffiti": "Граффити",
+            "Artstyle Hyperrealism": "Гиперреализм",
+            "Artstyle Impressionist": "Импрессионизм",
+            "Artstyle Pointillism": "Пуантилизм",
+            "Artstyle Pop Art": "Поп-арт",
+            "Artstyle Psychedelic": "Психоделический",
+            "Artstyle Renaissance": "Ренессанс",
+            "Artstyle Steampunk": "Стимпанк",
+            "Artstyle Surrealist": "Сюрреализм",
+            "Artstyle Typography": "Типографика",
+            "Artstyle Watercolor": "Акварель",
+            "Futuristic Biomechanical": "Биомеханический",
+            "Futuristic Biomechanical Cyberpunk": "Биомеханический киберпанк",
+            "Futuristic Cybernetic": "Кибернетический",
+            "Futuristic Cybernetic Robot": "Кибернетический робот",
+            "Futuristic Cyberpunk Cityscape": "Киберпанк-пейзаж",
+            "Futuristic Futuristic": "Футуристический",
+            "Futuristic Retro Cyberpunk": "Ретро-киберпанк",
+            "Futuristic Retro Futurism": "Ретро-футуризм",
+            "Futuristic Sci Fi": "Научная фантастика",
+            "Futuristic Vaporwave": "Вэйпорвейв",
+            "Game Bubble Bobble": "Стиль Bubble Bobble",
+            "Game Cyberpunk Game": "Стиль киберпанк игры",
+            "Game Fighting Game": "Стиль файтинга",
+            "Game Gta": "Стиль GTA",
+            "Game Mario": "Стиль Супер Марио",
+            "Game Minecraft": "Стиль Майнкрафт",
+            "Game Pokemon": "Стиль Покемон",
+            "Game Retro Arcade": "Стиль ретро аркады",
+            "Game Retro Game": "Стиль ретро игры",
+            "Game RPG Fantasy Game": "Стиль фэнтези RPG",
+            "Game Strategy Game": "Стиль стратегии",
+            "Game Streetfighter": "Стиль Стритфайтер",
+            "Game Zelda": "Стиль Зельда",
+            "Misc Architectural": "Архитектурный",
+            "Misc Disco": "Диско",
+            "Misc Dreamscape": "Мир снов",
+            "Misc Dystopian": "Дистопический",
+            "Misc Fairy Tale": "Сказочный",
+            "Misc Gothic": "Готический",
+            "Misc Grunge": "Гранж",
+            "Misc Horror": "Ужасы",
+            "Misc Kawaii": "Кавайный",
+            "Misc Lovecraftian": "Лавкрафтовский",
+            "Misc Macabre": "Макабрический",
+            "Misc Manga": "Манга",
+            "Misc Metropolis": "Метрополис",
+            "Misc Minimalist": "Минималистичный",
+            "Misc Monochrome": "Монохромный",
+            "Misc Nautical": "Морской",
+            "Misc Space": "Космический",
+            "Misc Stained Glass": "Витраж",
+            "Misc Techwear Fashion": "Техническая мода",
+            "Misc Tribal": "Племенной",
+            "Misc Zentangle": "Зентангл",
+            "Papercraft Collage": "Коллаж из бумаги",
+            "Papercraft Flat Papercut": "Плоская вырезка из бумаги",
+            "Papercraft Kirigami": "Киригами",
+            "Papercraft Paper Mache": "Папье-маше",
+            "Papercraft Paper Quilling": "Бумажный квиллинг",
+            "Papercraft Papercut Collage": "Коллаж из бумажных вырезок",
+            "Papercraft Papercut Shadow Box": "Теневая коробка из бумаги",
+            "Papercraft Stacked Papercut": "Многослойная вырезка из бумаги",
+            "Papercraft Thick Layered Papercut": "Толстослойная вырезка из бумаги",
+            "Photo Alien": "Чужой",
+            "Photo Film Noir": "Фильм Нуар",
+            "Photo Glamour": "Гламур",
+            "Photo Hdr": "HDR Фото",
+            "Photo Iphone Photographic": "Фото на айфон",
+            "Photo Long Exposure": "Длинная выдержка",
+            "Photo Neon Noir": "Неоновый Нуар",
+            "Photo Silhouette": "Силуэт",
+            "Photo Tilt Shift": "Тилт-шифт"
+        };
+
+
+        const artisticTemplates = {
+            "in the style of Van Gogh": "in the style of Van Gogh, impasto brushstrokes, swirling skies, vivid color contrasts, expressive and emotional",
+            "inspired by Hayao Miyazaki": "inspired by Hayao Miyazaki, Studio Ghibli aesthetic, soft pastel tones, whimsical and serene, detailed natural environments, gentle characters",
+            "Greg Rutkowski concept art": "Greg Rutkowski concept art, epic fantasy, dramatic lighting, painterly, highly detailed, vibrant colors, dynamic composition",
+            "Beeple digital art": "Beeple digital art, futuristic, surreal, glitch effects, vibrant neon palette, cyberpunk, chaotic yet detailed",
+            "Moebius illustration": "Moebius illustration, clean linework, surreal landscapes, imaginative sci-fi, intricate details, dreamlike atmosphere",
+            "Zdzisław Beksiński surrealism": "Zdzisław Beksiński surrealism, dystopian, apocalyptic, hauntingly beautiful, surreal architecture, desolate mood, monochromatic with red accents",
+            "Artgerm portrait": "Artgerm portrait, dynamic female character, vibrant colors, comic book realism, stylized anatomy, dramatic pose",
+            "in the style of Albert Bierstadt": "in the style of Albert Bierstadt, grand romantic landscapes, dramatic mountain scenery, luminous skies, sublime nature, detailed realism",
+            "in the style of John Singer Sargent": "in the style of John Singer Sargent, elegant portraits, loose brushwork, sophisticated compositions, masterful handling of light and fabric",
+            "in the style of Rembrandt": "in the style of Rembrandt, dramatic chiaroscuro, golden light, emotional depth, textured brushstrokes, old master technique",
+            "in the style of Alphonse Mucha": "in the style of Alphonse Mucha, Art Nouveau elegance, flowing hair, decorative elements, subtle colors, feminine beauty",
+            "in the style of H.R. Giger": "in the style of H.R. Giger, biomechanical horror, surreal machinery, organic metal, dark eroticism, xenomorphic forms",
+            "in the style of Caspar David Friedrich": "in the style of Caspar David Friedrich, romantic landscapes, solitary figures, sublime nature, symbolic composition, melancholic mood",
+            "in the style of Wassily Kandinsky": "in the style of Wassily Kandinsky, abstract expressionism, geometric forms, vibrant colors, spiritual abstraction, musical composition",
+            "in the style of Ross Tran (RossDraws)": "in the style of RossDraws, vibrant digital art, expressive characters, dynamic lighting, fantasy elements, emotional storytelling",
+            "in the style of Loish (Lois van Baarle)": "in the style of Loish, flowing organic forms, warm color palettes, expressive female characters, soft digital painting",
+            "in the style of WLOP": "in the style of WLOP, ethereal digital portraits, delicate brushwork, fantasy atmosphere, subtle textures, romantic lighting",
+            "in the style of James Jean": "in the style of James Jean, intricate linework, surreal narratives, organic patterns, mixed media aesthetic, dreamlike compositions",
+            "in the style of Sakimichan": "in the style of Sakimichan, polished digital rendering, popular character portraits, vibrant colors, professional finish",
+            "in the style of Krenz Cushart": "in the style of Krenz Cushart, dynamic anatomy, strong perspective, anime-inspired characters, educational approach to digital art",
+            "in the style of Ilya Kuvshinov": "in the style of Ilya Kuvshinov, soft digital painting, melancholic anime characters, atmospheric lighting, emotional expressions",
+            "in the style of John Harris": "in the style of John Harris, epic sci-fi landscapes, vast cosmic vistas, impressionistic space art, scale and wonder",
+            "in the style of J.C. Leyendecker": "in the style of J.C. Leyendecker, bold graphic illustration, crisp folds in clothing, dramatic lighting, iconic American illustration",
+            "in the style of Frank Frazetta": "in the style of Frank Frazetta, dynamic fantasy art, muscular anatomy, dramatic composition, raw energy, iconic sword and sorcery",
+            "in the style of Victo Ngai": "in the style of Victo Ngai, intricate graphic illustration, pattern-based designs, sophisticated color palettes, editorial fantasy art",
+            "in the style of Ruan Jia": "in the style of Ruan Jia, hyper-detailed fantasy art, realistic rendering, atmospheric lighting, professional concept art quality",
+            "in the style of Android Jones": "in the style of Android Jones, visionary digital art, psychedelic patterns, intricate details, consciousness-expanding imagery",
+            "in the style of Peter Mohrbacher": "in the style ...(truncated 4939 characters)...s, uncanny valley",
+            "serene": "serene landscape, calm water, soft morning light, harmonious composition, peaceful mood",
+            "chaotic": "chaotic energy, dynamic motion, clashing colors, fragmented forms, high intensity",
+            "mystical": "mystical aura, glowing particles, ancient symbols, otherworldly light, sacred geometry",
+            "nostalgic": "nostalgic feel, warm sepia tones, vintage texture, soft focus, remembrance of childhood",
+            "teal and orange palette": "teal and orange color grading, cinematic contrast, complementary colors, vibrant yet balanced",
+            "monochromatic crimson": "monochromatic crimson palette, deep red tones, dramatic shadows, intense mood",
+            "pastel sunset colors": "pastel sunset colors, soft pinks, lavenders, and golds, dreamy gradient, gentle light",
+            "cyberpunk neon palette": "cyberpunk neon palette, electric blues, pinks, and purples, high contrast, glowing signs",
+            "earth-tone palette": "earth-tone palette, ochres, umbers, and greens, natural harmony, organic textures",
+            "vintage film color grading": "vintage film color grading, faded tones, subtle grain, nostalgic warmth, soft highlights",
+            "oil painting texture": "oil painting texture, visible brushstrokes, rich impasto, luminous glazes, classical technique",
+            "watercolor wash": "watercolor wash, soft bleeding edges, translucent layers, delicate pigments, fluid motion",
+            "charcoal sketch": "charcoal sketch, expressive lines, smudged shadows, raw and tactile, monochrome depth",
+            "ink line art": "ink line art, precise contours, black and white contrast, graphic novel style, clean and bold",
+            "glazed ceramic texture": "glazed ceramic texture, smooth glossy surface, reflective highlights, artisanal craft",
+            "film grain overlay": "film grain overlay, analog texture, subtle noise, cinematic authenticity, nostalgic feel",
+            "matte painting": "matte painting, painted environment, seamless backdrop, cinematic scale, atmospheric perspective",
+            "rule of thirds": "rule of thirds composition, balanced framing, visual tension, professional layout",
+            "Dutch angle": "Dutch angle, tilted horizon, dynamic unease, dramatic perspective, cinematic tension",
+            "extreme close-up": "extreme close-up, intimate detail, shallow depth of field, emotional intensity",
+            "wide-angle lens": "wide-angle lens, expansive view, exaggerated perspective, immersive environment",
+            "symmetrical composition": "symmetrical composition, perfect balance, architectural precision, formal elegance",
+            "Baroque": "Baroque style, dramatic chiaroscuro, ornate details, rich fabrics, emotional intensity, grandeur",
+            "Cyberpunk": "cyberpunk aesthetic, neon-lit streets, rain-slicked pavement, dystopian future, high-tech low-life",
+            "Cottagecore": "cottagecore aesthetic, rustic simplicity, floral prints, warm hearth, pastoral idyll, handmade charm",
+            "Dark Fantasy": "dark fantasy, gothic architecture, shadowy creatures, melancholic hero, ominous mood, rich textures",
+            "Ukiyo-e": "Ukiyo-e woodblock print, flat planes of color, bold outlines, traditional Japanese motifs, wave or mountain backdrop",
+            "Synthwave": "synthwave style, 80s retro-futurism, sunset grid, palm trees, neon grid, nostalgic sci-fi",
+            "Steampunk": "steampunk design, brass gears, leather straps, Victorian fashion, steam-powered machinery, industrial elegance",
+            "Gothic Blue and Black": "gothic blue and black palette, deep midnight blue, charcoal black, dramatic, mysterious, moody, high contrast",
+            "Forest Green and Gold": "forest green and gold palette, rich emerald, moss green, shimmering gold accents, lush, luxurious, nature-inspired",
+            "Desert Sunset": "desert sunset palette, fiery oranges, deep reds, soft purples, dusty yellows, gradient, warm, expansive",
+            "Oceanic Blues and Greens": "oceanic blues and greens palette, turquoise, aquamarine, deep sea blue, kelp green, tranquil, refreshing, aquatic",
+            "Lavender and Grey": "lavender and grey palette, soft lavender, ash grey, hints of silver, elegant, calm, sophisticated",
+            "Crimson and Gold": "crimson and gold palette, rich crimson, antique gold, luxurious, regal, dramatic, opulent",
+            "Emerald and Copper": "emerald and copper palette, deep emerald green, burnished copper, earthy, rich, industrial yet natural",
+            "Sapphire and Silver": "sapphire and silver palette, deep sapphire blue, gleaming silver, elegant, cool, jewel-toned, refined",
+            "Ruby and Charcoal": "ruby and charcoal palette, deep ruby red, dark charcoal grey, bold, sophisticated, intense",
+            "Amethyst and Bronze": "amethyst and bronze palette, rich purple amethyst, warm bronze, mystical, earthy, ancient",
+            "Autumn Foliage": "autumn foliage palette, fiery reds, deep oranges, golden yellows, rustic browns, warm, vibrant, natural",
+            "Spring Blossom": "spring blossom palette, soft pinks, light greens, creamy whites, delicate, fresh, natural, airy",
+            "Winter Wonderland": "winter wonderland palette, icy blues, pure whites, frosty silvers, cool, sparkling, ethereal",
+            "Tropical Paradise": "tropical paradise palette, vivid fuchsia, electric blue, sunny yellow, lush green, vibrant, energetic, exotic",
+            "Rustic Farmhouse": "rustic farmhouse palette, muted creams, warm browns, faded blues, distressed textures, cozy, earthy, vintage",
+            "Art Deco Glam": "art deco glam palette, metallic golds, deep blacks, geometric patterns, sleek, luxurious, elegant",
+            "Industrial Chic": "industrial chic palette, concrete greys, exposed brick reds, metallic accents, raw, urban, modern",
+            "Bohemian Rhapsody": "bohemian rhapsody palette, earthy browns, deep reds, mustard yellows, turquoise accents, free-spirited, rich texture, eclectic",
+            "Vaporwave Sunset": "vaporwave sunset palette, electric pinks, vibrant purples, glowing blues, retro gradient, nostalgic, synthetic",
+            "Steampunk Sepia": "steampunk sepia palette, warm sepia tones, brassy accents, clockwork browns, vintage, mechanical, aged",
+            "Nordic Winter": "nordic winter palette, cool blues, stark whites, wooden browns, minimalist, calm, natural, serene",
+            "Japanese Zen": "Japanese Zen palette, subtle greys, natural wood tones, muted greens, minimalist, peaceful, harmonious",
+            "Egyptian Gold": "Egyptian gold palette, royal blues, rich golds, sandy yellows, ancient, luxurious, mystical",
+            "Chinese Ink Wash": "Chinese ink wash palette, monochrome greys, deep blacks, subtle blues, ethereal, traditional, flowing",
+            "Indian Spice": "Indian spice palette, rich turmeric yellow, fiery saffron, deep maroon, vibrant, exotic, warm",
+            "Mediterranean Coast": "Mediterranean coast palette, azure blues, terracotta oranges, whitewashed walls, sunny, fresh, inviting",
+            "Cyberpunk Dystopia": "cyberpunk dystopia palette, dark greys, deep reds, electric blues, gritty, high contrast, urban decay",
+            "Whimsical Forest": "whimsical forest palette, moss greens, fairy purples, soft browns, magical, enchanting, dreamlike",
+            "Cosmic Dust": "cosmic dust palette, deep space purples, shimmering blues, stardust golds, ethereal, mysterious, celestial",
+            "Deep Sea Glimmer": "deep sea glimmer palette, abyssal blacks, bioluminescent greens, electric blues, mysterious, dark, glowing",
+            "Pencil Drawing": "pencil drawing, graphite sketch, detailed shading, textured paper, monochrome, hand-drawn, realistic sketch, fine lines",
+            "Ink Drawing": "ink drawing, bold lines, cross-hatching, contrast, traditional illustration, black and white, pen work, detailed linework",
+            "Pen and Watercolor Painting": "pen and watercolor painting, ink outlines, watercolor wash, mixed media, fluid colors, artistic blend, sketchy, vibrant",
+            "Oil Painting": "oil painting, thick brushstrokes, rich colors, canvas texture, classical technique, luminous, layered paint, fine art",
+            "Risograph Print": "risograph print, vibrant colors, grainy texture, layered printing, vintage aesthetic, bold graphics, limited color palette",
+            "Impasto Painting": "impasto painting, thick paint texture, raised brushstrokes, three-dimensional surface, expressive, heavy texture, sculptural paint",
+            "Palette Knife Oil Painting": "palette knife oil painting, bold strokes, thick texture, dramatic, expressive, chunky paint application, modern technique",
+            "Chiaroscuro Painting": "chiaroscuro painting, dramatic light and shadow, high contrast, tenebrism, Renaissance technique, volumetric lighting, theatrical",
+            "Comic Character": "comic character, bold outlines, vibrant colors, dynamic pose, graphic novel style, superhero aesthetic, action-packed",
+            "Pixel Art": "pixel art, 8-bit graphics, retro gaming style, pixelated, limited color palette, nostalgic, digital sprite",
+            "Vector Graphic": "vector graphic, clean lines, flat colors, scalable illustration, modern design, geometric shapes, digital art, smooth curves"
+        };
+
+
+        const artisticTranslations = {
+            "in the style of Van Gogh": "В стиле Ван Гога",
+            "inspired by Hayao Miyazaki": "Вдохновлено Хаяо Миядзаки",
+            "Greg Rutkowski concept art": "Концепт-арт Грега Рутковски",
+            "Beeple digital art": "Цифровое искусство Beeple",
+            "Moebius illustration": "Иллюстрация Мёбиуса",
+            "Zdzisław Beksiński surrealism": "Сюрреализм Здзислава Бексинского",
+            "Artgerm portrait": "Портрет в стиле Artgerm",
+            "in the style of Albert Bierstadt": "В стиле Альберта Бирштадта",
+            "in the style of John Singer Sargent": "В стиле Джона Сингера Сарджента",
+            "in the style of Rembrandt": "В стиле Рембрандта",
+            "in the style of Alphonse Mucha": "В стиле Альфонса Мухи",
+            "in the style of H.R. Giger": "В стиле Г.Р. Гигера",
+            "in the style of Caspar David Friedrich": "В стиле Каспара Давида Фридриха",
+            "in the style of Wassily Kandinsky": "В стиле Василия Кандинского",
+            "in the style of Ross Tran (RossDraws)": "В стиле Росса Трана (RossDraws)",
+            "in the style of Loish (Lois van Baarle)": "В стиле Лоиш (Лоис ван Баарле)",
+            "in the style of WLOP": "В стиле WLOP",
+            "in the style of James Jean": "В стиле Джеймса Джина",
+            "in the style of Sakimichan": "В стиле Сакимичан",
+            "in the style of Krenz Cushart": "В стиле Кренца Кушарта",
+            "in the style of Ilya Kuvshinov": "В стиле Ильи Кувшинова",
+            "in the style of John Harris": "В стиле Джона Харриса",
+            "in the style of J.C. Leyendecker": "В стиле Дж.К. Лейендекера",
+            "in the style of Frank Frazetta": "В стиле Фрэнка Фразетты",
+            "in the style of Victo Ngai": "В стиле Викто Нгаи",
+            "in the style of Ruan Jia": "В стиле Руан Цзя",
+            "in the style of Android Jones": "В стиле Эндрю Джонса",
+            "in the style of Peter Mohrbacher": "В стиле Питера Морбахера",
+            "in the style of Simon Stålenhag": "В стиле Симона Столенхага",
+            "in the style of Makoto Shinkai": "В стиле Макото Синкая",
+            "in the style of Katsuhiro Otomo (Akira style)": "В стиле Кацухиро Отомо (стиль Акиры)",
+            "in the style of Hieronymus Bosch": "В стиле Иеронима Босха",
+            "in the style of Sandro Botticelli": "В стиле Сандро Боттичелли",
+            "in the style of Leonardo da Vinci": "В стиле Леонардо да Винчи",
+            "in the style of Albrecht Dürer": "В стиле Альбрехта Дюрера",
+            "in the style of Pieter Bruegel the Elder": "В стиле Питера Брейгеля Старшего",
+            "in the style of El Greco": "В стиле Эль Греко",
+            "in the style of Caravaggio": "В стиле Караваджо",
+            "in the style of Peter Paul Rubens": "В стиле Питера Пауля Рубенса",
+            "in the style of Rembrandt van Rijn": "В стиле Рембрандта ван Рейна",
+            "in the style of Johannes Vermeer": "В стиле Яна Вермеера",
+            "in the style of Francisco Goya": "В стиле Франсиско Гойи",
+            "in the style of William Turner": "В стиле Уильяма Тернера",
+            "in the style of John Constable": "В стиле Джона Констебла",
+            "in the style of Eugène Delacroix": "В стиле Эжена Делакруа",
+            "in the style of Jean-Auguste-Dominique Ingres": "В стиле Жана-Огюста-Доминика Энгра",
+            "in the style of Gustave Courbet": "В стиле Гюстава Курбе",
+            "in the style of Camille Corot": "В стиле Камиля Коро",
+            "in the style of Ivan Aivazovsky": "В стиле Ивана Айвазовского",
+            "in the style of Dante Gabriel Rossetti": "В стиле Данте Габриэля Россетти",
+            "in the style of Ivan Shishkin": "В стиле Ивана Шишкина",
+            "dreamlike": "Сновидческий",
+            "melancholic": "Меланхоличный",
+            "whimsical": "Причудливый",
+            "eerie": "Жутковатый",
+            "serene": "Безмятежный",
+            "chaotic": "Хаотичный",
+            "mystical": "Мистический",
+            "nostalgic": "Ностальгический",
+            "teal and orange palette": "Палитра бирюзового и оранжевого",
+            "monochromatic crimson": "Монохромный багряный",
+            "pastel sunset colors": "Пастельные цвета заката",
+            "cyberpunk neon palette": "Неоновая палитра киберпанка",
+            "earth-tone palette": "Земляная палитра",
+            "vintage film color grading": "Винтажная цветокоррекция плёнки",
+            "oil painting texture": "Текстура масляной живописи",
+            "watercolor wash": "Акварельная заливка",
+            "charcoal sketch": "Угольный набросок",
+            "ink line art": "Линейная графика тушью",
+            "glazed ceramic texture": "Текстура глазурованной керамики",
+            "film grain overlay": "Наложение зернистости плёнки",
+            "matte painting": "Матовая живопись",
+            "rule of thirds": "Правило третей",
+            "Dutch angle": "Голландский угол",
+            "extreme close-up": "Крупный план",
+            "wide-angle lens": "Широкоугольный объектив",
+            "symmetrical composition": "Симметричная композиция",
+            "Baroque": "Барокко",
+            "Cyberpunk": "Киберпанк",
+            "Cottagecore": "Коттеджкор",
+            "Dark Fantasy": "Тёмное фэнтези",
+            "Ukiyo-e": "Укиё-э",
+            "Synthwave": "Синтвейв",
+            "Steampunk": "Стимпанк",
+            "Gothic Blue and Black": "Готическая сине-чёрная",
+            "Forest Green and Gold": "Лесной зелёный и золотой",
+            "Desert Sunset": "Закат в пустыне",
+            "Oceanic Blues and Greens": "Океанические синие и зелёные",
+            "Lavender and Grey": "Лавандовый и серый",
+            "Crimson and Gold": "Малиновый и золотой",
+            "Emerald and Copper": "Изумрудный и медный",
+            "Sapphire and Silver": "Сапфировый и серебряный",
+            "Ruby and Charcoal": "Рубиновый и угольный",
+            "Amethyst and Bronze": "Аметистовый и бронзовый",
+            "Autumn Foliage": "Осенняя листва",
+            "Spring Blossom": "Весеннее цветение",
+            "Winter Wonderland": "Зимняя сказка",
+            "Tropical Paradise": "Тропический рай",
+            "Rustic Farmhouse": "Деревенский дом",
+            "Art Deco Glam": "Гламур Арт-Деко",
+            "Industrial Chic": "Индустриальный шик",
+            "Bohemian Rhapsody": "Богемная рапсодия",
+            "Vaporwave Sunset": "Закат в стиле Vaporwave",
+            "Steampunk Sepia": "Сепия Стимпанк",
+            "Nordic Winter": "Скандинавская зима",
+            "Japanese Zen": "Японский Дзен",
+            "Egyptian Gold": "Египетское золото",
+            "Chinese Ink Wash": "Китайская тушь",
+            "Indian Spice": "Индийские специи",
+            "Mediterranean Coast": "Средиземноморское побережье",
+            "Cyberpunk Dystopia": "Киберпанк Дистопия",
+            "Whimsical Forest": "Причудливый лес",
+            "Cosmic Dust": "Космическая пыль",
+            "Deep Sea Glimmer": "Мерцание глубокого моря",
+            "Pencil Drawing": "Рисунок карандашом",
+            "Ink Drawing": "Рисунок тушью",
+            "Pen and Watercolor Painting": "Перо и акварель",
+            "Oil Painting": "Масляная живопись",
+            "Risograph Print": "Ризограф",
+            "Impasto Painting": "Импасто",
+            "Palette Knife Oil Painting": "Масло мастихином",
+            "Chiaroscuro Painting": "Кьяроскуро",
+            "Comic Character": "Комикс-персонаж",
+            "Pixel Art": "Пиксель-арт",
+            "Vector Graphic": "Векторная графика"
+        };
+
+
+        const styleCategories = {
+            "Базовые": ["none", "3D Model", "Anime", "Cinematic", "Digital Art", "Fantasy Art", "Photographic", "Pixel Art"],
+            "Реклама": [
+                "Ads Advertising", "Ads Automotive", "Ads Corporate", "Ads Fashion Editorial",
+                "Ads Food Photography", "Ads Gourmet Food Photography", "Ads Luxury", "Ads Real Estate", "Ads Retail"
+            ],
+            "Художественные стили": [
+                "Artstyle Abstract", "Artstyle Art Deco", "Artstyle Art Nouveau", "Artstyle Constructivist",
+                "Artstyle Cubist", "Artstyle Expressionist", "Artstyle Graffiti", "Artstyle Hyperrealism",
+                "Artstyle Impressionist", "Artstyle Pointillism", "Artstyle Pop Art", "Artstyle Psychedelic",
+                "Artstyle Renaissance", "Artstyle Steampunk", "Artstyle Surrealist", "Artstyle Watercolor"
+            ],
+            "Игровые": [
+                "Game Bubble Bobble", "Game Cyberpunk Game", "Game Fighting Game", "Game Gta",
+                "Game Mario", "Game Minecraft", "Game Pokemon", "Game Retro Arcade", "Game Zelda"
+            ],
+            "Футуристические": [
+                "Futuristic Biomechanical", "Futuristic Cyberpunk", "Futuristic Sci Fi", "Futuristic Vaporwave"
+            ],
+            "Разное": [
+                "Misc Dreamscape", "Misc Dystopian", "Misc Fairy Tale", "Misc Gothic", "Misc Horror",
+                "Misc Kawaii", "Misc Minimalist", "Misc Space", "Misc Stained Glass", "Line Art", "Lowpoly"
+            ],
+            "Паперкрафт": [
+                "Papercraft Collage", "Papercraft Flat Papercut", "Papercraft Kirigami", "Papercraft Paper Mache",
+                "Papercraft Paper Quilling", "Papercraft Papercut Collage", "Papercraft Papercut Shadow Box",
+                "Papercraft Stacked Papercut", "Papercraft Thick Layered Papercut"
+            ],
+            "Фотографические": [
+                "Photo Alien", "Photo Film Noir", "Photo Glamour", "Photo Hdr", "Photo Iphone Photographic",
+                "Photo Long Exposure", "Photo Neon Noir", "Photo Silhouette", "Photo Tilt Shift"
+            ]
+        };
+
+
+        const artisticCategories = {
+            "Художники": {
+                "Современные цифровые художники": {
+                    "Концепт-арт / Фэнтези": [
+                        "Greg Rutkowski concept art", "Beeple digital art", "WLOP", "James Jean", "Sakimichan",
+                        "Krenz Cushart", "Ilya Kuvshinov", "Ruan Jia", "Android Jones", "Peter Mohrbacher"
+                    ],
+                    "Аниме / Манга": [
+                        "inspired by Hayao Miyazaki", "Artgerm portrait", "in the style of Ross Tran (RossDraws)",
+                        "in the style of Loish (Lois van Baarle)", "in the style of Makoto Shinkai",
+                        "in the style of Katsuhiro Otomo (Akira style)"
+                    ],
+                    "Научная фантастика / Футуризм": [
+                        "Moebius illustration", "in the style of H.R. Giger", "in the style of John Harris",
+                        "in the style of Simon Stålenhag"
+                    ]
+                },
+                "Классические художники": {
+                    "Возрождение / Северное Возрождение": [
+                        "in the style of Hieronymus Bosch", "in the style of Sandro Botticelli", "in the style of Leonardo da Vinci",
+                        "in the style of Albrecht Dürer", "in the style of Pieter Bruegel the Elder"
+                    ],
+                    "Маньеризм / Барокко / Голландский Золотой век": [
+                        "in the style of El Greco", "in the style of Caravaggio", "in the style of Peter Paul Rubens",
+                        "in the style of Rembrandt van Rijn", "in the style of Johannes Vermeer"
+                    ],
+                    "Романтизм / Реализм": [
+                        "in the style of Francisco Goya", "in the style of William Turner", "in the style of John Constable",
+                        "in the style of Eugène Delacroix", "in the style of Jean-Auguste-Dominique Ingres",
+                        "in the style of Gustave Courbet", "in the style of Camille Corot", "in the style of Ivan Aivazovsky",
+                        "in the style of Dante Gabriel Rossetti", "in the style of Ivan Shishkin",
+                        "in the style of Albert Bierstadt", "in the style of Caspar David Friedrich"
+                    ],
+                    "Импрессионизм / Постимпрессионизм / Арт Нуво": [
+                        "in the style of John Singer Sargent", "in the style of Van Gogh", "in the style of Alphonse Mucha",
+                        "in the style of Wassily Kandinsky"
+                    ],
+                    "Иллюстрация / Золотой век иллюстрации": [
+                        "in the style of J.C. Leyendecker", "in the style of Frank Frazetta", "in the style of Victo Ngai"
+                    ],
+                    "Сюрреализм": [
+                        "Zdzisław Beksiński surrealism"
+                    ]
+                }
+            },
+            "Атмосфера": [
+                "dreamlike", "melancholic", "whimsical", "eerie", "serene", "chaotic", "mystical", "nostalgic"
+            ],
+            "Цветовые палитры": [
+                "teal and orange palette", "monochromatic crimson", "pastel sunset colors",
+                "cyberpunk neon palette",
+                "Gothic Blue and Black", "Forest Green and Gold", "Desert Sunset",
+                "Oceanic Blues and Greens", "Lavender and Grey", "Crimson and Gold",
+                "Emerald and Copper", "Sapphire and Silver", "Ruby and Charcoal",
+                "Amethyst and Bronze", "Autumn Foliage", "Spring Blossom",
+                "Winter Wonderland", "Tropical Paradise", "Rustic Farmhouse",
+                "Art Deco Glam", "Industrial Chic", "Bohemian Rhapsody",
+                "Vaporwave Sunset", "Steampunk Sepia", "Nordic Winter",
+                "Japanese Zen", "Egyptian Gold", "Chinese Ink Wash",
+                "Indian Spice", "Mediterranean Coast", "Cyberpunk Dystopia",
+                "Whimsical Forest", "Cosmic Dust", "Deep Sea Glimmer"
+            ],
+            "Техники": [
+                "oil painting texture", "watercolor wash", "charcoal sketch", "ink line art",
+                "glazed ceramic texture", "film grain overlay", "matte painting"
+            ,
+                "Pencil Drawing", "Ink Drawing", "Pen and Watercolor Painting", "Oil Painting",
+                "Risograph Print", "Impasto Painting", "Palette Knife Oil Painting", "Chiaroscuro Painting",
+                "Comic Character", "Pixel Art", "Vector Graphic"
+            ],
+            "Композиция": [
+                "rule of thirds", "Dutch angle", "extreme close-up", "wide-angle lens", "symmetrical composition"
+            ],
+            "Жанры / Движения": [
+                "Baroque", "Cyberpunk", "Cottagecore", "Dark Fantasy", "Ukiyo-e", "Synthwave", "Steampunk"
+            ]
+        };
+
+
+        const allExamples = [
+            "Город будущего под дождём ночью",
+            "Портрет старого мага с посохом",
+            "Подводный город в океане",
+            "Робот-садовник в цветущем саду",
+            "Замок на облаке в закате",
+            "Киберпанк-рынок в Токио 2077",
+            "Древний дракон спит в пещере с сокровищами",
+            "Космический путешественник на краю чёрной дыры",
+            "Ведьмин домик в зимнем лесу",
+            "Биомеханическое существо в пустыне",
+            "Стимпанк-дирижабль над Лондоном",
+            "Феникс восстаёт из пепла на рассвете",
+            "Танцующие огоньки в заброшенном театре",
+            "Гигантский кот охраняет город мечты",
+            "Космическая опера: битва у туманности Ориона",
+            "Сакура в полнолуние, девочка в кимоно",
+            "Механический слон в джунглях Индии",
+            "Ледяной дворец на Северном полюсе",
+            "Портрет киборга с живыми глазами",
+            "Пиратский корабль плывёт по облакам",
+            "Магическая библиотека с парящими книгами",
+            "Одинокий путешественник в пустыне Сахара",
+            "Грибной лес с биолюминесцентными грибами",
+            "Космический бар в далёкой галактике",
+            "Зимняя сказка: ледяные конькобежцы на озере",
+            "Архитектура будущего: стекло и природа в гармонии",
+            "Девушка с волшебной книгой в старинной библиотеке",
+            "Полёт на бумажном журавле над городом",
+            "Океан из звёзд, а луна — маяк",
+            "Сад из кристаллов под стеклянным куполом",
+            "Механическая сова на заброшенной башне",
+            "Лес из зеркал в утреннем тумане",
+            "Праздник фонариков над рекой в горах",
+            "Кит-небоскрёб в облаках",
+            "Дерево желаний с горящими листьями",
+            "Космический поезд сквозь кольца Сатурна",
+            "Аквариум с инопланетными рыбами",
+            "Балет роботов в зале с золотыми колоннами",
+            "Дом на спине гигантской черепахи",
+            "Остров, парящий над водопадом",
+            "Музыкант играет на виолончели в пещере со светлячками",
+            "Город в бутылке на подоконнике",
+            "Бумажный корабль в луже после дождя",
+            "Слон из облаков над пустыней",
+            "Книжный магазин с лестницами в никуда",
+            "Дверь в другое измерение в старом шкафу",
+            "Цветок, распускающийся при лунном свете",
+            "Пчёлы из света опыляют звёзды",
+            "Небесный кит проплывает мимо облаков",
+            "Деревянный дракон в саду камней",
+            "Письмо, написанное дождём на асфальте",
+            "Луна в виде колеса обозрения",
+            "Танцующие статуи на площади полуночью",
+            "Чай в космосе с видом на Землю",
+            "Песочные часы с галактикой внутри",
+            "Сердце из проводов и цветов",
+            "Карта мира на спине бабочки",
+            "Фонарщик зажигает звёзды на небе",
+            "Корабль из книг плывёт по реке слов",
+            "Волшебная лампа в виде старого телефона",
+            "Снег из лепестков персикового дерева",
+            "Домик в корнях древнего дуба",
+            "Мост из радуги между двумя горами",
+            "Кофе с звёздной пеной в уютной космической кофейне",
+            "Скрипка, играющая рассвет",
+            "Письмо от будущего себе в бутылке времени",
+            "Цветущий кактус в лунном свете",
+            "Город в капле росы",
+            "Дракон из дыма над костром",
+            "Балкон с видом на Млечный Путь",
+            "Книга с живыми иллюстрациями",
+            "Парящий остров с водопадом в никуда",
+            "Механическая птица поёт на рассвете",
+            "Сердце, бьющееся в кристалле льда",
+            "Дверной проём в сад вечной весны",
+            "Фонарик, освещающий воспоминания",
+            "Платье из тумана и звёзд",
+            "Лестница в облака из старых книг",
+            "Вода, текущая вверх по стене",
+            "Цветок, поймавший лунный луч",
+            "Карта сокровищ в коже апельсина",
+            "Скрипка, сделанная из дерева и света",
+            "Сад из шёпота и звёздной пыли",
+            "Часы, показывающие время мечты",
+            "Корабль из перьев и надежд",
+            "Окно в другой мир в старом зеркале",
+            "Письмо, написанное ветром на песке",
+            "Кошка, сторожащая границу между мирами",
+            "Дерево с плодами-лунами",
+            "Песня, сложенная из снежинок",
+            "Фонарик, светящийся воспоминаниями",
+            "Мост из музыки через реку времени",
+            "Дом, построенный из закатов",
+            "Ключ от двери в детство",
+            "Сердце, бьющееся в ритме вселенной",
+            "Письмо от звезды на Землю"
+        ];
+
+        function getRandomExamples(arr, count) {
+            const shuffled = [...arr].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+
+        function renderRandomExamples() {
+            const examplesList = document.getElementById('examples-list');
+            const selected = getRandomExamples(allExamples, 5);
+            examplesList.innerHTML = selected.map(text => 
+                `<span class="example-btn" data-text="${text}">${text}</span>`
+            ).join('');
+            
+            document.querySelectorAll('.example-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    inputEl.value = e.target.dataset.text;
+                    generatePrompt();
+                });
+            });
+        }
 
         const inputEl = document.getElementById('input');
         const outputEl = document.getElementById('output');
         const enhancedOutputEl = document.getElementById('enhanced-output');
+        const copyBtn = document.getElementById('copy-btn');
+        const copyEnhancedBtn = document.getElementById('copy-enhanced-btn');
+        const enhanceBtn = document.getElementById('enhance-btn');
+        const notificationEl = document.getElementById('notification');
+        const styleSearchEl = document.getElementById('style-search');
+        const artisticSearchEl = document.getElementById('artistic-search');
+        const stylesContentEl = document.getElementById('styles-content');
+        const artisticContentEl = document.getElementById('artistic-content');
+        const historyGrid = document.getElementById('history-grid');
 
-        const styleDescriptions = {
-            'realistic': 'ultra realistic, photorealistic, 8k resolution, professional photography',
-            'anime': 'anime style, vibrant colors, detailed anime artwork',
-            'digital_art': 'digital art, trending on artstation, highly detailed',
-            'oil_painting': 'oil painting, classic art style, traditional painting',
-            'watercolor': 'watercolor painting, soft colors, artistic watercolor',
-            'pencil': 'pencil sketch, detailed drawing, graphite art',
-            'cartoon': 'cartoon style, bright colors, fun and playful',
-            'cyberpunk': 'cyberpunk style, neon lights, futuristic cityscape',
-            'fantasy': 'fantasy art, magical atmosphere, epic fantasy scene',
-            'sci-fi': 'science fiction, futuristic, advanced technology',
-            'horror': 'horror atmosphere, dark and eerie, suspenseful mood',
-            'steampunk': 'steampunk aesthetic, Victorian-era machinery, brass and copper tones',
-            'minimalist': 'minimalist design, clean lines, simple composition',
-            'abstract': 'abstract art, non-representational, experimental forms',
-            'surreal': 'surrealism, dreamlike imagery, unexpected combinations',
-            'comic': 'comic book style, bold outlines, dynamic action',
-            'retro': 'retro aesthetic, vintage style, nostalgic atmosphere',
-            'noir': 'film noir style, high contrast, dramatic shadows',
-            '3d_render': '3D render, CGI, photorealistic rendering',
-            'isometric': 'isometric view, geometric precision, technical illustration',
-            'pixel': 'pixel art, 8-bit style, retro gaming aesthetic',
-            'pop_art': 'pop art style, bold colors, Andy Warhol inspired',
-            'impressionist': 'impressionist painting, loose brushstrokes, Monet style',
-            'baroque': 'baroque art style, ornate details, dramatic lighting',
-            'art_nouveau': 'art nouveau style, flowing lines, decorative elements',
-            'art_deco': 'art deco design, geometric patterns, 1920s aesthetic',
-            'gothic': 'gothic style, dark atmosphere, medieval architecture',
-            'renaissance': 'Renaissance painting, classical composition, masterwork',
-            'cubist': 'cubist style, geometric shapes, Picasso inspired',
-            'vaporwave': 'vaporwave aesthetic, pastel colors, 80s nostalgia',
-            'low_poly': 'low poly art, geometric shapes, minimalist 3D',
-            'glitch': 'glitch art, digital corruption, distorted imagery'
-        };
+        const MAX_ARTISTIC = 5;
 
-        const styleTranslations = {
-            'realistic': 'Реалистичный',
-            'anime': 'Аниме',
-            'digital_art': 'Цифровое искусство',
-            'oil_painting': 'Масло',
-            'watercolor': 'Акварель',
-            'pencil': 'Карандаш',
-            'cartoon': 'Мультяшный',
-            'cyberpunk': 'Киберпанк',
-            'fantasy': 'Фэнтези',
-            'sci-fi': 'Научная фантастика',
-            'horror': 'Хоррор',
-            'steampunk': 'Стимпанк',
-            'minimalist': 'Минимализм',
-            'abstract': 'Абстракция',
-            'surreal': 'Сюрреализм',
-            'comic': 'Комикс',
-            'retro': 'Ретро',
-            'noir': 'Нуар',
-            '3d_render': '3D-рендер',
-            'isometric': 'Изометрия',
-            'pixel': 'Пиксель-арт',
-            'pop_art': 'Поп-арт',
-            'impressionist': 'Импрессионизм',
-            'baroque': 'Барокко',
-            'art_nouveau': 'Модерн',
-            'art_deco': 'Ар-деко',
-            'gothic': 'Готика',
-            'renaissance': 'Ренессанс',
-            'cubist': 'Кубизм',
-            'vaporwave': 'Вейпорвейв',
-            'low_poly': 'Лоу-поли',
-            'glitch': 'Глитч'
-        };
-
-        const styleCategories = {
-            'Основные стили': ['realistic', 'anime', 'digital_art', 'cartoon'],
-            'Традиционное искусство': ['oil_painting', 'watercolor', 'pencil', 'impressionist', 'renaissance', 'baroque'],
-            'Современное искусство': ['abstract', 'surreal', 'cubist', 'pop_art', 'minimalist'],
-            'Жанры': ['fantasy', 'sci-fi', 'horror', 'cyberpunk', 'steampunk', 'gothic'],
-            'Цифровое искусство': ['3d_render', 'isometric', 'pixel', 'low_poly', 'glitch'],
-            'Стилизация': ['comic', 'retro', 'noir', 'art_nouveau', 'art_deco', 'vaporwave']
-        };
-
-        const artisticTemplates = {
-            'golden_ratio': 'golden ratio composition, fibonacci spiral, harmonious proportions',
-            'symmetry': 'perfect symmetry, balanced composition, mirror effect',
-            'rule_of_thirds': 'rule of thirds composition, dynamic placement',
-            'leading_lines': 'leading lines, perspective depth, visual flow',
-            'framing': 'natural framing, focus on subject, layered composition',
-            'depth_of_field': 'shallow depth of field, bokeh background, professional focus',
-            'color_harmony': 'color harmony, complementary colors, balanced palette',
-            'chiaroscuro': 'chiaroscuro lighting, strong light-dark contrast',
-            'atmospheric': 'atmospheric perspective, depth through haze, layered distances',
-            'dynamic_pose': 'dynamic pose, action shot, movement captured',
-            'macro': 'macro photography, extreme close-up, intricate details',
-            'wide_angle': 'wide angle view, expansive scene, panoramic perspective',
-            'birds_eye': 'bird\'s eye view, overhead perspective, top-down angle',
-            'worms_eye': 'worm\'s eye view, looking up, dramatic low angle',
-            'dutch_angle': 'Dutch angle, tilted horizon, dynamic tension',
-            'silhouette': 'silhouette, backlit subject, strong outline',
-            'reflection': 'reflection effect, mirrored surface, double image',
-            'texture': 'rich texture, tactile quality, surface detail',
-            'pattern': 'repeating pattern, geometric design, visual rhythm',
-            'negative_space': 'negative space, minimalist composition, breathing room',
-            'motion_blur': 'motion blur, speed effect, dynamic movement',
-            'long_exposure': 'long exposure, light trails, smooth water effect',
-            'hdr': 'HDR effect, high dynamic range, enhanced details',
-            'vintage_grain': 'vintage film grain, analog photography aesthetic',
-            'lens_flare': 'lens flare, sun rays, optical effect',
-            'vignette': 'vignette effect, darkened edges, focus on center',
-            'tilt_shift': 'tilt-shift effect, miniature appearance, selective focus',
-            'double_exposure': 'double exposure, overlapping images, artistic blend',
-            'rim_lighting': 'rim lighting, edge highlight, dramatic outline',
-            'god_rays': 'god rays, volumetric lighting, light beams',
-            'foggy': 'foggy atmosphere, mysterious mood, diffused light',
-            'rainy': 'rainy weather, wet surfaces, water droplets',
-            'snowy': 'snowy scene, winter atmosphere, white landscape',
-            'sunset': 'sunset lighting, warm orange glow, golden hour',
-            'sunrise': 'sunrise scene, morning light, soft awakening',
-            'twilight': 'twilight hour, blue hour, magical transition',
-            'starry_night': 'starry night sky, celestial view, night photography',
-            'aurora': 'aurora borealis, northern lights, colorful sky',
-            'moonlight': 'moonlit scene, silvery glow, night atmosphere',
-            'candlelight': 'candlelight illumination, warm intimate glow',
-            'neon': 'neon lights, vibrant glow, urban night',
-            'bioluminescent': 'bioluminescent, glowing organisms, ethereal light',
-            'underwater': 'underwater scene, aquatic environment, submerged view',
-            'aerial': 'aerial view, drone perspective, bird\'s flight',
-            'microscopic': 'microscopic view, cellular detail, scientific beauty',
-            'cosmic': 'cosmic scene, space environment, nebula and stars',
-            'dystopian': 'dystopian atmosphere, post-apocalyptic, desolate mood',
-            'utopian': 'utopian vision, ideal world, harmonious scene',
-            'whimsical': 'whimsical style, playful elements, imaginative design',
-            'elegant': 'elegant composition, refined aesthetic, sophisticated style',
-            'gritty': 'gritty texture, rough aesthetic, raw atmosphere',
-            'ethereal': 'ethereal quality, otherworldly beauty, transcendent mood',
-            'dramatic': 'dramatic composition, high tension, emotional impact',
-            'serene': 'serene atmosphere, peaceful mood, tranquil scene',
-            'energetic': 'energetic composition, vibrant activity, lively scene',
-            'melancholic': 'melancholic mood, wistful atmosphere, nostalgic feeling',
-            'mysterious': 'mysterious atmosphere, enigmatic scene, hidden secrets',
-            'romantic': 'romantic mood, passionate atmosphere, emotional connection',
-            'epic': 'epic scale, grand composition, larger than life',
-            'intimate': 'intimate framing, close personal moment, emotional closeness'
-        };
-
-        const artisticTranslations = {
-            'golden_ratio': 'Золотое сечение',
-            'symmetry': 'Симметрия',
-            'rule_of_thirds': 'Правило третей',
-            'leading_lines': 'Направляющие линии',
-            'framing': 'Кадрирование',
-            'depth_of_field': 'Глубина резкости',
-            'color_harmony': 'Цветовая гармония',
-            'chiaroscuro': 'Кьяроскуро',
-            'atmospheric': 'Атмосферная перспектива',
-            'dynamic_pose': 'Динамичная поза',
-            'macro': 'Макросъёмка',
-            'wide_angle': 'Широкий угол',
-            'birds_eye': 'Вид с высоты птичьего полёта',
-            'worms_eye': 'Вид снизу вверх',
-            'dutch_angle': 'Голландский угол',
-            'silhouette': 'Силуэт',
-            'reflection': 'Отражение',
-            'texture': 'Текстура',
-            'pattern': 'Паттерн',
-            'negative_space': 'Негативное пространство',
-            'motion_blur': 'Размытие в движении',
-            'long_exposure': 'Длинная выдержка',
-            'hdr': 'HDR эффект',
-            'vintage_grain': 'Винтажная зернистость',
-            'lens_flare': 'Блики',
-            'vignette': 'Виньетирование',
-            'tilt_shift': 'Тилт-шифт',
-            'double_exposure': 'Двойная экспозиция',
-            'rim_lighting': 'Контровое освещение',
-            'god_rays': 'Божественные лучи',
-            'foggy': 'Туманный',
-            'rainy': 'Дождливый',
-            'snowy': 'Снежный',
-            'sunset': 'Закат',
-            'sunrise': 'Рассвет',
-            'twilight': 'Сумерки',
-            'starry_night': 'Звёздная ночь',
-            'aurora': 'Северное сияние',
-            'moonlight': 'Лунный свет',
-            'candlelight': 'Свет свечей',
-            'neon': 'Неон',
-            'bioluminescent': 'Биолюминесценция',
-            'underwater': 'Подводный',
-            'aerial': 'Воздушный',
-            'microscopic': 'Микроскопический',
-            'cosmic': 'Космический',
-            'dystopian': 'Дистопический',
-            'utopian': 'Утопический',
-            'whimsical': 'Причудливый',
-            'elegant': 'Элегантный',
-            'gritty': 'Грубый',
-            'ethereal': 'Эфирный',
-            'dramatic': 'Драматичный',
-            'serene': 'Спокойный',
-            'energetic': 'Энергичный',
-            'melancholic': 'Меланхоличный',
-            'mysterious': 'Таинственный',
-            'romantic': 'Романтичный',
-            'epic': 'Эпичный',
-            'intimate': 'Интимный'
-        };
-
-        const artisticCategories = {
-            'Композиция': {
-                'Основы': ['golden_ratio', 'symmetry', 'rule_of_thirds', 'leading_lines', 'framing', 'negative_space'],
-                'Перспектива': ['birds_eye', 'worms_eye', 'dutch_angle', 'aerial', 'wide_angle']
-            },
-            'Эффекты камеры': {
-                'Фокус и глубина': ['depth_of_field', 'macro', 'tilt_shift'],
-                'Движение': ['motion_blur', 'long_exposure'],
-                'Обработка': ['hdr', 'vintage_grain', 'lens_flare', 'vignette', 'double_exposure']
-            },
-            'Освещение': {
-                'Естественное': ['sunset', 'sunrise', 'twilight', 'moonlight'],
-                'Искусственное': ['candlelight', 'neon', 'rim_lighting', 'god_rays'],
-                'Природные явления': ['starry_night', 'aurora', 'bioluminescent']
-            },
-            'Атмосфера': {
-                'Погода': ['foggy', 'rainy', 'snowy'],
-                'Настроение': ['dramatic', 'serene', 'energetic', 'melancholic', 'mysterious', 'romantic', 'whimsical']
-            },
-            'Визуальные элементы': {
-                'Базовые': ['silhouette', 'reflection', 'texture', 'pattern', 'color_harmony'],
-                'Стиль': ['elegant', 'gritty', 'ethereal', 'epic', 'intimate']
-            },
-            'Окружение': {
-                'Специфические виды': ['underwater', 'microscopic', 'cosmic'],
-                'Мировоззрение': ['dystopian', 'utopian']
-            },
-            'Техники': {
-                'Световые': ['chiaroscuro', 'atmospheric'],
-                'Композиционные': ['dynamic_pose']
-            }
-        };
-
-        const enhancePrompts = {
-            artistic: "You are an expert AI art prompt engineer. Enhance the following prompt to be more artistic and visually appealing. Add creative details about composition, color palette, mood, and artistic style. Keep it concise but impactful. Respond ONLY with the enhanced prompt, no explanations.",
-            technical: "You are a technical AI art prompt engineer. Enhance the following prompt with precise technical details about lighting, camera settings, rendering quality, and visual parameters. Include specific technical terms. Respond ONLY with the enhanced prompt, no explanations.",
-            cinematic: "You are a cinematic AI prompt engineer. Transform the following prompt into a cinematic masterpiece description. Add details about dramatic lighting, camera angles, depth of field, and film-like atmosphere. Respond ONLY with the enhanced prompt, no explanations.",
-            anime: "You are an anime art expert. Enhance the following prompt with anime-specific details: character style, vibrant colors, dynamic poses, and typical anime aesthetic elements. Respond ONLY with the enhanced prompt, no explanations.",
-            minimalist: "You are a minimalist design expert. Refine the following prompt to emphasize simplicity, clean lines, essential elements, and negative space. Remove unnecessary details while maintaining the core concept. Respond ONLY with the enhanced prompt, no explanations."
-        };
-
-        const promptExamples = [
-            'Кот на крыше под луной',
-            'Дракон над горным хребтом',
-            'Космический корабль в туманности',
-            'Футуристический город в дождь',
-            'Волшебный лес с светящимися грибами',
-            'Старинный замок на утёсе',
-            'Подводный город с русалками',
-            'Робот в заброшенном здании',
-            'Феникс, восстающий из пепла',
-            'Викинг в битве с морским чудовищем',
-            'Эльфийская принцесса в лесу',
-            'Самурай на фоне сакуры',
-            'Киборг в неоновом переулке',
-            'Пиратский корабль в шторм',
-            'Ангел и демон лицом к лицу',
-            'Механический дракон в пустыне',
-            'Медитирующий монах в храме',
-            'Космонавт на чужой планете',
-            'Ведьма варит зелье',
-            'Рыцарь перед драконом'
-        ];
-
-        function renderRandomExamples() {
-            const examplesList = document.getElementById('examples-list');
-            const shuffled = [...promptExamples].sort(() => 0.5 - Math.random());
-            const selected = shuffled.slice(0, 6);
-            examplesList.innerHTML = selected.map(ex =>
-                `<span class="example-btn" onclick="useExample('${ex.replace(/'/g, "\\'")}')">${ex}</span>`
-            ).join('');
+        function getSelectedStyle() {
+            const selected = document.querySelector('input[name="style"]:checked');
+            return selected ? selected.value : 'none';
         }
 
-        function useExample(text) {
-            inputEl.value = text;
-            generatePrompt();
-        }
-
-        function renderStyles() {
-            const container = document.getElementById('styles-content');
-            let html = '';
-            for (let category in styleCategories) {
-                html += `<div class="section-header" style="margin-top: 10px;"><h3 style="font-size: 14px; color: var(--text);">${category}</h3></div>`;
-                html += `<div class="styles-list">`;
-                styleCategories[category].forEach(key => {
-                    html += `<label class="style-option">
-                        <input type="radio" name="style" value="${key}" onchange="generatePrompt()">
-                        ${styleTranslations[key]}
-                    </label>`;
-                });
-                html += `</div>`;
-            }
-            container.innerHTML = html;
-        }
-
-        function renderArtistic() {
-            const container = document.getElementById('artistic-content');
-            let html = '';
-
-            function renderCategory(categories, level = 1) {
-                let result = '';
-                for (let category in categories) {
-                    const content = categories[category];
-                    const isSubcategory = typeof content === 'object' && !Array.isArray(content);
-                    const categoryId = category.replace(/\s+/g, '-').toLowerCase();
-
-                    if (isSubcategory) {
-                        result += `<div class="artistic-category-level-${level}">`;
-                        result += `<div class="section-header" onclick="toggleSubcategory('${categoryId}')">`;
-                        result += level === 1 
-                            ? `<h3 style="font-size: 14px; margin: 0;">${category}</h3>` 
-                            : `<h4 style="font-size: 13px; margin: 0;">${category}</h4>`;
-                        result += `<span class="toggle-icon collapsed" id="${categoryId}-toggle">▼</span>`;
-                        result += `</div>`;
-                        result += `<div class="subcategory-content" id="${categoryId}-content">`;
-                        result += renderCategory(content, level + 1);
-                        result += `</div></div>`;
-                    } else {
-                        result += `<div class="artistic-category-level-${level}">`;
-                        result += level === 1 
-                            ? `<h3 style="font-size: 14px; margin-top: 10px;">${category}</h3>` 
-                            : `<h4 style="font-size: 13px; margin-top: 8px;">${category}</h4>`;
-                        result += `<div class="styles-list">`;
-                        content.forEach(key => {
-                            result += `<label class="style-option">
-                                <input type="checkbox" class="artistic-checkbox" value="${key}" onchange="handleArtisticChange()">
-                                ${artisticTranslations[key]}
-                            </label>`;
-                        });
-                        result += `</div></div>`;
-                    }
-                }
-                return result;
-            }
-
-            html = renderCategory(artisticCategories);
-            container.innerHTML = html;
-            updateArtisticCounter();
-        }
-
-        function handleArtisticChange() {
-            limitArtisticCheckboxes();
-            updateArtisticCounter();
-            generatePrompt();
+        function getSelectedArtistic() {
+            const checked = document.querySelectorAll('input[name="artistic"]:checked');
+            return Array.from(checked)
+                .map(el => el.value)
+                .slice(0, MAX_ARTISTIC);
         }
 
         function limitArtisticCheckboxes() {
-            const checkboxes = document.querySelectorAll('.artistic-checkbox');
-            const checked = document.querySelectorAll('.artistic-checkbox:checked');
-            if (checked.length > 5) {
-                showToast('⚠️ Максимум 5 художественных элементов!');
-                checked[checked.length - 1].checked = false;
+            const checked = document.querySelectorAll('input[name="artistic"]:checked');
+            if (checked.length > MAX_ARTISTIC) {
+                const last = checked[checked.length - 1];
+                last.checked = false;
+                showNotification(`Можно выбрать не более ${MAX_ARTISTIC} элементов`);
             }
-        }
-
-        function updateArtisticCounter() {
-            const checked = document.querySelectorAll('.artistic-checkbox:checked');
-            const counter = document.getElementById('artistic-counter');
-            counter.textContent = `${checked.length}/5`;
-            if (checked.length > 5) {
-                counter.classList.add('exceeded');
-            } else {
-                counter.classList.remove('exceeded');
-            }
-        }
-
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
         function toggleSubcategory(id) {
-            const content = document.getElementById(`${id}-content`);
-            const toggle = document.getElementById(`${id}-toggle`);
-            if (content.classList.contains('expanded')) {
-                content.classList.remove('expanded');
-                toggle.classList.add('collapsed');
-            } else {
-                content.classList.add('expanded');
-                toggle.classList.remove('collapsed');
+            const content = document.getElementById(`subcat-${id}`);
+            const icon = document.getElementById(`subcat-toggle-${id}`);
+            const isExpanded = content.classList.contains('expanded');
+            
+            content.classList.toggle('expanded', !isExpanded);
+            icon.classList.toggle('collapsed', !isExpanded);
+        }
+
+        function renderStyles() {
+            const query = styleSearchEl.value.toLowerCase();
+            let html = '';
+
+            for (const [cat, items] of Object.entries(styleCategories)) {
+                const filtered = items.filter(s => 
+                    s.toLowerCase().includes(query) || (styleTranslations[s] && styleTranslations[s].toLowerCase().includes(query))
+                );
+                if (filtered.length === 0 && query !== '') continue; // Skip if no matches and there's a query
+
+                const safeCatId = cat.replace(/\s+/g, '_');
+                html += `
+                    <div class="section-header subcategory-header" onclick="toggleSubcategory('styles_${safeCatId}')">
+                        <h4>${cat}</h4>
+                        <span class="toggle-icon collapsed" id="subcat-toggle-styles_${safeCatId}">▼</span>
+                    </div>
+                    <div class="subcategory-content" id="subcat-styles_${safeCatId}">
+                        <div class="styles-list">
+                `;
+                filtered.forEach(style => {
+                    const displayName = style === 'none' ? 'Без стиля' : style;
+                    const translation = styleTranslations[style] || style; // Получаем перевод
+                    html += `
+                        <label class="style-option" title="${translation}">
+                            <input type="radio" name="style" value="${style}" onchange="generatePrompt()">
+                            ${displayName}
+                        </label>
+                    `;
+                });
+                html += `
+                        </div>
+                    </div>
+                `;
             }
+
+            if (!query && html === '') {
+                html = '<p style="color: var(--text-muted);">Стили не найдены</p>';
+            }
+
+            stylesContentEl.innerHTML = html;
+            const selected = getSelectedStyle();
+            const radio = stylesContentEl.querySelector(`input[value="${selected}"]`);
+            if (radio) radio.checked = true;
+
+            // All subcategories should be collapsed by default
+            document.querySelectorAll('.subcategory-content').forEach(subcat => {
+                subcat.classList.remove('expanded');
+                const iconId = subcat.id.replace('subcat-', 'subcat-toggle-');
+                const icon = document.getElementById(iconId);
+                if (icon) {
+                    icon.classList.add('collapsed');
+                }
+            });
+        }
+
+        function renderArtistic() {
+            const query = artisticSearchEl.value.toLowerCase();
+            let html = '';
+
+            for (const [cat, subcategoriesOrItems] of Object.entries(artisticCategories)) {
+                const safeCatId = cat.replace(/\s+/g, '_');
+                
+                // If the category contains sub-objects (like artists grouped by style)
+                if (typeof subcategoriesOrItems === 'object' && !Array.isArray(subcategoriesOrItems)) {
+                    let mainCatHtml = '';
+                    let mainCatHasContent = false;
+
+                    for (const [subCatName, itemsOrSubSubCategories] of Object.entries(subcategoriesOrItems)) {
+                        const safeSubCatId = `${safeCatId}_${subCatName.replace(/\s+/g, '_')}`;
+                        let currentSubCatHtml = '';
+                        let currentSubCatHasContent = false;
+
+                        // If it's a sub-subcategory (e.g., "Современные цифровые художники" -> "Концепт-арт")
+                        if (typeof itemsOrSubSubCategories === 'object' && !Array.isArray(itemsOrSubSubCategories)) {
+                            let subSubCatHtml = '';
+                            let subSubCatHasContent = false;
+                            for (const [subSubCatName, items] of Object.entries(itemsOrSubSubCategories)) {
+                                const filtered = items.filter(s => 
+                                    s.toLowerCase().includes(query) || (artisticTranslations[s] && artisticTranslations[s].toLowerCase().includes(query))
+                                );
+                                if (filtered.length > 0) {
+                                    subSubCatHasContent = true;
+                                    const safeSubSubCatId = `${safeSubCatId}_${subSubCatName.replace(/\s+/g, '_')}`;
+                                    subSubCatHtml += `
+                                        <div class="artistic-category-level-2">
+                                            <div class="section-header subcategory-header" onclick="toggleSubcategory('artistic_${safeSubSubCatId}')">
+                                                <h4>${subSubCatName}</h4>
+                                                <span class="toggle-icon collapsed" id="subcat-toggle-artistic_${safeSubSubCatId}">▼</span>
+                                            </div>
+                                            <div class="subcategory-content" id="subcat-artistic_${safeSubSubCatId}">
+                                                <div class="styles-list">
+                                    `;
+                                    filtered.forEach(item => {
+                                        const translation = artisticTranslations[item] || item;
+                                        subSubCatHtml += `
+                                            <label class="style-option" title="${translation}">
+                                                <input type="checkbox" name="artistic" value="${item}" onchange="limitArtisticCheckboxesEnhanced(); generatePrompt();">
+                                                ${item}
+                                            </label>
+                                        `;
+                                    });
+                                    subSubCatHtml += `
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `;
+                                }
+                            }
+                            if (subSubCatHasContent) {
+                                currentSubCatHtml += subSubCatHtml;
+                                currentSubCatHasContent = true;
+                            }
+                        } else { // Direct items under a subcategory
+                            const filtered = itemsOrSubSubCategories.filter(s => 
+                                s.toLowerCase().includes(query) || (artisticTranslations[s] && artisticTranslations[s].toLowerCase().includes(query))
+                            );
+                            if (filtered.length > 0) {
+                                currentSubCatHasContent = true;
+                                currentSubCatHtml += `
+                                    <div class="styles-list">
+                                `;
+                                filtered.forEach(item => {
+                                    const translation = artisticTranslations[item] || item;
+                                    currentSubCatHtml += `
+                                        <label class="style-option" title="${translation}">
+                                            <input type="checkbox" name="artistic" value="${item}" onchange="limitArtisticCheckboxesEnhanced(); generatePrompt();">
+                                            ${item}
+                                        </label>
+                                    `;
+                                });
+                                currentSubCatHtml += `
+                                    </div>
+                                `;
+                            }
+                        }
+
+                        if (currentSubCatHasContent || (query && subCatName.toLowerCase().includes(query))) {
+                            mainCatHasContent = true;
+                            mainCatHtml += `
+                                <div class="artistic-category-level-1">
+                                    <div class="section-header subcategory-header" onclick="toggleSubcategory('artistic_${safeSubCatId}')">
+                                        <h4>${subCatName}</h4>
+                                        <span class="toggle-icon collapsed" id="subcat-toggle-artistic_${safeSubCatId}">▼</span>
+                                    </div>
+                                    <div class="subcategory-content" id="subcat-artistic_${safeSubCatId}">
+                                        ${currentSubCatHtml}
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    }
+
+                    if (mainCatHasContent || (query && cat.toLowerCase().includes(query))) {
+                        html += `
+                            <div class="section-header subcategory-header" onclick="toggleSubcategory('artistic_main_${safeCatId}')">
+                                <h3>${cat}</h3>
+                                <span class="toggle-icon collapsed" id="subcat-toggle-artistic_main_${safeCatId}">▼</span>
+                            </div>
+                            <div class="subcategory-content" id="subcat-artistic_main_${safeCatId}">
+                                ${mainCatHtml}
+                            </div>
+                        `;
+                    }
+
+                } else { // If the category directly contains items (not sub-objects)
+                    const filtered = subcategoriesOrItems.filter(s => 
+                        s.toLowerCase().includes(query) || (artisticTranslations[s] && artisticTranslations[s].toLowerCase().includes(query))
+                    );
+                    if (filtered.length === 0 && !query) continue;
+                    if (filtered.length === 0 && query && !cat.toLowerCase().includes(query)) continue;
+
+
+                    html += `
+                        <div class="section-header subcategory-header" onclick="toggleSubcategory('artistic_${safeCatId}')">
+                            <h4>${cat}</h4>
+                            <span class="toggle-icon collapsed" id="subcat-toggle-artistic_${safeCatId}">▼</span>
+                        </div>
+                        <div class="subcategory-content" id="subcat-artistic_${safeCatId}">
+                            <div class="styles-list">
+                    `;
+                    filtered.forEach(item => {
+                        const translation = artisticTranslations[item] || item;
+                        html += `
+                            <label class="style-option" title="${translation}">
+                                <input type="checkbox" name="artistic" value="${item}" onchange="limitArtisticCheckboxesEnhanced(); generatePrompt();">
+                                ${item}
+                            </label>
+                        `;
+                    });
+                    html += `
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
+            if (!query && html === '') {
+                html = '<p style="color: var(--text-muted);">Элементы не найдены</p>';
+            }
+
+            artisticContentEl.innerHTML = html;
+            const selected = getSelectedArtistic();
+            document.querySelectorAll('input[name="artistic"]').forEach(el => {
+                el.checked = selected.includes(el.value);
+            });
+
+            // All subcategories should be collapsed by default
+            document.querySelectorAll('.subcategory-content').forEach(subcat => {
+                subcat.classList.remove('expanded');
+                const iconId = subcat.id.replace('subcat-', 'subcat-toggle-');
+                const icon = document.getElementById(iconId);
+                if (icon) {
+                    icon.classList.add('collapsed');
+                }
+            });
         }
 
         async function generatePrompt() {
@@ -1771,345 +2162,524 @@
                 return;
             }
 
-            const selectedStyle = document.querySelector('input[name="style"]:checked');
-            const selectedArtistic = Array.from(document.querySelectorAll('.artistic-checkbox:checked')).map(cb => cb.value);
+            let translated = input;
+            try {
+                // Изменено: отправляем весь текст для перевода, даже если есть точки.
+                // Google Translate API обычно обрабатывает предложения корректно.
+                const res = await fetch(
+                    `https://translate.googleapis.com/translate_a/single?client=gtx&sl=ru&tl=en&dt=t&q=${encodeURIComponent(input)}`
+                );
+                if (res.ok) {
+                    const data = await res.json();
+                    translated = data[0].map(s => s[0]).join(' '); // Объединяем все переведенные сегменты
+                }
+            } catch (err) {
+                console.warn('Translation failed');
+            }
+
+            const selectedStyle = getSelectedStyle();
+            const artistic = getSelectedArtistic();
+
             const resolution = document.getElementById('resolution').value;
             const lighting = document.getElementById('lighting').value;
-            const colors = document.getElementById('colors').value;
+            const colors = document.getElementById('colors').value; // Original colors from quality settings
             const focus = document.getElementById('focus').value;
             const detail = document.getElementById('detail').value;
 
-            try {
-                const translated = await translateText(input, 'en');
-                let basePart = translated;
-                if (selectedStyle) {
-                    const template = styleDescriptions[selectedStyle.value];
-                    basePart = `${translated}, ${template}`;
-                }
-
-                let artisticPart = '';
-                if (selectedArtistic.length > 0) {
-                    const artisticDescriptions = selectedArtistic.map(key => artisticTemplates[key]);
-                    artisticPart = artisticDescriptions.join(', ');
-                }
-
-                const qualityParts = [resolution, lighting, colors, focus, detail].filter(v => v);
-                const qualityPart = qualityParts.join(', ');
-
-                let finalPrompt = [basePart, artisticPart, qualityPart].filter(p => p).join(', ');
-
-                if (input.endsWith('.')) {
-                    if (!finalPrompt.endsWith('.')) finalPrompt += '.';
+            let basePart = '';
+            if (selectedStyle !== 'none') {
+                const template = styleDescriptions[selectedStyle];
+                if (template) {
+                    basePart = template.replace("{prompt}", translated);
                 } else {
-                    if (finalPrompt.endsWith('.')) finalPrompt = finalPrompt.slice(0, -1);
+                    basePart = `${translated}, in ${selectedStyle} style`;
                 }
-
-                outputEl.value = finalPrompt;
-            } catch (error) {
-                console.error('Translation error:', error);
-                outputEl.value = input;
+            } else {
+                basePart = translated;
             }
+
+            let artisticPart = '';
+            if (artistic.length > 0) {
+                const templates = artistic
+                    .map(item => artisticTemplates[item] || item)
+                    .filter(Boolean);
+                if (templates.length > 0) {
+                    artisticPart = templates.join(', ');
+                }
+            }
+
+            const qualityParts = [];
+            if (detail) qualityParts.push(detail);
+            if (resolution) qualityParts.push(resolution);
+            if (colors) qualityParts.push(colors); // Add original quality colors
+            if (focus) qualityParts.push(focus);
+            if (lighting) qualityParts.push(lighting);
+
+            let parts = [basePart];
+            if (artisticPart) parts.push(artisticPart);
+            if (qualityParts.length > 0) parts.push(qualityParts.join(', '));
+
+            let finalPrompt = parts.join(', ');
+
+            // Normalize the ending: remove any trailing period that might come from the translation.
+            if (finalPrompt.endsWith('.')) {
+                finalPrompt = finalPrompt.slice(0, -1).trim();
+            }
+
+            // Add the period back only if it was present in the original Russian input.
+            if (input.endsWith('.')) {
+                finalPrompt += '.';
+            }
+            
+            outputEl.value = finalPrompt;
         }
 
-        async function translateText(text, targetLang) {
-            try {
-                const response = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`);
-                const data = await response.json();
-                return data[0].map(item => item[0]).join('');
-            } catch (error) {
-                throw error;
-            }
-        }
+        const enhancePrompts = {
+            "artistic": "Enhance this AI art prompt to be highly artistic, evocative, and detailed. Add references to artists, mood, lighting, color palette, and color composition. Keep it as a single English sentence.",
+            "technical": "Enhance this prompt focusing on extreme technical detail, resolution (8k, 16k), textures, lighting physics, and photorealism. Include terms like 'octane render', 'ray tracing', 'unreal engine 5', 'sharp focus'. Keep it as a single English sentence.",
+            "cinematic": "Rewrite this prompt as a high-budget movie scene. Focus on camera angles (wide shot, close up, dutch angle), depth of field, color grading (teal and orange), emotional atmosphere, and composition. Keep it as a single English sentence.",
+            "anime": "Rewrite this prompt in a high-quality anime style (Makoto Shinkai/Studio Ghibli style). Focus on vibrant colors, emotive characters, 2D animation aesthetics, and cel shading. Keep it as a single English sentence.",
+            "minimalist": "Simplify and refine this prompt for a minimalist aesthetic. Focus on clean lines, negative space, simple geometry, and limited color palette. Remove clutter. Keep it as a single English sentence."
+        };
 
         async function enhanceArtistically() {
             const prompt = outputEl.value.trim();
             if (!prompt) {
-                showNotification('⚠️ Сначала сгенерируйте промпт!', 'warning');
+                showNotification('Сначала сгенерируйте промпт');
                 return;
             }
 
-            const apiKey = document.getElementById('api-key').value.trim();
-            if (!apiKey) {
-                showNotification('⚠️ Введите API-ключ Groq!', 'warning');
+            if (!GROQ_KEY) {
+                showNotification('Введите API-ключ Groq');
                 return;
             }
 
-            const model = SELECTED_MODEL || 'llama3-8b-8192';
+            const originalPlaceholder = enhancedOutputEl.placeholder;
+            enhancedOutputEl.value = '';
+            enhancedOutputEl.placeholder = '🧠 Улучшение через ИИ...';
+
+            let dots = 0;
+            const dotInterval = setInterval(() => {
+                dots = (dots + 1) % 4;
+                enhancedOutputEl.placeholder = '🧠 Улучшение через ИИ' + '.'.repeat(dots);
+            }, 500);
+
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 12000);
+            
+            // Получаем выбранный режим
             const mode = document.getElementById('enhance-mode').value;
-            const systemPrompt = enhancePrompts[mode];
-
-            const enhanceBtn = document.getElementById('enhance-btn');
-            enhanceBtn.disabled = true;
-            enhanceBtn.innerHTML = '<span class="loading-spinner"></span>Генерация...';
+            const systemPrompt = enhancePrompts[mode] || enhancePrompts['artistic'];
 
             try {
-                const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-                    method: 'POST',
+                const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                    method: "POST",
+                    signal: controller.signal,
                     headers: {
-                        'Authorization': `Bearer ${apiKey}`,
-                        'Content-Type': 'application/json'
+                        "Authorization": `Bearer ${GROQ_KEY}`,
+                        "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        model: model,
-                        messages: [
-                            { role: 'system', content: systemPrompt },
-                            { role: 'user', content: prompt }
-                        ],
-                        temperature: 0.9,
-                        max_tokens: 500
+                        model: SELECTED_MODEL,
+                        messages: [{
+                            role: "user",
+                            content: `${systemPrompt} Prompt: "${prompt}"`
+                        }]
                     })
                 });
 
+                clearTimeout(timeoutId);
+                clearInterval(dotInterval);
+                enhancedOutputEl.placeholder = originalPlaceholder;
+
                 if (!response.ok) {
-                    throw new Error(`API Error: ${response.status}`);
+                    let errorMessage = '❌ Ошибка Groq API';
+                    if (response.status === 401) {
+                        errorMessage = '❌ Неверный API-ключ';
+                    } else if (response.status === 429) {
+                        errorMessage = '❌ Лимит запросов исчерпан';
+                    } else {
+                        errorMessage = `❌ Ошибка: ${response.status}`;
+                    }
+                    enhancedOutputEl.value = errorMessage;
+                    console.error('Groq API error:', response.status, await response.text());
+                    return;
                 }
 
                 const data = await response.json();
-                const enhanced = data.choices[0].message.content.trim();
-                enhancedOutputEl.value = enhanced;
-                showNotification('✅ Промпт улучшен!', 'success');
-            } catch (error) {
-                console.error('Enhance error:', error);
-                showNotification('❌ Ошибка улучшения промпта!', 'error');
-            } finally {
-                enhanceBtn.disabled = false;
-                enhanceBtn.innerHTML = '🎨';
+                if (data.choices?.[0]?.message?.content) {
+                    // Удаляем кавычки
+                    enhancedOutputEl.value = data.choices[0].message.content.trim().replace(/["']/g, '');
+                } else {
+                    throw new Error('Пустой ответ от модели');
+                }
+            } catch (err) {
+                clearTimeout(timeoutId);
+                clearInterval(dotInterval);
+                enhancedOutputEl.placeholder = originalPlaceholder;
+
+                let errorMsg = '🛠️ Не удалось улучшить промпт';
+                if (err.name === 'AbortError') {
+                    errorMsg = '⏱️ Таймаут: сервер не ответил';
+                } else if (err.message && err.message.includes('Failed to fetch')) {
+                    errorMsg = '🌐 Нет подключения к Groq API';
+                }
+                enhancedOutputEl.value = errorMsg;
+                console.error('Enhancement error:', err);
             }
         }
-
-        function copyPrompt(source) {
-            const text = document.getElementById(source).value;
-            if (!text) return;
-            navigator.clipboard.writeText(text).then(() => {
-                showNotification('📋 Промпт скопирован!', 'success');
-                saveToHistory(text);
-            });
-        }
-
-        function showNotification(message, type = 'success') {
-            const notif = document.getElementById('notification');
-            notif.textContent = message;
-            if (type === 'warning') notif.style.background = 'var(--danger)';
-            else if (type === 'success') notif.style.background = 'var(--success)';
-            notif.classList.add('show');
-            setTimeout(() => notif.classList.remove('show'), 3000);
-        }
-
-        function saveToHistory(prompt) {
-            let history = JSON.parse(localStorage.getItem('prompt_history') || '[]');
-            history.unshift({ text: prompt, time: Date.now() });
-            history = history.slice(0, 60);
-            localStorage.setItem('prompt_history', JSON.stringify(history));
-            renderHistory();
-        }
-
-        function renderHistory() {
-            const history = JSON.parse(localStorage.getItem('prompt_history') || '[]');
-            const grid = document.getElementById('history-grid');
-            if (history.length === 0) {
-                grid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: var(--text-muted);">История пуста</p>';
+        
+        async function translateBack(sourceId) {
+            const text = document.getElementById(sourceId).value;
+            if (!text || text.startsWith('❌') || text.startsWith('⏱️') || text.startsWith('🌐') || text.startsWith('🛠️')) {
+                showToast('⚠️ Нет текста для перевода');
                 return;
             }
-            grid.innerHTML = history.map((item, idx) => {
-                const short = item.text.length > 80 ? item.text.substring(0, 80) + '...' : item.text;
-                return `<div class="history-item" onclick="loadFromHistory(${idx})" title="${item.text.replace(/"/g, '&quot;')}">${short}</div>`;
-            }).join('');
+            
+            const modal = document.getElementById('translation-modal');
+            const resultDiv = document.getElementById('translation-result');
+            modal.style.display = 'block';
+            resultDiv.textContent = 'Загрузка перевода...';
+            
+            try {
+                // Используем тот же API, но en -> ru
+                const res = await fetch(
+                    `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=ru&dt=t&q=${encodeURIComponent(text)}`
+                );
+                
+                if (res.ok) {
+                    const data = await res.json();
+                    const translatedText = data[0].map(s => s[0]).join(' ');
+                    resultDiv.textContent = translatedText;
+                } else {
+                    resultDiv.textContent = '❌ Ошибка сервиса перевода';
+                }
+            } catch (err) {
+                console.error(err);
+                resultDiv.textContent = '❌ Ошибка сети при переводе';
+            }
+        }
+
+
+        async function copyTranslation() {
+            const text = document.getElementById('translation-result').textContent;
+            if (!text || text === 'Загрузка перевода...' || text.startsWith('❌')) {
+                showToast('⚠️ Нет текста для копирования');
+                return;
+            }
+            
+            try {
+                await navigator.clipboard.writeText(text);
+                showNotification('Перевод скопирован!');
+            } catch (err) {
+                // Fallback для старых браузеров
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showNotification('Перевод скопирован!');
+            }
+        }
+
+        async function copyPrompt() {
+            const text = outputEl.value;
+            if (!text) return;
+            try {
+                await navigator.clipboard.writeText(text);
+                showNotification('Промпт скопирован!');
+                saveToHistory(text);
+            } catch (err) {
+                outputEl.select();
+                document.execCommand('copy');
+                showNotification('Промпт скопирован!');
+                saveToHistory(text);
+            }
+        }
+
+        async function copyEnhancedPrompt() {
+            const text = enhancedOutputEl.value;
+            if (!text || text.startsWith('❌') || text.startsWith('⏱️') || text.startsWith('🌐') || text.startsWith('🛠️')) return;
+            try {
+                await navigator.clipboard.writeText(text);
+                showNotification('Улучшенный промпт скопирован!');
+                saveToHistory(text);
+            } catch (err) {
+                enhancedOutputEl.select();
+                document.execCommand('copy');
+                showNotification('Улучшенный промпт скопирован!');
+                saveToHistory(text);
+            }
+        }
+
+        function showNotification(message) {
+            notificationEl.textContent = message;
+            notificationEl.classList.add('show');
+            setTimeout(() => notificationEl.classList.remove('show'), 2500);
+        }
+
+        const HISTORY_KEY = 'flux_prompt_history';
+        const MAX_HISTORY = 60;
+
+        function saveToHistory(prompt) {
+            const history = loadFromStorage();
+            const now = new Date();
+            const entry = {
+                prompt,
+                timestamp: now.toISOString(),
+                displayTime: now.toLocaleString('ru-RU', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                })
+            };
+            if (history.length === 0 || history[0].prompt !== prompt) {
+                history.unshift(entry);
+                if (history.length > MAX_HISTORY) history.pop();
+                localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+                renderHistory(history);
+            }
+        }
+
+        function loadHistory() {
+            const history = loadFromStorage();
+            renderHistory(history);
+        }
+
+        function loadFromStorage() {
+            const data = localStorage.getItem(HISTORY_KEY);
+            return data ? JSON.parse(data) : [];
+        }
+
+        function renderHistory(history) {
+            if (history.length === 0) {
+                historyGrid.innerHTML = '<p style="color: var(--text-muted); grid-column: 1 / -1;">История пуста</p>';
+                return;
+            }
+            historyGrid.innerHTML = history.map((item, i) => `
+                <div class="history-item" onclick="loadFromHistory(${i})">
+                    <strong>${item.prompt.substring(0, 60)}${item.prompt.length > 60 ? '...' : ''}</strong>
+                    <time>${item.displayTime}</time>
+                </div>
+            `).join('');
         }
 
         function loadFromHistory(index) {
-            const history = JSON.parse(localStorage.getItem('prompt_history') || '[]');
+            const history = loadFromStorage();
             if (history[index]) {
-                outputEl.value = history[index].text;
-                showNotification('✅ Промпт загружен из истории', 'success');
+                outputEl.value = history[index].prompt;
+                inputEl.value = ''; // Очищаем поле ввода русского текста
+                enhancedOutputEl.value = ''; // Очищаем улучшенный промпт
             }
         }
 
         function clearHistory() {
-            if (confirm('Очистить всю историю промптов?')) {
-                localStorage.removeItem('prompt_history');
-                renderHistory();
-                showNotification('🗑️ История очищена', 'success');
+            localStorage.removeItem(HISTORY_KEY);
+            renderHistory([]);
+        }
+
+        function toggleSection(id, forceExpand = null) {
+            const content = document.getElementById(`${id}-content`);
+            const icon = document.getElementById(`${id}-toggle`);
+            const isExpanded = content.classList.contains('expanded');
+            const expand = (forceExpand === null) ? !isExpanded : forceExpand;
+            content.classList.toggle('expanded', expand);
+            icon.classList.toggle('collapsed', !expand);
+            if (id === 'quality' && expand && !content.hasAttribute('initialized')) {
+                content.setAttribute('initialized', 'true');
             }
         }
 
-        function toggleSection(section) {
-            const content = document.getElementById(`${section}-content`);
-            const toggle = document.getElementById(`${section}-toggle`);
-            if (content.classList.contains('expanded')) {
-                content.classList.remove('expanded');
-                toggle.classList.add('collapsed');
-            } else {
-                content.classList.add('expanded');
-                toggle.classList.remove('collapsed');
-            }
+        function reset_parameters() {
+            // Сброс стилей: выбрать 'none'
+            const style_radios = document.querySelectorAll('input[name="style"]');
+            style_radios.forEach(radio => {
+                radio.checked = (radio.value === 'none');
+            });
+            
+            // Сброс художественных элементов: снять все чекбоксы
+            const artistic_checkboxes = document.querySelectorAll('input[name="artistic"]');
+            artistic_checkboxes.forEach(cb => { cb.checked = false; });
+            
+            // Сброс настроек качества
+            document.getElementById('resolution').value = '';
+            document.getElementById('lighting').value = '';
+            document.getElementById('colors').value = '';
+            document.getElementById('focus').value = '';
+            document.getElementById('detail').value = '';
+            
+            // Сброс поисковых полей
+            document.getElementById('style-search').value = '';
+            document.getElementById('artistic-search').value = '';
+            
+            // Обновить отображения
+            renderStyles();
+            renderArtistic();
+            
+            // Перегенерировать промпт
+            generatePrompt();
         }
 
-        document.getElementById('theme-toggle').addEventListener('click', () => {
-            const current = document.documentElement.getAttribute('data-theme');
-            const newTheme = current === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            document.getElementById('theme-toggle').textContent = newTheme === 'dark' ? '☀️' : '🌙';
-            localStorage.setItem('theme', newTheme);
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            renderRandomExamples();
+
+            inputEl.addEventListener('input', generatePrompt);
+            copyBtn.addEventListener('click', copyPrompt);
+            copyEnhancedBtn.addEventListener('click', copyEnhancedPrompt);
+            enhanceBtn.addEventListener('click', enhanceArtistically);
+            styleSearchEl.addEventListener('input', debouncedRenderStyles);
+            artisticSearchEl.addEventListener('input', debouncedRenderArtistic);
+
+            document.querySelectorAll('#resolution, #lighting, #colors, #focus, #detail').forEach(el => {
+                el.addEventListener('change', generatePrompt);
+            });
+
+            renderStyles();
+            renderArtistic();
+            loadHistory();
+            
+            // Initial states for the main sections
+            // All main sections are collapsed by default
+            toggleSection('history', false);
+            toggleSection('styles', false);
+            toggleSection('artistic', false);
+            toggleSection('quality', true); // Quality remains expanded for ease of use
+
+            // Добавляем обработчик для кнопки сброса
+            document.getElementById('reset-button').addEventListener('click', reset_parameters);
+
+            renderPresets();
+            updateArtisticCounter();
+            toggleSection('presets', false);
+
         });
 
-        document.getElementById('reset-button').addEventListener('click', () => {
-            if (confirm('Сбросить все выбранные параметры?')) {
-                document.querySelectorAll('input[type="radio"]:checked').forEach(r => r.checked = false);
-                document.querySelectorAll('.artistic-checkbox:checked').forEach(cb => cb.checked = false);
-                document.getElementById('resolution').value = '';
-                document.getElementById('lighting').value = '';
-                document.getElementById('colors').value = '';
-                document.getElementById('focus').value = '';
-                document.getElementById('detail').value = '';
-                document.getElementById('style-search').value = '';
-                document.getElementById('artistic-search').value = '';
-                updateArtisticCounter();
-                generatePrompt();
-                showNotification('🔄 Параметры сброшены', 'success');
-            }
-        });
+        // ===== НОВЫЕ ФУНКЦИИ =====
+        
+        // Дебаунс для поиска
+        let searchDebounceTimer = null;
+        const DEBOUNCE_DELAY = 200;
 
-        inputEl.addEventListener('input', generatePrompt);
-        document.getElementById('copy-btn').addEventListener('click', () => copyPrompt('output'));
-        document.getElementById('copy-enhanced-btn').addEventListener('click', () => copyPrompt('enhanced-output'));
-        document.getElementById('enhance-btn').addEventListener('click', enhanceArtistically);
-
-        document.getElementById('style-search').addEventListener('input', debounce((e) => {
-            const query = e.target.value.toLowerCase();
-            document.querySelectorAll('.styles-list .style-option').forEach(opt => {
-                const text = opt.textContent.toLowerCase();
-                opt.style.display = text.includes(query) ? '' : 'none';
-            });
-        }, 300));
-
-        document.getElementById('artistic-search').addEventListener('input', debounce((e) => {
-            const query = e.target.value.toLowerCase();
-            document.querySelectorAll('.artistic-content .style-option').forEach(opt => {
-                const text = opt.textContent.toLowerCase();
-                opt.style.display = text.includes(query) ? '' : 'none';
-            });
-        }, 300));
-
-        function debounce(func, wait) {
-            let timeout;
+        function debounce(func, delay) {
             return function(...args) {
-                clearTimeout(timeout);
-                timeout = setTimeout(() => func.apply(this, args), wait);
+                clearTimeout(searchDebounceTimer);
+                searchDebounceTimer = setTimeout(() => func.apply(this, args), delay);
             };
         }
 
-        function openHelpModal() {
-            document.getElementById('help-modal').style.display = 'block';
-        }
+        const debouncedRenderStyles = debounce(renderStyles, DEBOUNCE_DELAY);
+        const debouncedRenderArtistic = debounce(renderArtistic, DEBOUNCE_DELAY);
 
-        function closeHelpModal() {
-            document.getElementById('help-modal').style.display = 'none';
-        }
-
-        function openHFHelpModal() {
-            document.getElementById('hf-help-modal').style.display = 'block';
-        }
-
-        function closeHFHelpModal() {
-            document.getElementById('hf-help-modal').style.display = 'none';
-        }
-
-        function translateBack(sourceId) {
-            const text = document.getElementById(sourceId).value.trim();
-            if (!text) {
-                showNotification('⚠️ Нет текста для перевода!', 'warning');
-                return;
+        // Обновление счётчика художественных элементов
+        function updateArtisticCounter() {
+            const checked = document.querySelectorAll('input[name="artistic"]:checked');
+            const counter = document.getElementById('artistic-counter');
+            const count = checked.length;
+            
+            counter.textContent = `${count}/${MAX_ARTISTIC}`;
+            
+            if (count > MAX_ARTISTIC) {
+                counter.classList.add('exceeded');
+            } else {
+                counter.classList.remove('exceeded');
             }
-
-            document.getElementById('translation-modal').style.display = 'block';
-            document.getElementById('translation-result').textContent = 'Загрузка перевода...';
-
-            translateText(text, 'ru').then(translated => {
-                document.getElementById('translation-result').textContent = translated;
-            }).catch(error => {
-                document.getElementById('translation-result').textContent = 'Ошибка перевода. Попробуйте еще раз.';
-            });
         }
 
-        function closeTranslationModal() {
-            document.getElementById('translation-modal').style.display = 'none';
+        // Показ toast-уведомления
+        function showToast(message, duration = 3000) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, duration);
         }
 
-        function copyTranslation() {
-            const text = document.getElementById('translation-result').textContent;
-            navigator.clipboard.writeText(text).then(() => {
-                showNotification('📋 Перевод скопирован!', 'success');
-            });
+        // Обновлённая функция лимита с toast
+        function limitArtisticCheckboxesEnhanced() {
+            const checked = document.querySelectorAll('input[name="artistic"]:checked');
+            
+            if (checked.length > MAX_ARTISTIC) {
+                const last = checked[checked.length - 1];
+                last.checked = false;
+                showToast(`⚠️ Максимум ${MAX_ARTISTIC} элементов!`);
+            }
+            
+            updateArtisticCounter();
         }
 
-        window.onclick = function(event) {
-            const modals = document.querySelectorAll('.modal');
-            modals.forEach(modal => {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                }
-            });
-        };
+        // ===== СИСТЕМА ПРЕСЕТОВ =====
+        const PRESETS_KEY = 'flux_prompt_presets';
 
         function getCurrentState() {
-            const selectedStyle = document.querySelector('input[name="style"]:checked');
-            const selectedArtistic = Array.from(document.querySelectorAll('.artistic-checkbox:checked')).map(cb => cb.value);
             return {
-                style: selectedStyle ? selectedStyle.value : null,
-                artistic: selectedArtistic,
-                resolution: document.getElementById('resolution').value,
-                lighting: document.getElementById('lighting').value,
-                colors: document.getElementById('colors').value,
-                focus: document.getElementById('focus').value,
-                detail: document.getElementById('detail').value
+                style: getSelectedStyle(),
+                artistic: getSelectedArtistic(),
+                quality: {
+                    resolution: document.getElementById('resolution').value,
+                    lighting: document.getElementById('lighting').value,
+                    colors: document.getElementById('colors').value,
+                    focus: document.getElementById('focus').value,
+                    detail: document.getElementById('detail').value
+                }
             };
         }
 
         function applyState(state) {
-            document.querySelectorAll('input[type="radio"]:checked').forEach(r => r.checked = false);
-            document.querySelectorAll('.artistic-checkbox:checked').forEach(cb => cb.checked = false);
+            // Применяем стиль
+            const styleRadio = document.querySelector(`input[name="style"][value="${state.style}"]`);
+            if (styleRadio) styleRadio.checked = true;
 
-            if (state.style) {
-                const radio = document.querySelector(`input[name="style"][value="${state.style}"]`);
-                if (radio) radio.checked = true;
-            }
+            // Снимаем все художественные элементы
+            document.querySelectorAll('input[name="artistic"]').forEach(cb => cb.checked = false);
 
-            state.artistic.forEach(key => {
-                const checkbox = document.querySelector(`.artistic-checkbox[value="${key}"]`);
+            // Применяем художественные элементы
+            state.artistic.forEach(value => {
+                const checkbox = document.querySelector(`input[name="artistic"][value="${value}"]`);
                 if (checkbox) checkbox.checked = true;
             });
 
-            document.getElementById('resolution').value = state.resolution || '';
-            document.getElementById('lighting').value = state.lighting || '';
-            document.getElementById('colors').value = state.colors || '';
-            document.getElementById('focus').value = state.focus || '';
-            document.getElementById('detail').value = state.detail || '';
+            // Применяем качество
+            if (state.quality) {
+                document.getElementById('resolution').value = state.quality.resolution || '';
+                document.getElementById('lighting').value = state.quality.lighting || '';
+                document.getElementById('colors').value = state.quality.colors || '';
+                document.getElementById('focus').value = state.quality.focus || '';
+                document.getElementById('detail').value = state.quality.detail || '';
+            }
 
             updateArtisticCounter();
             generatePrompt();
         }
 
         function loadPresets() {
-            return JSON.parse(localStorage.getItem('prompt_presets') || '[]');
+            const data = localStorage.getItem(PRESETS_KEY);
+            return data ? JSON.parse(data) : [];
         }
 
         function savePresets(presets) {
-            localStorage.setItem('prompt_presets', JSON.stringify(presets));
+            localStorage.setItem(PRESETS_KEY, JSON.stringify(presets));
         }
 
         function renderPresets() {
             const presets = loadPresets();
-            const list = document.getElementById('preset-list');
+            const container = document.getElementById('preset-list');
+            
             if (presets.length === 0) {
-                list.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 20px 0;">Нет сохранённых пресетов</p>';
+                container.innerHTML = '<p style="color: var(--text-muted); margin-top: 12px;">Нет сохранённых пресетов</p>';
                 return;
             }
-            list.innerHTML = presets.map((preset, idx) => `
+
+            container.innerHTML = presets.map((preset, index) => `
                 <div class="preset-item">
                     <span class="preset-item-name">${preset.name}</span>
                     <div class="preset-item-actions">
-                        <button class="preset-item-btn load" onclick="loadPreset(${idx})">Загрузить</button>
-                        <button class="preset-item-btn delete" onclick="deletePreset(${idx})">Удалить</button>
+                        <button class="preset-item-btn load" onclick="loadPreset(${index})">Загрузить</button>
+                        <button class="preset-item-btn delete" onclick="deletePreset(${index})">Удалить</button>
                     </div>
                 </div>
             `).join('');
@@ -2118,6 +2688,7 @@
         function savePresetDialog() {
             document.getElementById('preset-modal').style.display = 'block';
             document.getElementById('preset-name-input').value = '';
+            document.getElementById('preset-name-input').focus();
         }
 
         function closePresetModal() {
@@ -2126,52 +2697,62 @@
 
         function confirmSavePreset() {
             const name = document.getElementById('preset-name-input').value.trim();
+            
             if (!name) {
-                showNotification('⚠️ Введите название пресета!', 'warning');
+                showToast('⚠️ Введите название пресета');
                 return;
             }
 
             const presets = loadPresets();
             const state = getCurrentState();
-            presets.push({ name, state });
+            
+            presets.push({
+                name: name,
+                state: state,
+                created: new Date().toISOString()
+            });
+
             savePresets(presets);
             renderPresets();
             closePresetModal();
-            showNotification('💾 Пресет сохранён!', 'success');
+            showNotification(`Пресет "${name}" сохранён!`);
         }
 
         function loadPreset(index) {
             const presets = loadPresets();
             if (presets[index]) {
                 applyState(presets[index].state);
-                showNotification('✅ Пресет загружен!', 'success');
+                showNotification(`Пресет "${presets[index].name}" загружен!`);
             }
         }
 
         function deletePreset(index) {
-            if (confirm('Удалить этот пресет?')) {
-                const presets = loadPresets();
-                presets.splice(index, 1);
-                savePresets(presets);
-                renderPresets();
-                showNotification('🗑️ Пресет удалён', 'success');
-            }
+            if (!confirm('Удалить этот пресет?')) return;
+            
+            const presets = loadPresets();
+            const deleted = presets.splice(index, 1)[0];
+            savePresets(presets);
+            renderPresets();
+            showNotification(`Пресет "${deleted.name}" удалён`);
         }
 
         function exportPresets() {
             const presets = loadPresets();
+            
             if (presets.length === 0) {
-                showNotification('⚠️ Нет пресетов для экспорта!', 'warning');
+                showToast('⚠️ Нет пресетов для экспорта');
                 return;
             }
+
             const json = JSON.stringify(presets, null, 2);
             const blob = new Blob([json], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'prompt_presets.json';
+            a.download = `flux_presets_${Date.now()}.json`;
             a.click();
-            showNotification('📤 Пресеты экспортированы!', 'success');
+            URL.revokeObjectURL(url);
+            showNotification('Пресеты экспортированы!');
         }
 
         function importPresetsDialog() {
@@ -2185,181 +2766,80 @@
 
         function confirmImportPresets() {
             const json = document.getElementById('import-json-input').value.trim();
+            
             if (!json) {
-                showNotification('⚠️ Вставьте JSON данные!', 'warning');
+                showToast('⚠️ Вставьте JSON данные');
                 return;
             }
 
             try {
                 const imported = JSON.parse(json);
-                if (!Array.isArray(imported)) throw new Error('Invalid format');
+                
+                if (!Array.isArray(imported)) {
+                    throw new Error('Неверный формат');
+                }
+
                 const presets = loadPresets();
-                presets.push(...imported);
-                savePresets(presets);
+                const merged = [...presets, ...imported];
+                savePresets(merged);
                 renderPresets();
                 closeImportModal();
-                showNotification('📥 Пресеты импортированы!', 'success');
-            } catch (error) {
-                showNotification('❌ Ошибка импорта! Проверьте JSON.', 'error');
+                showNotification(`Импортировано ${imported.length} пресетов!`);
+            } catch (err) {
+                showToast('❌ Ошибка импорта: неверный JSON');
+                console.error(err);
             }
         }
 
+        // ===== СЛУЧАЙНЫЙ ПРОМПТ =====
         function generateRandomPrompt() {
-            const randomExample = promptExamples[Math.floor(Math.random() * promptExamples.length)];
+            // Очищаем предыдущие выборы
+            document.querySelectorAll('input[name="style"]').forEach(r => r.checked = false);
+            document.querySelectorAll('input[name="artistic"]').forEach(cb => cb.checked = false);
+
+            // Случайный пример
+            const randomExample = allExamples[Math.floor(Math.random() * allExamples.length)];
             inputEl.value = randomExample;
 
-            const allStyles = Object.keys(styleDescriptions);
+            // Случайный стиль
+            const allStyles = Object.values(styleCategories).flat();
             const randomStyle = allStyles[Math.floor(Math.random() * allStyles.length)];
             const styleRadio = document.querySelector(`input[name="style"][value="${randomStyle}"]`);
             if (styleRadio) styleRadio.checked = true;
 
-            document.querySelectorAll('.artistic-checkbox:checked').forEach(cb => cb.checked = false);
-            const allArtistic = Object.keys(artisticTemplates);
-            const randomCount = Math.floor(Math.random() * 3) + 1;
+            // 1-3 случайных художественных элементов
+            const allArtistic = [];
+            for (const catData of Object.values(artisticCategories)) {
+                if (Array.isArray(catData)) {
+                    allArtistic.push(...catData);
+                } else {
+                    for (const subData of Object.values(catData)) {
+                        if (Array.isArray(subData)) {
+                            allArtistic.push(...subData);
+                        } else {
+                            for (const items of Object.values(subData)) {
+                                if (Array.isArray(items)) {
+                                    allArtistic.push(...items);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            const artisticCount = Math.floor(Math.random() * 3) + 1; // 1-3
             const shuffled = allArtistic.sort(() => 0.5 - Math.random());
-            shuffled.slice(0, randomCount).forEach(key => {
-                const checkbox = document.querySelector(`.artistic-checkbox[value="${key}"]`);
+            const selected = shuffled.slice(0, artisticCount);
+
+            selected.forEach(value => {
+                const checkbox = document.querySelector(`input[name="artistic"][value="${value}"]`);
                 if (checkbox) checkbox.checked = true;
             });
 
             updateArtisticCounter();
             generatePrompt();
-            showNotification('🎲 Случайный промпт сгенерирован!', 'success');
+            showNotification('🎲 Случайный промпт сгенерирован!');
         }
-
-        // === НОВЫЙ КОД: Функции для распознавания изображений ===
-        function initializeImageRecognition() {
-            const uploadArea = document.getElementById('image-upload-area');
-            const fileInput = document.getElementById('image-file-input');
-            const analyzeBtn = document.getElementById('analyze-image-btn');
-
-            uploadArea.addEventListener('click', () => fileInput.click());
-
-            uploadArea.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                uploadArea.classList.add('dragging');
-            });
-
-            uploadArea.addEventListener('dragleave', () => {
-                uploadArea.classList.remove('dragging');
-            });
-
-            uploadArea.addEventListener('drop', (e) => {
-                e.preventDefault();
-                uploadArea.classList.remove('dragging');
-                const files = e.dataTransfer.files;
-                if (files.length > 0) {
-                    handleImageFile(files[0]);
-                }
-            });
-
-            fileInput.addEventListener('change', (e) => {
-                if (e.target.files.length > 0) {
-                    handleImageFile(e.target.files[0]);
-                }
-            });
-
-            analyzeBtn.addEventListener('click', analyzeImage);
-        }
-
-        function handleImageFile(file) {
-            if (!file.type.startsWith('image/')) {
-                showNotification('⚠️ Пожалуйста, выберите изображение!', 'warning');
-                return;
-            }
-
-            currentImageFile = file;
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                document.getElementById('image-preview').src = e.target.result;
-                document.getElementById('image-preview-container').style.display = 'block';
-                document.getElementById('image-prompt-result-container').style.display = 'none';
-                updateAnalyzeButtonState();
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function updateAnalyzeButtonState() {
-            const token = document.getElementById('hf-token').value.trim();
-            const btn = document.getElementById('analyze-image-btn');
-            btn.disabled = !(currentImageFile && token);
-        }
-
-        async function analyzeImage() {
-            const apiKey = document.getElementById('hf-token').value.trim();
-            if (!apiKey || !currentImageFile) return;
-
-            const btn = document.getElementById('analyze-image-btn');
-            const btnText = document.getElementById('analyze-btn-text');
-            btn.disabled = true;
-            btnText.innerHTML = '<span class="loading-spinner"></span>Анализ изображения...';
-
-            try {
-                const base64Image = await fileToBase64(currentImageFile);
-                const mimeType = currentImageFile.type;
-                
-                const requestBody = {
-                    contents: [{
-                        parts: [
-                            {
-                                text: "Describe this image in detail for AI image generation. Include: main subject, composition, colors, lighting, style, mood, and artistic elements. Focus on visual characteristics that would help recreate a similar image. Provide a comprehensive description in English."
-                            },
-                            {
-                                inline_data: {
-                                    mime_type: mimeType,
-                                    data: base64Image
-                                }
-                            }
-                        ]
-                    }]
-                };
-
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(requestBody)
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error?.message || `API Error: ${response.status}`);
-                }
-
-                const data = await response.json();
-                const answer = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Не удалось получить описание';
-                
-                const russianPrompt = await translateText(answer, 'ru');
-                
-                document.getElementById('image-prompt-result').textContent = russianPrompt;
-                document.getElementById('image-prompt-result-container').style.display = 'block';
-                showNotification('✅ Изображение проанализировано!', 'success');
-            } catch (error) {
-                console.error('Image analysis error:', error);
-                showNotification('❌ Ошибка анализа изображения: ' + error.message, 'error');
-            } finally {
-                btn.disabled = false;
-                btnText.innerHTML = '🔍 Анализировать изображение';
-            }
-        }
-
-        function fileToBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result.split(',')[1]);
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
-            });
-        }
-
-        function copyImagePrompt() {
-            const text = document.getElementById('image-prompt-result').textContent;
-            navigator.clipboard.writeText(text).then(() => {
-                showNotification('📋 Промпт изображения скопирован!', 'success');
-            });
-        }
-        // === КОНЕЦ нового кода ===
 
     </script>
 </body>
